@@ -1,9 +1,3 @@
-const lenis = new Lenis({
-    autoRaf: true,
-  });
-
-
-
 let N = 500000;
 let fbWide, fbHigh;
 let oldPos, newPos;
@@ -14,6 +8,9 @@ let canvas;
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight, WEBGL);
   canvas.parent('heroe-bg');
+  // Habilita la transparencia en el canvas
+  let gl = this._renderer.GL;
+  gl.clearColor(0, 0, 0, 0);
   
   updateShdr = createShader(vsUpdate, fsUpdate);
   drawShdr = createShader(vsDraw, fsDraw);
@@ -66,7 +63,7 @@ function draw() {
   rotateX(0.5);
   rotateY(TAU*0.05*t);
 
-  background(0);
+  clear(); // Reemplaza background(0) con clear()
   gl = this._renderer.GL;
   gl.disable(gl.DEPTH_TEST);
   gl.enable(gl.BLEND);
@@ -140,11 +137,6 @@ vec3 auroraColors(float t) {
   
   return color;
 }
-
-
-
-
-
 
 void main() {
   ivec2 res = textureSize(dataA, 0);

@@ -42,35 +42,21 @@ body {
     overflow-x: hidden;
     background-color: black;
 }
-canvas {
-    display: block;
-}
 
 nav{
     position: fixed;
     width: 100%;
-}
-nav .logo{
+}nav .logo{
     width: 2vw;
     height: auto;
     padding: 1%;
     float: left;
-}
-nav .menu{
+}nav .menu{
     width: 3vw;
     height: auto;
     filter: invert(1);
     padding: 0.7%;
     float: right;
-}
-
-.heroe-bg{
-    width: 100%;
-    height: auto;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: -1;
 }
 
 header{
@@ -80,28 +66,42 @@ header{
     place-items: center;
     place-content: center;
     position: relative;
-}
-.heroe-text{
+    overflow: hidden;
+}.heroe-text{
     position: absolute;
     color: white;
     opacity: 0.8;
     mix-blend-mode: difference;
-}
-header h1{
+}header h1{
     font-family: 'ZENTRY', monospace;
     font-size: 25em;
     margin: 0;
     word-spacing: 0.2em;
-}
-header p{
+}header p{
     font-family: 'Roobert-Regular', monospace;
     font-size: 2.5em;
     margin: 0;
     transform: translateY(1em);
-}
-.heroe-logo{
+}.heroe-logo{
     height: auto;
     width: 0.77em;
+}.heroe-bg-canvas{
+    width: 100%;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}header canvas {
+    display: block;
+}header video{
+    height: 100vh;
+    min-width: 100%;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -2;
 }
 
 section{
