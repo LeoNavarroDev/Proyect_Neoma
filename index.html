@@ -3,22 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visualización con p5.js y GLSL</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    canvas {
-      display: block;
-    }
-  </style>
+  <title>NEOMA</title>
+  <link rel="icon" href="img/logo.png">
+
   <!-- Incluir las bibliotecas necesarias de p5.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js"></script>
+  <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script> 
+
+  <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
-  <script src="js/main.js">
-  </script>
+  <nav>
+    <img src="img/logo.png" alt="" class="logo">
+    <img src="img/list.svg" alt="menu" class="menu">
+  </nav>
+
+  <header>
+    
+    <div class="heroe-text">
+      <p>Insights al instante, futuro brillante.</p>
+      <h1>NE<span><img src="img/logo.png" alt="O" class="heroe-logo"></span>MA</h1>
+    </div>
+
+    <!-- bg -->
+    <div id="heroe-bg" class="heroe-bg"></div>
+
+  </header>
+
+  <section></section>
+
+
+  <script src="js/heroe.js"></script>
 </body>
 </html>

@@ -1,0 +1,83 @@
+@font-face {
+    font-family: 'ZENTRY';
+    src: url('../font/ZENTRY-Regular.woff2') format('woff2');
+}@font-face {
+    font-family: 'Roobert-Regular';
+    src: url('../font/Roobert-Regular.woff2') format('woff2');
+}
+
+
+
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: black;
+}
+canvas {
+    display: block;
+}
+
+nav{
+    position: fixed;
+    width: 100%;
+}
+nav .logo{
+    width: 2vw;
+    height: auto;
+    padding: 1%;
+    float: left;
+}
+nav .menu{
+    width: 3vw;
+    height: auto;
+    filter: invert(1);
+    padding: 0.7%;
+    float: right;
+}
+
+.heroe-bg{
+    width: 100%;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+
+header{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    place-items: center;
+    place-content: center;
+    position: relative;
+}
+.heroe-text{
+    position: absolute;
+    color: white;
+    opacity: 0.8;
+}
+header h1{
+    font-family: 'ZENTRY', monospace;
+    font-size: 25em;
+    margin: 0;
+    word-spacing: 0.2em;
+}
+header p{
+    font-family: 'Roobert-Regular', monospace;
+    font-size: 2.5em;
+    margin: 0;
+    transform: translateY(1em);
+}
+.heroe-logo{
+    height: auto;
+    width: 0.77em;
+}
+
+
+section{
+    height: 100vh;
+    width: 100%;
+}
