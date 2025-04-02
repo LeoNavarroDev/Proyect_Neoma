@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NEOMA</title>
   <link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="css/style.css">
 
-  <!-- Incluir las bibliotecas necesarias de p5.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js"></script>
   <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script> 
-
-  <link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
@@ -20,26 +18,21 @@
   </nav>
 
   <header>
-    
     <div class="heroe-text">
       <p>Insights al instante, futuro brillante.</p>
       <h1>NE<span><img src="img/logo.png" alt="O" class="heroe-logo"></span>MA</h1>
     </div>
 
-    <!-- bg -->
+    <div class="gradient"></div>
     <div id="heroe-bg" class="heroe-bg-canvas"></div>
-    <video src="img/vodeobgHeader.mp4" autoplay muted loop poster></video>
-
+    <video src="img/vodeobgHeader.mp4" id="video_background" muted loop poster></video>
   </header>
 
-  <section></section>
+  <section>
+    <img class="aboutUs-h1img" src="img/aboutus/aboutUs-h1img.png" alt="">
+  </section>
 
-
-  <!-- <script src="js/heroe.js"></script> -->
-  <script src="js/main.js">
-
-    
-
-  </script>
+  <script src="js/heroe.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

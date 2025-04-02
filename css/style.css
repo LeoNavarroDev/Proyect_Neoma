@@ -46,6 +46,7 @@ body {
 nav{
     position: fixed;
     width: 100%;
+    z-index: 999;
 }nav .logo{
     width: 2vw;
     height: auto;
@@ -72,6 +73,7 @@ header{
     color: white;
     opacity: 0.8;
     mix-blend-mode: difference;
+    animation: fadeInH1 3s forwards;
 }header h1{
     font-family: 'ZENTRY', monospace;
     font-size: 25em;
@@ -103,8 +105,44 @@ header{
     top: 0;
     z-index: -2;
 }
+.gradient{
+    height: 5%;
+    width: 100%;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 50%);
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+}
+
+@keyframes fadeInH1 {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0.8;
+    }
+}
+.fade-out {
+    animation: fadeOut 3s forwards;
+}.fade-in {
+animation: fadeIn 3s forwards;
+}@keyframes fadeOut {
+    from { opacity: 0.8; scale: 1;}
+    to { opacity: 0; scale: 0.5; transform: translateY(250%);}
+}@keyframes fadeIn {
+    from { opacity: 0; scale: 0.5; transform: translateY(0%); }
+    to { opacity: 0.8; scale: 1;}
+}
+  
 
 section{
     height: 100vh;
     width: 100%;
+    display: flex;
+    place-items: center;
+    place-content: center;
+}.aboutUs-h1img{
+    width: auto;
+    height: 50%;
 }
