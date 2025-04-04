@@ -1,9 +1,9 @@
 // Variables globales y de tiempo
-let N = 200000;
+let N = 100000;
 let fbWide, fbHigh;
 let oldPos, newPos;
 let updateShdr, drawShdr;
-let b = 0.19;
+let b = 1;
 let canvas;
 
 // Tiempo activo y duración del fade (en segundos)
