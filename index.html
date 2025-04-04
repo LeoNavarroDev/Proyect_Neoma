@@ -12,11 +12,13 @@
 
 </head>
 <body>
+  <!-- navbar -->
   <nav>
     <img src="img/logo.png" alt="" class="logo">
     <img src="img/list.svg" alt="menu" class="menu">
   </nav>
 
+  <!-- heroe -->
   <header>
     <div class="heroe-text">
       <p>Insights al instante, futuro brillante.</p>
@@ -25,12 +27,35 @@
 
     <div class="gradient"></div>
     <div id="heroe-bg" class="heroe-bg-canvas"></div>
-    <video src="img/vodeobgHeader.mp4" id="video_background" muted loop poster></video>
+    <video src="img/vodeobgHeader.mp4" id="video_background" muted loop poster ></video>
   </header>
 
+  <!-- about us -->
   <section>
-    <img class="aboutUs-h1img" src="img/aboutus/aboutUs-h1img.png" alt="">
+    <div class="h1img">
+      <img class="aboutUs-h1img" src="img/aboutus/aboutUs-h1img.png" alt="About Us">
+    </div>
+
+    <!-- video presentacion -->
+    <div class="video_aboutus">
+      <video src="" autoplay muted loop poster></video>
+    </div>
+
+    <div class="aboutus-description">
+      <!-- text -->
+      <div class="text-aboutus-description">
+        <h3>NEOMA IS</h3>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.</p>
+      </div>
+      
+      <!-- lente -->
+      <div class="lente-aboutus">
+        <div id="canvas-container"></div>
+      </div>
+    </div>
   </section>
+
+
 
   <script src="js/heroe.js"></script>
   <script src="js/main.js"></script>
