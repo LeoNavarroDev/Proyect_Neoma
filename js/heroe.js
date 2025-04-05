@@ -7,37 +7,37 @@ let b = 1;
 let canvas;
 
 // Tiempo activo y duración del fade (en segundos)
-let activeTime = 5;  // tiempo en que las partículas se muestran a pleno rendimiento
-let fadeTime = 3;    // tiempo durante el cual las partículas se desvanecen
+let activeTime = 5; // tiempo en que las partículas se muestran a pleno rendimiento
+let fadeTime = 3; // tiempo durante el cual las partículas se desvanecen
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight, WEBGL);
-  canvas.parent('heroe-bg');
+  canvas.parent("heroe-bg");
   let gl = this._renderer.GL;
   gl.clearColor(0, 0, 0, 0);
-  
+
   updateShdr = createShader(vsUpdate, fsUpdate);
   // Nota: agregamos el uniforme 'fade' en el shader de dibujo
   drawShdr = createShader(vsDraw, fsDraw);
-  
+
   fbWide = 1024;
   fbHigh = ceil(N / fbWide);
   let fbOptions = {
     format: FLOAT,
-    depth: false, 
-    antialias: false, 
+    depth: false,
+    antialias: false,
     density: 1,
-    width: fbWide, 
-    height: fbHigh
+    width: fbWide,
+    height: fbHigh,
   };
   oldPos = createFramebuffer(fbOptions);
   newPos = createFramebuffer(fbOptions);
   oldPos.loadPixels();
-  for(let i=0; i<N; i++) {
-    oldPos.pixels[4*i  ] = random(-1, 1);
-    oldPos.pixels[4*i+1] = random(-1, 1);
-    oldPos.pixels[4*i+2] = 2.0*i/N-1;
-    oldPos.pixels[4*i+3] = 1.0;
+  for (let i = 0; i < N; i++) {
+    oldPos.pixels[4 * i] = random(-1, 1);
+    oldPos.pixels[4 * i + 1] = random(-1, 1);
+    oldPos.pixels[4 * i + 2] = (2.0 * i) / N - 1;
+    oldPos.pixels[4 * i + 3] = 1.0;
   }
   oldPos.updatePixels();
 }
@@ -49,9 +49,9 @@ function windowResized() {
 
 function draw() {
   let t = frameCount / 60.0;
-  
+
   // Calculamos el factor de fade:
-  // Si t < activeTime => fade = 1; 
+  // Si t < activeTime => fade = 1;
   // Si t entre activeTime y activeTime+fadeTime => fade decae linealmente hasta 0;
   // Si t mayor, fade = 0.
   let fade = 1.0;
@@ -59,23 +59,23 @@ function draw() {
     fade = max(1.0 - (t - activeTime) / fadeTime, 0.0);
   }
 
-  b = 0.14 + 0.06 * sin(TAU*t/37.018);
-  
+  b = 0.14 + 0.06 * sin((TAU * t) / 37.018);
+
   newPos.begin();
   updateShdr.bindShader();
   updateShdr.setUniform("b", b);
-  updateShdr.setUniform('data', oldPos);
+  updateShdr.setUniform("data", oldPos);
   updateShdr.bindTextures();
   let gl = newPos.gl;
   gl.drawArrays(gl.TRIANGLES, 0, 3);
   updateShdr.unbindTextures();
   updateShdr.unbindShader();
   newPos.end();
-  
+
   camera(0, 0, -3, 0, 0.1, 0, 0, 1, 0);
-  perspective(PI/3, 1.0*width/height, 1, 10);
+  perspective(PI / 3, (1.0 * width) / height, 1, 10);
   rotateX(0.5);
-  rotateY(TAU*0.05*t);
+  rotateY(TAU * 0.05 * t);
 
   clear();
   gl = this._renderer.GL;
@@ -85,11 +85,11 @@ function draw() {
   gl.lineWidth(0.5);
   drawShdr.bindShader();
   // Enviamos las texturas y uniformes al shader de dibujo
-  drawShdr.setUniform('dataA', oldPos);
-  drawShdr.setUniform('dataB', newPos);
-  drawShdr.setUniform('N', N);
+  drawShdr.setUniform("dataA", oldPos);
+  drawShdr.setUniform("dataB", newPos);
+  drawShdr.setUniform("N", N);
   drawShdr.setUniform("b", b);
-  drawShdr.setUniform("fade", fade);  // factor de desvanecimiento
+  drawShdr.setUniform("fade", fade); // factor de desvanecimiento
   drawShdr.bindTextures();
   gl.drawArrays(gl.LINES, 0, 2 * N);
   gl.disable(gl.BLEND);
