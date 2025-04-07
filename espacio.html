@@ -10,13 +10,15 @@
       margin: 0;
       background-color: #000;
       overflow-x: hidden;
-      height: 20000px; /* Великий простір для скролінгу */
+      font-family: Arial, sans-serif;
+      color: white;
     }
     canvas {
       position: fixed;
       top: 0;
       left: 0;
       display: block;
+      z-index: -1;
     }
     .instructions {
       position: fixed;
@@ -30,10 +32,53 @@
       z-index: 100;
       opacity: 0.7;
     }
+    .content-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 20px;
+    }
+    .content-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 100px; /* Відстань між елементами */
+      min-height: 300px;
+    }
+    .content-item.right {
+      flex-direction: row-reverse;
+    }
+    .content-text {
+      flex: 1;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+    }
+    .content-image {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .content-image img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(180, 100, 255, 0.5);
+    }
+    h2 {
+      color: #ff96b4; /* rosa color */
+      margin-top: 0;
+    }
+    p {
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
   <div class="instructions">Прокрутіть сторінку для руху між світлячками</div>
+  
+  <div class="content-container" id="content-container">
+    <!-- Контент буде додано через JavaScript -->
+  </div>
   
   <script>
     // Налаштування Three.js
@@ -258,8 +303,78 @@
       lerp: 0.1
     });
     
+    // Змінна з описом кожного елемента (текст або зображення)
+    const contentItems = [
+      {
+        type: "text",
+        title: "Космічні світлячки",
+        content: "У безмежному просторі Всесвіту мерехтять мільярди зірок, нагадуючи нам про вічність і безкінечність. Кожна з них має свою унікальну історію."
+      },
+      {
+        type: "image",
+        src: "/api/placeholder/600/400",
+        alt: "Космічний пейзаж"
+      },
+      {
+        type: "text",
+        title: "Подорож крізь галактики",
+        content: "Галактики — це величезні системи з мільярдів зірок, планет, газу та пилу. Кожна галактика має свою структуру та динаміку, що визначає її форму та еволюцію."
+      },
+      {
+        type: "image",
+        src: "/api/placeholder/600/400",
+        alt: "Галактика"
+      },
+      {
+        type: "text",
+        title: "Чорні діри",
+        content: "Чорні діри — це області простору-часу з настільки потужною гравітацією, що навіть світло не може вирватися з їхніх меж. Вони залишаються одними з найзагадковіших об'єктів у Всесвіті."
+      },
+      {
+        type: "image",
+        src: "/api/placeholder/600/400",
+        alt: "Чорна діра"
+      }
+    ];
+    
+    // Функція для генерації HTML-структури з елементами контенту
+    function generateContent() {
+      const container = document.getElementById('content-container');
+      
+      contentItems.forEach((item, index) => {
+        const isRight = index % 2 !== 0;
+        const div = document.createElement('div');
+        div.className = `content-item ${isRight ? 'right' : 'left'}`;
+        
+        if (item.type === "text") {
+          div.innerHTML = `
+            <div class="content-text">
+              <h2>${item.title}</h2>
+              <p>${item.content}</p>
+            </div>
+            <div class="content-image"></div>
+          `;
+        } else if (item.type === "image") {
+          div.innerHTML = `
+            <div class="content-text"></div>
+            <div class="content-image">
+              <img src="${item.src}" alt="${item.alt}">
+            </div>
+          `;
+        }
+        
+        container.appendChild(div);
+      });
+    }
+    
     // Створюємо світлячки після завантаження сторінки
     createFireflies();
+    
+    // Генеруємо контент
+    generateContent();
+    
+    // Розраховуємо висоту сторінки на основі кількості елементів
+    document.body.style.height = `${contentItems.length * 500 + 1000}px`;
     
     // Запуск анімації
     animate();
