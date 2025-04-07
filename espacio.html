@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Космічні світлячки - Анімація з ефектом скролінгу</title>
+  <title>3D Текст та зображення з ефектом скролінгу</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
   <style>
@@ -10,16 +10,18 @@
       margin: 0;
       background-color: #000;
       overflow-x: hidden;
+      height: 20000px; /* Великий простір для скролінгу */
       font-family: Arial, sans-serif;
-      color: white;
     }
+    
     canvas {
       position: fixed;
       top: 0;
       left: 0;
       display: block;
-      z-index: -1;
+      z-index: 1;
     }
+    
     .instructions {
       position: fixed;
       bottom: 20px;
@@ -32,56 +34,56 @@
       z-index: 100;
       opacity: 0.7;
     }
-    .content-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 100px 20px;
+    
+    .content-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 10;
+      perspective: 1000px;
     }
+    
     .content-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 100px; /* Відстань між елементами */
-      min-height: 300px;
+      position: absolute;
+      width: 40%;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+      color: white;
+      transform-style: preserve-3d;
+      opacity: 0;
+      transition: transform 0.5s ease, opacity 0.5s ease;
     }
+    
+    .content-item img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    
+    .content-item.left {
+      left: 5%;
+    }
+    
     .content-item.right {
-      flex-direction: row-reverse;
+      right: 5%;
+      text-align: right;
     }
-    .content-text {
-      flex: 1;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 10px;
-      backdrop-filter: blur(5px);
-    }
-    .content-image {
-      flex: 1;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-    }
-    .content-image img {
-      max-width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(180, 100, 255, 0.5);
-    }
-    h2 {
-      color: #ff96b4; /* rosa color */
-      margin-top: 0;
-    }
-    p {
-      line-height: 1.6;
+    
+    .content-item.active {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <div class="instructions">Прокрутіть сторінку для руху між світлячками</div>
+  <div class="instructions">Прокрутіть сторінку для руху між світлячками та перегляду контенту</div>
   
-  <div class="content-container" id="content-container">
-    <!-- Контент буде додано через JavaScript -->
-  </div>
+  <div class="content-wrapper" id="contentWrapper"></div>
   
   <script>
-    // Налаштування Three.js
+    // Налаштування Three.js для фону
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -260,6 +262,93 @@
       }
     }
     
+    // Створення контенту в 3D просторі
+    // Масив з елементами контенту (текст та зображення)
+    const contentItems = [
+      {
+        type: 'text',
+        content: '<h2>Космічна подорож</h2><p>Безмежний всесвіт відкриває свої таємниці перед сміливими дослідниками.</p>'
+      },
+      {
+        type: 'image',
+        content: '<img src="/api/placeholder/600/400" alt="Космічний корабель">'
+      },
+      {
+        type: 'text',
+        content: '<h2>Зоряні системи</h2><p>Кожна зірка - це цілий світ, навколо якої обертаються планети та астероїди.</p>'
+      },
+      {
+        type: 'image',
+        content: '<img src="/api/placeholder/600/400" alt="Зоряна система">'
+      },
+      {
+        type: 'text',
+        content: '<h2>Чорні діри</h2><p>Найзагадковіші об\'єкти у всесвіті, які поглинають навіть світло.</p>'
+      },
+      {
+        type: 'image',
+        content: '<img src="/api/placeholder/600/400" alt="Чорна діра">'
+      },
+      {
+        type: 'text',
+        content: '<h2>Галактики</h2><p>Величезні системи зірок, що кружляють навколо спільного центру.</p>'
+      },
+      {
+        type: 'image',
+        content: '<img src="/api/placeholder/600/400" alt="Галактика">'
+      },
+      {
+        type: 'text',
+        content: '<h2>Комети та метеорити</h2><p>Космічні мандрівники, що несуть у собі історію всесвіту.</p>'
+      },
+      {
+        type: 'image',
+        content: '<img src="/api/placeholder/600/400" alt="Комета">'
+      }
+    ];
+    
+    // Відстань між елементами в пікселях скролу
+    const contentSpacing = 2000;
+    
+    // Створення елементів контенту
+    function createContentItems() {
+      const contentWrapper = document.getElementById('contentWrapper');
+      
+      contentItems.forEach((item, index) => {
+        const element = document.createElement('div');
+        element.className = `content-item ${index % 2 === 0 ? 'left' : 'right'}`;
+        element.innerHTML = item.content;
+        element.dataset.index = index;
+        element.style.transform = `translateZ(${-5000}px)`;
+        contentWrapper.appendChild(element);
+      });
+    }
+    
+    // Оновлення позицій елементів контенту під час скролу
+    function updateContentPositions(scrollY) {
+      const elements = document.querySelectorAll('.content-item');
+      
+      elements.forEach((element) => {
+        const index = parseInt(element.dataset.index);
+        const idealPosition = index * contentSpacing;
+        const distance = scrollY - idealPosition;
+        
+        // Визначаємо, чи елемент має бути видимим
+        if (Math.abs(distance) < contentSpacing / 2) {
+          const zPosition = 1000 - Math.abs(distance) * 2;
+          const opacity = 1 - Math.abs(distance) / (contentSpacing / 2);
+          
+          element.style.transform = `translateZ(${-Math.abs(distance)}px)`;
+          element.style.opacity = opacity;
+          element.classList.add('active');
+        } else {
+          element.classList.remove('active');
+          element.style.opacity = 0;
+          element.style.transform = `translateZ(${-5000}px)`;
+        }
+      });
+    }
+    
     // Функція анімації
     function animate() {
       requestAnimationFrame(animate);
@@ -275,6 +364,9 @@
       
       // Оновлення світлячків
       updateFireflies(time, scrollSpeed);
+      
+      // Оновлення позицій контенту
+      updateContentPositions(scrollPosition);
       
       // Легкий рух камери
       camera.position.x += (Math.sin(time * 0.1) * 30 - camera.position.x) * 0.01;
@@ -303,78 +395,9 @@
       lerp: 0.1
     });
     
-    // Змінна з описом кожного елемента (текст або зображення)
-    const contentItems = [
-      {
-        type: "text",
-        title: "Космічні світлячки",
-        content: "У безмежному просторі Всесвіту мерехтять мільярди зірок, нагадуючи нам про вічність і безкінечність. Кожна з них має свою унікальну історію."
-      },
-      {
-        type: "image",
-        src: "/api/placeholder/600/400",
-        alt: "Космічний пейзаж"
-      },
-      {
-        type: "text",
-        title: "Подорож крізь галактики",
-        content: "Галактики — це величезні системи з мільярдів зірок, планет, газу та пилу. Кожна галактика має свою структуру та динаміку, що визначає її форму та еволюцію."
-      },
-      {
-        type: "image",
-        src: "/api/placeholder/600/400",
-        alt: "Галактика"
-      },
-      {
-        type: "text",
-        title: "Чорні діри",
-        content: "Чорні діри — це області простору-часу з настільки потужною гравітацією, що навіть світло не може вирватися з їхніх меж. Вони залишаються одними з найзагадковіших об'єктів у Всесвіті."
-      },
-      {
-        type: "image",
-        src: "/api/placeholder/600/400",
-        alt: "Чорна діра"
-      }
-    ];
-    
-    // Функція для генерації HTML-структури з елементами контенту
-    function generateContent() {
-      const container = document.getElementById('content-container');
-      
-      contentItems.forEach((item, index) => {
-        const isRight = index % 2 !== 0;
-        const div = document.createElement('div');
-        div.className = `content-item ${isRight ? 'right' : 'left'}`;
-        
-        if (item.type === "text") {
-          div.innerHTML = `
-            <div class="content-text">
-              <h2>${item.title}</h2>
-              <p>${item.content}</p>
-            </div>
-            <div class="content-image"></div>
-          `;
-        } else if (item.type === "image") {
-          div.innerHTML = `
-            <div class="content-text"></div>
-            <div class="content-image">
-              <img src="${item.src}" alt="${item.alt}">
-            </div>
-          `;
-        }
-        
-        container.appendChild(div);
-      });
-    }
-    
-    // Створюємо світлячки після завантаження сторінки
+    // Ініціалізація
     createFireflies();
-    
-    // Генеруємо контент
-    generateContent();
-    
-    // Розраховуємо висоту сторінки на основі кількості елементів
-    document.body.style.height = `${contentItems.length * 500 + 1000}px`;
+    createContentItems();
     
     // Запуск анімації
     animate();
