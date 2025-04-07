@@ -1,3 +1,9 @@
+// lenis.js
+const lenis = new Lenis({
+    autoRaf: true,
+});
+
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 

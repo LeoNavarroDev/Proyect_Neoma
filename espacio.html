@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Космічні світлячки - Анімація з ефектом скролінгу</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      overflow-x: hidden;
+      height: 20000px; /* Великий простір для скролінгу */
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: block;
+    }
+    .instructions {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      color: white;
+      font-family: Arial, sans-serif;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 100;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="instructions">Прокрутіть сторінку для руху між світлячками</div>
+  
+  <script>
+    // Налаштування Three.js
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    document.body.appendChild(renderer.domElement);
+    
+    // Оригінальні кольори з початкового коду
+    const rosa = new THREE.Color(255/255, 150/255, 180/255);
+    const morado = new THREE.Color(180/255, 100/255, 255/255);
+    
+    // Зчитуємо початкову позицію скролу
+    let initialScrollPosition = window.scrollY;
+    let scrollPosition = initialScrollPosition;
+    let lastScrollPosition = initialScrollPosition;
+    let scrollSpeed = 0;
+    
+    // Налаштування світлячків
+    const fireflyCount = 1000;
+    const fireflies = [];
+    
+    // Текстура для світлячків
+    const textureLoader = new THREE.TextureLoader();
+    const fireflyTexture = new THREE.CanvasTexture(createFireflyTexture());
+    
+    // Створення базової текстури для світлячків
+    function createFireflyTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 32;
+      canvas.height = 32;
+      const context = canvas.getContext('2d');
+      
+      const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16);
+      gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+      gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.8)');
+      gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.3)');
+      gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      
+      context.fillStyle = gradient;
+      context.fillRect(0, 0, 32, 32);
+      
+      return canvas;
+    }
+    
+    // Створення матеріалу для світлячків
+    const fireflyMaterial = new THREE.SpriteMaterial({
+      map: fireflyTexture,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthTest: false
+    });
+    
+    // Розрахунок зсуву з на основі початкової позиції скролу
+    const initialScrollOffset = (initialScrollPosition / document.body.scrollHeight) * 2000 - 1000;
+    
+    // Створення світлячків з урахуванням початкової позиції скролу
+    function createFireflies() {
+      // Спочатку очищаємо сцену, якщо вже є світлячки
+      for (let i = 0; i < fireflies.length; i++) {
+        scene.remove(fireflies[i].sprite);
+      }
+      fireflies.length = 0;
+      
+      for (let i = 0; i < fireflyCount; i++) {
+        // Позиція з врахуванням початкового скролу
+        const x = (Math.random() - 0.5) * 2000;
+        const y = (Math.random() - 0.5) * 2000;
+        const z = Math.random() * 2000 - 1000;
+        
+        // Створення спрайту
+        const sprite = new THREE.Sprite(fireflyMaterial.clone());
+        sprite.position.set(x, y, z);
+        
+        // Випадковий розмір
+        const size = Math.random() * 4 + 2;
+        sprite.scale.set(size, size, 1);
+        
+        // Змішування оригінальних кольорів (rosa та morado)
+        const colorMix = Math.random();
+        const color = new THREE.Color().lerpColors(rosa, morado, colorMix);
+        sprite.material.color = color;
+        
+        // Параметри для мерехтіння та руху
+        const firefly = {
+          sprite: sprite,
+          baseSize: size,
+          flickerSpeed: 0.5 + Math.random() * 2,
+          flickerIntensity: 0.2 + Math.random() * 0.4,
+          flickerPhase: Math.random() * Math.PI * 2,
+          moveSpeed: {
+            x: (Math.random() - 0.5) * 0.2,
+            y: (Math.random() - 0.5) * 0.2,
+            z: (Math.random() - 0.5) * 0.2
+          },
+          initialPosition: { x, y, z }
+        };
+        
+        fireflies.push(firefly);
+        scene.add(sprite);
+      }
+      
+      // Правильно розподіляємо світлячки на основі позиції скролу
+      updateFireflyDistribution(initialScrollPosition);
+    }
+    
+    // Функція для розподілу світлячків на основі позиції скролу
+    function updateFireflyDistribution(scrollY) {
+      const scrollFactor = scrollY / 1000; // Коефіцієнт впливу скролу
+      
+      for (let i = 0; i < fireflies.length; i++) {
+        const firefly = fireflies[i];
+        // Зміщуємо початкову Z позицію на основі скролу
+        firefly.sprite.position.z -= scrollFactor;
+        
+        // Переконуємося, що світлячки залишаються в межах видимого діапазону
+        if (firefly.sprite.position.z < -1000) {
+          firefly.sprite.position.z += 2000;
+        } else if (firefly.sprite.position.z > 1000) {
+          firefly.sprite.position.z -= 2000;
+        }
+        
+        // Оновлюємо початкову позицію
+        firefly.initialPosition.z = firefly.sprite.position.z;
+      }
+    }
+    
+    // Позиціонування камери
+    camera.position.z = 1000;
+    
+    // Час для анімацій
+    let clock = new THREE.Clock();
+    
+    // Функції оновлення світлячків
+    function updateFireflies(time, scrollDelta) {
+      for (let i = 0; i < fireflies.length; i++) {
+        const firefly = fireflies[i];
+        const sprite = firefly.sprite;
+        
+        // Мерехтіння
+        const flicker = 1.0 + Math.sin(time * firefly.flickerSpeed + firefly.flickerPhase) * firefly.flickerIntensity;
+        sprite.scale.set(firefly.baseSize * flicker, firefly.baseSize * flicker, 1);
+        
+        // Хаотичний рух
+        sprite.position.x += firefly.moveSpeed.x * Math.sin(time * 0.5 + i);
+        sprite.position.y += firefly.moveSpeed.y * Math.cos(time * 0.3 + i);
+        sprite.position.z += firefly.moveSpeed.z * Math.sin(time * 0.7 + i);
+        
+        // Обмеження руху навколо початкової позиції
+        if (Math.abs(sprite.position.x - firefly.initialPosition.x) > 50) {
+          firefly.moveSpeed.x *= -1;
+        }
+        if (Math.abs(sprite.position.y - firefly.initialPosition.y) > 50) {
+          firefly.moveSpeed.y *= -1;
+        }
+        if (Math.abs(sprite.position.z - firefly.initialPosition.z) > 50) {
+          firefly.moveSpeed.z *= -1;
+        }
+        
+        // Рух на основі скролу
+        sprite.position.z -= scrollDelta * 0.5;
+        
+        // Якщо світлячок занадто близько або далеко, перемістити його
+        if (sprite.position.z < -1000) {
+          sprite.position.z = 1000;
+          firefly.initialPosition.z = sprite.position.z;
+        } else if (sprite.position.z > 1000) {
+          sprite.position.z = -1000;
+          firefly.initialPosition.z = sprite.position.z;
+        }
+        
+        // Зміна розміру залежно від відстані
+        const distance = Math.abs(sprite.position.z - camera.position.z);
+        const sizeFactor = Math.max(0.1, Math.min(1.5, 1000 / distance));
+        sprite.material.opacity = Math.min(1, sizeFactor * 0.8);
+      }
+    }
+    
+    // Функція анімації
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      const time = clock.getElapsedTime();
+      
+      // Розрахунок швидкості скролу
+      scrollSpeed = (scrollPosition - lastScrollPosition) * 2;
+      lastScrollPosition = scrollPosition;
+      
+      // Згладжування швидкості скролу
+      scrollSpeed = scrollSpeed * 0.95;
+      
+      // Оновлення світлячків
+      updateFireflies(time, scrollSpeed);
+      
+      // Легкий рух камери
+      camera.position.x += (Math.sin(time * 0.1) * 30 - camera.position.x) * 0.01;
+      camera.position.y += (Math.cos(time * 0.15) * 20 - camera.position.y) * 0.01;
+      camera.lookAt(scene.position);
+      
+      // Рендерінг сцени
+      renderer.render(scene, camera);
+    }
+    
+    // Відстеження скролу
+    window.addEventListener('scroll', () => {
+      scrollPosition = window.scrollY;
+    });
+    
+    // Зміна розміру вікна
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    
+    // Налаштування плавного скролу
+    const lenis = new Lenis({
+      autoRaf: true,
+      lerp: 0.1
+    });
+    
+    // Створюємо світлячки після завантаження сторінки
+    createFireflies();
+    
+    // Запуск анімації
+    animate();
+  </script>
+</body>
+</html>
