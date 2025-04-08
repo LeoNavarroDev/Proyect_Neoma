@@ -1,0 +1,117 @@
+@font-face {
+    font-family: "ZENTRY";
+    src: url("../font/ZENTRY-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Roobert-Regular";
+    src: url("../font/Roobert-Regular.woff2") format("woff2");
+}
+
+body,
+html {
+    width: 100%;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: black;
+    display: contents;
+    place-content: center;
+    place-items: center;
+}
+
+.loader{
+    color: white;
+    font-family: "ZENTRY", monospace;
+}
+
+.content{
+    display: block;
+    place-content: center;
+    place-items: center;
+}
+
+.videobg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
+    opacity: 0.4;
+    filter: blur(5px);
+}
+
+h1 {
+    font-size: 12em;
+    margin-bottom: 0;
+    letter-spacing: 0.01em;
+}
+
+h3 {
+    margin-top: 0;
+    font-size: 4em;
+    margin-bottom: 20%;
+    letter-spacing: 0.03em;
+}
+
+
+.scroll-downs {
+    transform: scale(130%);
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 34px;
+    height: 55px;
+}
+
+.mousey {
+    width: 3px;
+    padding: 10px 15px;
+    height: 35px;
+    border: 2px solid #fff;
+    border-radius: 25px;
+    opacity: 0.75;
+    box-sizing: content-box;
+}
+
+.scroller {
+    width: 3px;
+    height: 10px;
+    border-radius: 25%;
+    background-color: #fff;
+    animation-name: scroll;
+    animation-duration: 2.2s;
+    animation-timing-function: cubic-bezier(.15, .41, .69, .94);
+    animation-iteration-count: infinite;
+}
+
+@keyframes scroll {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(15px);
+        opacity: 0;
+    }
+}
+
+.windowchange{
+    animation: 1.5s alternate cambio;
+}
+
+@keyframes cambio {
+    from {opacity: 1;}
+    to {opacity: 0;}
+  }
