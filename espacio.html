@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>3D Fireflies with Zoom Panels Effect</title>
+  <title>3D Fireflies with Floating Text</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
   <style>
@@ -50,15 +50,12 @@
       const fireflyCount = 1000;
       const fireflies = [];
       
-      // --- Configuración de los paneles ---
-      const panels = [];
-      const panelCount = 9; // Загальна кількість панелей
+      // --- Configuración de los paneles de texto ---
+      const textPanels = [];
+      const panelCount = 9;
       
-      // Variables для контролю розташування панелей
+      // Variables для контролю розташування текстових панелей
       const panelDepthSpacing = 500; // Відстань між панелями по осі Z
-      const centeredWidth = 300;     // Ширина панелей, що розташовані по центру
-      const altWidth = 200;          // Менша ширина для чергування зліва/справа
-      const panelHeight = 200;
       
       // Функція для створення текстури "firefly" з радіальним градієнтом
       const createFireflyTexture = () => {
@@ -85,60 +82,134 @@
         depthTest: false
       });
       
-      // Функція для створення панелей у 3D-просторі
-      const createPanels = () => {
-        // Видалення існуючих панелей
-        panels.forEach(p => scene.remove(p.mesh));
-        panels.length = 0;
+      // Тексты для панелей
+      const panelTexts = [
+        "Imagínate tener un amigo que siempre sabe lo que necesitas antes de que se lo pidas. Así es Neoma, el lente de contacto inteligente que te acompaña y te entiende como nadie más.",
+        "La pregunta es..",
+        "¿Por qué elegir Neoma?",
+        "Porque Neoma conecta todos los aspectos de tu vida en un solo lugar, analizando tus datos de salud, finanzas y hábitos diarios para ofrecerte una visión completa de tu bienestar.",
+        "Porque a diferencia de otras soluciones, nuestro lente no solo recopila información, sino que la transforma en predicciones personalizadas que realmente puedes usar para mejorar tu día a día.",
+        "Porque cada consejo que recibes está diseñado específicamente para ti, basado en tus patrones únicos, no en estadísticas generales que poco tienen que ver con tu realidad.",
+        "Porque Neoma es discreto y se integra perfectamente en tu vida, sin dispositivos adicionales que llevar encima o apps complicadas que aprender a usar.",
+        "Con Neoma, no estás comprando un gadget más, estás invirtiendo en un compañero de vida que te ayudará a tomar las mejores decisiones para tu futuro, sea en el amor, las finanzas o la salud.",
+        "Scroll para volver"
+      ];
+      
+      // Función para crear textura con texto
+      const createTextTexture = (text, isTitle = false) => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size based on text length
+        const fontSize = isTitle ? 32 : 18;
+        const lineHeight = fontSize * 1.4;
+        const maxWidth = 350;
+        
+        // Set font properties
+        ctx.font = `${isTitle ? 'bold ' : ''}${fontSize}px Arial`;
+        
+        // Word wrap text
+        const words = text.split(' ');
+        let lines = [];
+        let currentLine = words[0];
+        
+        for(let i = 1; i < words.length; i++) {
+          const testLine = currentLine + ' ' + words[i];
+          const metrics = ctx.measureText(testLine);
+          
+          if (metrics.width > maxWidth) {
+            lines.push(currentLine);
+            currentLine = words[i];
+          } else {
+            currentLine = testLine;
+          }
+        }
+        lines.push(currentLine);
+        
+        // Set canvas dimensions
+        canvas.width = maxWidth;
+        canvas.height = lines.length * lineHeight + 20;
+        
+        // Redraw with correct dimensions
+        // Transparent background (no background)
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.font = `${isTitle ? 'bold ' : ''}${fontSize}px Arial`;
+        ctx.textAlign = 'center';
+        
+        // Create gradient for text
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        gradient.addColorStop(0, isTitle ? 'rgba(255, 150, 180, 1)' : 'rgba(255, 255, 255, 0.95)');
+        gradient.addColorStop(1, isTitle ? 'rgba(180, 100, 255, 1)' : 'rgba(255, 255, 255, 0.95)');
+        ctx.fillStyle = gradient;
+        
+        // Add glow effect
+        if (isTitle) {
+          ctx.shadowColor = 'rgba(255, 150, 220, 0.8)';
+          ctx.shadowBlur = 15;
+        } else {
+          ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
+          ctx.shadowBlur = 7;
+        }
+        
+        // Draw each line
+        lines.forEach((line, i) => {
+          ctx.fillText(line, canvas.width / 2, (i + 1) * lineHeight);
+        });
+        
+        return canvas;
+      };
+      
+      // Функція для створення текстових панелей у 3D-просторі
+      const createTextPanels = () => {
+        // Видалення існуючих текстових панелей
+        textPanels.forEach(p => scene.remove(p.mesh));
+        textPanels.length = 0;
         
         for (let i = 0; i < panelCount; i++) {
           let x = 0;
-          let width = centeredWidth;
-          // Перші три панелі по центру: i = 0,1,2  
-          // Чотири наступні: i = 3,4,5,6 чергування зліва/справа з меншою шириною
+          
+          // Аналогичное позиционирование, как и раньше
           if (i >= 3 && i <= 6) {
-            width = altWidth;
-            // Групове індексування для чергування: 0 – ліва, 1 – права, 2 – ліва, 3 – права
             if ((i - 3) % 2 === 0) {
               x = -150; // позиція зліва
             } else {
               x = 150;  // позиція справа
             }
           }
-          // Останні дві панелі (i = 7,8) по центру
           
           const y = 0;
           const z = -(i * panelDepthSpacing);
           
-          const geometry = new THREE.PlaneGeometry(width, panelHeight);
-          const material = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
+          // Create text only
+          const isTitle = i === 1 || i === 2 || i === 8;
+          const textTexture = new THREE.CanvasTexture(createTextTexture(panelTexts[i], isTitle));
+          
+          const textMaterial = new THREE.MeshBasicMaterial({
+            map: textTexture,
             transparent: true,
-            opacity: 0.2,
             side: THREE.DoubleSide,
-            wireframe: false
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
           });
           
-          const mesh = new THREE.Mesh(geometry, material);
-          mesh.position.set(x, y, z);
+          // Calculate appropriate text plane size based on texture dimensions
+          const textAspect = textTexture.image.width / textTexture.image.height;
+          const textWidth = 350;
+          const textHeight = textWidth / textAspect;
           
-          // Додавання обводки до панелі
-          const borderGeometry = new THREE.EdgesGeometry(geometry);
-          const borderMaterial = new THREE.LineBasicMaterial({
-            color: new THREE.Color().lerpColors(colorRosa, colorMorado, i / panelCount),
-            linewidth: 2
-          });
-          const borderMesh = new THREE.LineSegments(borderGeometry, borderMaterial);
-          mesh.add(borderMesh);
+          const textGeometry = new THREE.PlaneGeometry(textWidth, textHeight);
+          const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+          textMesh.position.set(x, y, z);
           
           const panel = {
-            mesh: mesh,
+            mesh: textMesh,
             position: { x, y, z },
             index: i
           };
           
-          panels.push(panel);
-          scene.add(mesh);
+          textPanels.push(panel);
+          scene.add(textMesh);
         }
       };
       
@@ -206,8 +277,26 @@
         });
       };
       
+      // Функція для оновлення текстових панелей залежно від положення камери
+      const updateTextPanels = (time) => {
+        textPanels.forEach(panel => {
+          const distance = Math.abs(panel.position.z - camera.position.z);
+          
+          // Плавное появление/исчезновение текста
+          if (distance < 500) {
+            panel.mesh.material.opacity = Math.min(1, (500 - distance) / 200);
+            
+            // Легкая анимация текста
+            panel.mesh.rotation.x = Math.sin(time * 0.2) * 0.05;
+            panel.mesh.rotation.y = Math.sin(time * 0.3) * 0.05;
+          } else {
+            panel.mesh.material.opacity = 0;
+          }
+        });
+      };
+      
       // Функція для оновлення камери на основі scroll
-      const updateCamera = () => {
+      const updateCamera = (time) => {
         const scrollRatio = scrollPosition / maxScroll;
         const targetIndex = Math.floor(scrollRatio * panelCount);
         const panelProgress = (scrollRatio * panelCount) % 1;
@@ -216,14 +305,16 @@
           currentPanelIndex = targetIndex;
         }
         
-        const currentPanel = panels[currentPanelIndex];
-        const nextPanel = panels[Math.min(currentPanelIndex + 1, panelCount - 1)];
+        const currentPanel = textPanels[currentPanelIndex];
+        const nextPanel = textPanels[Math.min(currentPanelIndex + 1, panelCount - 1)];
         
         if (currentPanel && nextPanel) {
           const targetZ = currentPanel.position.z + (nextPanel.position.z - currentPanel.position.z) * panelProgress;
           targetCameraZ = targetZ + 200;
           camera.position.z += (targetCameraZ - camera.position.z) * 0.1;
         }
+        
+        updateTextPanels(time);
       };
       
       // --- Анімація та рендеринг ---
@@ -235,7 +326,7 @@
         const time = clock.getElapsedTime();
         
         updateFireflies(time);
-        updateCamera();
+        updateCamera(time);
         
         camera.position.x += (Math.sin(time * 0.1) * 30 - camera.position.x) * 0.01;
         camera.position.y += (Math.cos(time * 0.15) * 20 - camera.position.y) * 0.01;
@@ -261,7 +352,7 @@
         lerp: 0.1
       });
       
-      createPanels();
+      createTextPanels();
       createFireflies();
       animate();
     })();
