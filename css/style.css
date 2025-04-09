@@ -32,6 +32,11 @@
   background-position: right bottom;
 }
 
+.section_default{
+  height: 15vh;
+  width: 100vw;
+}
+
 /* --------------------------------- */
 
 body {
@@ -175,6 +180,7 @@ section {
 .aboutUs-h1img {
   width: auto;
   height: 50%;
+  cursor: pointer;
 }
 .video_aboutus {
   height: 100vh;

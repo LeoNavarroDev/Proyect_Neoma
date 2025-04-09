@@ -30,3 +30,31 @@ video.addEventListener("timeupdate", () => {
     animacionEjecutada = true;
   }
 });
+
+
+gsap.registerPlugin(ScrollTrigger);
+gsap.from (".h1img", {
+  x: "100%",
+  ease: "power1.out",
+  scrollTrigger: {
+      trigger: ".about_us",
+      start: "top center",
+      end: "center center",  
+      markers:true,  //empieza cuando el scroll este en el top y termina en el final del div
+      scrub: true,
+  }
+});
+
+
+// creando evento para la imagen para about us para que vayamos a la pagina 
+const tituloAboutUs = document.getElementById('about_us')
+document.addEventListener(('onclick'),()=>{
+  window.location.href= "aboutUs.html"
+}
+
+);
+
+function goto(){
+  window.location.href= "aboutUs.html";
+}
+
