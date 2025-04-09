@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>3D Texto y Imágenes con Efecto de Scroll</title>
+  <title>3D Fireflies with Scroll Effect</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
   <style>
@@ -33,55 +33,12 @@
       z-index: 100;
       opacity: 0.7;
     }
-    
-    .content-wrapper {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      z-index: 10;
-      perspective: 1000px;
-    }
-    
-    .content-item {
-      position: absolute;
-      width: 40%;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.6);
-      border-radius: 10px;
-      color: #fff;
-      transform-style: preserve-3d;
-      opacity: 0;
-      transition: transform 0.5s ease, opacity 0.5s ease;
-    }
-    
-    .content-item img {
-      width: 100%;
-      border-radius: 5px;
-    }
-    
-    .content-item.left {
-      left: 5%;
-    }
-    
-    .content-item.right {
-      right: 5%;
-      text-align: right;
-    }
-    
-    .content-item.active {
-      opacity: 1;
-    }
   </style>
 </head>
 <body>
   <div class="instructions">
-    Прокрутіть сторінку для руху між світлячками та перегляду контенту
+    Scroll to move between fireflies
   </div>
-  
-  <div class="content-wrapper" id="contentWrapper"></div>
   
   <script>
     (function() {
@@ -140,6 +97,7 @@
         
         for (let i = 0; i < fireflyCount; i++) {
           // Posiciones aleatorias en el espacio
+          // Distribuimos más uniformemente en el eje Z para evitar las paredes
           const x = (Math.random() - 0.5) * 2000;
           const y = (Math.random() - 0.5) * 2000;
           const z = Math.random() * 2000 - 1000;
@@ -167,7 +125,9 @@
               y: (Math.random() - 0.5) * 0.2,
               z: (Math.random() - 0.5) * 0.2
             },
-            initialPosition: { x, y, z }
+            initialPosition: { x, y, z },
+            // Factor individual para el movimiento de scroll para cada luciérnaga
+            scrollFactor: 0.3 + Math.random() * 1.4
           };
           
           fireflies.push(firefly);
@@ -178,7 +138,7 @@
       // Función para actualizar la posición de los fireflies según el tiempo y el scroll
       const updateFireflies = (time, scrollDelta) => {
         fireflies.forEach((firefly, i) => {
-          const { sprite, baseSize, flickerSpeed, flickerIntensity, flickerPhase, moveSpeed, initialPosition } = firefly;
+          const { sprite, baseSize, flickerSpeed, flickerIntensity, flickerPhase, moveSpeed, initialPosition, scrollFactor } = firefly;
           
           // Efecto parpadeante
           const flicker = 1.0 + Math.sin(time * flickerSpeed + flickerPhase) * flickerIntensity;
@@ -194,15 +154,28 @@
           if (Math.abs(sprite.position.y - initialPosition.y) > 50) moveSpeed.y *= -1;
           if (Math.abs(sprite.position.z - initialPosition.z) > 50) moveSpeed.z *= -1;
           
-          // Movimiento adicional basado en el scroll
-          sprite.position.z -= scrollDelta * 0.5;
+          // Movimiento adicional basado en el scroll con factor individual
+          // Esta es la clave para evitar el efecto "pared"
+          sprite.position.z -= scrollDelta * scrollFactor;
           
-          // Reubicar fireflies que se salen del rango visual
+          // Reubicar fireflies que se salen del rango visual con reposicionamiento aleatorio
           if (sprite.position.z < -1000) {
-            sprite.position.z = 1000;
+            // Al reposicionar, variar la posición XY para evitar que se creen patrones
+            sprite.position.z = 1000 + Math.random() * 100;
+            sprite.position.x = (Math.random() - 0.5) * 2000;
+            sprite.position.y = (Math.random() - 0.5) * 2000;
+            
+            // Actualizar posición inicial
+            initialPosition.x = sprite.position.x;
+            initialPosition.y = sprite.position.y;
             initialPosition.z = sprite.position.z;
           } else if (sprite.position.z > 1000) {
-            sprite.position.z = -1000;
+            sprite.position.z = -1000 - Math.random() * 100;
+            sprite.position.x = (Math.random() - 0.5) * 2000;
+            sprite.position.y = (Math.random() - 0.5) * 2000;
+            
+            initialPosition.x = sprite.position.x;
+            initialPosition.y = sprite.position.y;
             initialPosition.z = sprite.position.z;
           }
           
@@ -210,55 +183,6 @@
           const distance = Math.abs(sprite.position.z - camera.position.z);
           const sizeFactor = Math.max(0.1, Math.min(1.5, 1000 / distance));
           sprite.material.opacity = Math.min(1, sizeFactor * 0.8);
-        });
-      };
-      
-      // --- Creación y actualización de elementos de contenido 3D ---
-      const contentItems = [
-        { type: 'text', content: '<h2>Космічна подорож</h2><p>Безмежний всесвіт відкриває свої таємниці перед сміливими дослідниками.</p>' },
-        { type: 'image', content: '<img src="/api/placeholder/600/400" alt="Космічний корабель">' },
-        { type: 'text', content: '<h2>Зоряні системи</h2><p>Кожна зірка - це цілий світ, навколо якої обертаються планети та астероїди.</p>' },
-        { type: 'image', content: '<img src="/api/placeholder/600/400" alt="Зоряна система">' },
-        { type: 'text', content: '<h2>Чорні діри</h2><p>Найзагадковіші об\'єкти у всесвіті, які поглинають навіть світло.</p>' },
-        { type: 'image', content: '<img src="/api/placeholder/600/400" alt="Чорна діра">' },
-        { type: 'text', content: '<h2>Галактики</h2><p>Величезні системи зірок, що кружляють навколо спільного центру.</p>' },
-        { type: 'image', content: '<img src="/api/placeholder/600/400" alt="Галактика">' },
-        { type: 'text', content: '<h2>Комети та метеорити</h2><p>Космічні мандрівники, що несуть у собі історію всесвіту.</p>' },
-        { type: 'image', content: '<img src="/api/placeholder/600/400" alt="Комета">' }
-      ];
-      
-      const contentSpacing = 2000; // Espacio en píxeles entre cada elemento
-      
-      const createContentItems = () => {
-        const contentWrapper = document.getElementById('contentWrapper');
-        contentItems.forEach((item, index) => {
-          const element = document.createElement('div');
-          element.className = `content-item ${index % 2 === 0 ? 'left' : 'right'}`;
-          element.innerHTML = item.content;
-          element.dataset.index = index;
-          element.style.transform = 'translateZ(-5000px)';
-          contentWrapper.appendChild(element);
-        });
-      };
-      
-      const updateContentPositions = (scrollY) => {
-        const elements = document.querySelectorAll('.content-item');
-        elements.forEach((element) => {
-          const index = parseInt(element.dataset.index, 10);
-          const idealPosition = index * contentSpacing;
-          const distance = scrollY - idealPosition;
-          // Mostrar el elemento si se encuentra cerca de su posición ideal
-          if (Math.abs(distance) < contentSpacing / 2) {
-            const zPosition = 1000 - Math.abs(distance) * 2;
-            const opacity = 1 - Math.abs(distance) / (contentSpacing / 2);
-            element.style.transform = `translateZ(${-Math.abs(distance)}px)`;
-            element.style.opacity = opacity;
-            element.classList.add('active');
-          } else {
-            element.classList.remove('active');
-            element.style.opacity = 0;
-            element.style.transform = 'translateZ(-5000px)';
-          }
         });
       };
       
@@ -276,7 +200,6 @@
         scrollSpeed *= 0.95;
         
         updateFireflies(time, scrollSpeed);
-        updateContentPositions(scrollPosition);
         
         // Movimiento sutil de la cámara para dinamismo
         camera.position.x += (Math.sin(time * 0.1) * 30 - camera.position.x) * 0.01;
@@ -305,7 +228,6 @@
       });
       
       createFireflies();
-      createContentItems();
       animate();
     })();
   </script>
