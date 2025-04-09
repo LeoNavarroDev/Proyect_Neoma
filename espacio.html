@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>3D Fireflies with Scroll Effect</title>
+  <title>3D Fireflies with Zoom Panels Effect</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
   <style>
@@ -21,24 +21,9 @@
       display: block;
       z-index: 1;
     }
-    
-    .instructions {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      color: #fff;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 10px;
-      border-radius: 5px;
-      z-index: 100;
-      opacity: 0.7;
-    }
   </style>
 </head>
 <body>
-  <div class="instructions">
-    Scroll to move between fireflies
-  </div>
   
   <script>
     (function() {
@@ -56,15 +41,26 @@
       const colorMorado = new THREE.Color(180 / 255, 100 / 255, 255 / 255);
       
       // Variables para gestionar el scroll y animación
-      let scrollPosition = window.scrollY;
-      let lastScrollPosition = scrollPosition;
-      let scrollSpeed = 0;
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      let scrollPosition = 0;
+      let targetCameraZ = 0;
+      let currentPanelIndex = 0;
       
       // --- Configuración de los Fireflies ---
       const fireflyCount = 1000;
       const fireflies = [];
       
-      // Función para crear una textura de firefly con un degradado radial
+      // --- Configuración de los paneles ---
+      const panels = [];
+      const panelCount = 9; // Загальна кількість панелей
+      
+      // Variables для контролю розташування панелей
+      const panelDepthSpacing = 500; // Відстань між панелями по осі Z
+      const centeredWidth = 300;     // Ширина панелей, що розташовані по центру
+      const altWidth = 200;          // Менша ширина для чергування зліва/справа
+      const panelHeight = 200;
+      
+      // Функція для створення текстури "firefly" з радіальним градієнтом
       const createFireflyTexture = () => {
         const canvas = document.createElement('canvas');
         canvas.width = canvas.height = 32;
@@ -81,7 +77,7 @@
 
       const fireflyTexture = new THREE.CanvasTexture(createFireflyTexture());
       
-      // Material base para los fireflies
+      // Material базовий для fireflies
       const fireflyMaterial = new THREE.SpriteMaterial({
         map: fireflyTexture,
         transparent: true,
@@ -89,31 +85,86 @@
         depthTest: false
       });
       
-      // Función para crear y colocar fireflies en la escena
+      // Функція для створення панелей у 3D-просторі
+      const createPanels = () => {
+        // Видалення існуючих панелей
+        panels.forEach(p => scene.remove(p.mesh));
+        panels.length = 0;
+        
+        for (let i = 0; i < panelCount; i++) {
+          let x = 0;
+          let width = centeredWidth;
+          // Перші три панелі по центру: i = 0,1,2  
+          // Чотири наступні: i = 3,4,5,6 чергування зліва/справа з меншою шириною
+          if (i >= 3 && i <= 6) {
+            width = altWidth;
+            // Групове індексування для чергування: 0 – ліва, 1 – права, 2 – ліва, 3 – права
+            if ((i - 3) % 2 === 0) {
+              x = -150; // позиція зліва
+            } else {
+              x = 150;  // позиція справа
+            }
+          }
+          // Останні дві панелі (i = 7,8) по центру
+          
+          const y = 0;
+          const z = -(i * panelDepthSpacing);
+          
+          const geometry = new THREE.PlaneGeometry(width, panelHeight);
+          const material = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.2,
+            side: THREE.DoubleSide,
+            wireframe: false
+          });
+          
+          const mesh = new THREE.Mesh(geometry, material);
+          mesh.position.set(x, y, z);
+          
+          // Додавання обводки до панелі
+          const borderGeometry = new THREE.EdgesGeometry(geometry);
+          const borderMaterial = new THREE.LineBasicMaterial({
+            color: new THREE.Color().lerpColors(colorRosa, colorMorado, i / panelCount),
+            linewidth: 2
+          });
+          const borderMesh = new THREE.LineSegments(borderGeometry, borderMaterial);
+          mesh.add(borderMesh);
+          
+          const panel = {
+            mesh: mesh,
+            position: { x, y, z },
+            index: i
+          };
+          
+          panels.push(panel);
+          scene.add(mesh);
+        }
+      };
+      
+      // Функція для створення та розташування fireflies у сцені
       const createFireflies = () => {
-        // Vaciar fireflies existentes
+        // Видалення існуючих fireflies
         fireflies.forEach(f => scene.remove(f.sprite));
         fireflies.length = 0;
         
         for (let i = 0; i < fireflyCount; i++) {
-          // Posiciones aleatorias en el espacio
-          // Distribuimos más uniformemente en el eje Z para evitar las paredes
+          // Випадкове розташування у просторі
           const x = (Math.random() - 0.5) * 2000;
           const y = (Math.random() - 0.5) * 2000;
-          const z = Math.random() * 2000 - 1000;
+          const z = Math.random() * (panelCount * panelDepthSpacing * -1.5);
           
           const sprite = new THREE.Sprite(fireflyMaterial.clone());
           sprite.position.set(x, y, z);
           
-          // Tamaño aleatorio del firefly
+          // Випадковий розмір firefly
           const baseSize = Math.random() * 4 + 2;
           sprite.scale.set(baseSize, baseSize, 1);
           
-          // Mezclamos dos colores de forma aleatoria
+          // Анімація та змішування кольорів
           const colorMix = Math.random();
           sprite.material.color = new THREE.Color().lerpColors(colorRosa, colorMorado, colorMix);
           
-          // Configuración de animación individual
           const firefly = {
             sprite: sprite,
             baseSize: baseSize,
@@ -125,9 +176,7 @@
               y: (Math.random() - 0.5) * 0.2,
               z: (Math.random() - 0.5) * 0.2
             },
-            initialPosition: { x, y, z },
-            // Factor individual para el movimiento de scroll para cada luciérnaga
-            scrollFactor: 0.3 + Math.random() * 1.4
+            initialPosition: { x, y, z }
           };
           
           fireflies.push(firefly);
@@ -135,81 +184,67 @@
         }
       };
       
-      // Función para actualizar la posición de los fireflies según el tiempo y el scroll
-      const updateFireflies = (time, scrollDelta) => {
+      // Функція для оновлення fireflies залежно від часу
+      const updateFireflies = (time) => {
         fireflies.forEach((firefly, i) => {
-          const { sprite, baseSize, flickerSpeed, flickerIntensity, flickerPhase, moveSpeed, initialPosition, scrollFactor } = firefly;
+          const { sprite, baseSize, flickerSpeed, flickerIntensity, flickerPhase, moveSpeed, initialPosition } = firefly;
           
-          // Efecto parpadeante
           const flicker = 1.0 + Math.sin(time * flickerSpeed + flickerPhase) * flickerIntensity;
           sprite.scale.set(baseSize * flicker, baseSize * flicker, 1);
           
-          // Movimiento aleatorio
           sprite.position.x += moveSpeed.x * Math.sin(time * 0.5 + i);
           sprite.position.y += moveSpeed.y * Math.cos(time * 0.3 + i);
           sprite.position.z += moveSpeed.z * Math.sin(time * 0.7 + i);
           
-          // Limitar el desplazamiento alrededor de la posición base
           if (Math.abs(sprite.position.x - initialPosition.x) > 50) moveSpeed.x *= -1;
           if (Math.abs(sprite.position.y - initialPosition.y) > 50) moveSpeed.y *= -1;
           if (Math.abs(sprite.position.z - initialPosition.z) > 50) moveSpeed.z *= -1;
           
-          // Movimiento adicional basado en el scroll con factor individual
-          // Esta es la clave para evitar el efecto "pared"
-          sprite.position.z -= scrollDelta * scrollFactor;
-          
-          // Reubicar fireflies que se salen del rango visual con reposicionamiento aleatorio
-          if (sprite.position.z < -1000) {
-            // Al reposicionar, variar la posición XY para evitar que se creen patrones
-            sprite.position.z = 1000 + Math.random() * 100;
-            sprite.position.x = (Math.random() - 0.5) * 2000;
-            sprite.position.y = (Math.random() - 0.5) * 2000;
-            
-            // Actualizar posición inicial
-            initialPosition.x = sprite.position.x;
-            initialPosition.y = sprite.position.y;
-            initialPosition.z = sprite.position.z;
-          } else if (sprite.position.z > 1000) {
-            sprite.position.z = -1000 - Math.random() * 100;
-            sprite.position.x = (Math.random() - 0.5) * 2000;
-            sprite.position.y = (Math.random() - 0.5) * 2000;
-            
-            initialPosition.x = sprite.position.x;
-            initialPosition.y = sprite.position.y;
-            initialPosition.z = sprite.position.z;
-          }
-          
-          // Ajuste de opacidad en función de la distancia a la cámara
           const distance = Math.abs(sprite.position.z - camera.position.z);
           const sizeFactor = Math.max(0.1, Math.min(1.5, 1000 / distance));
           sprite.material.opacity = Math.min(1, sizeFactor * 0.8);
         });
       };
       
-      // --- Animación y renderizado ---
-      camera.position.z = 1000;
+      // Функція для оновлення камери на основі scroll
+      const updateCamera = () => {
+        const scrollRatio = scrollPosition / maxScroll;
+        const targetIndex = Math.floor(scrollRatio * panelCount);
+        const panelProgress = (scrollRatio * panelCount) % 1;
+        
+        if (targetIndex !== currentPanelIndex && targetIndex < panelCount) {
+          currentPanelIndex = targetIndex;
+        }
+        
+        const currentPanel = panels[currentPanelIndex];
+        const nextPanel = panels[Math.min(currentPanelIndex + 1, panelCount - 1)];
+        
+        if (currentPanel && nextPanel) {
+          const targetZ = currentPanel.position.z + (nextPanel.position.z - currentPanel.position.z) * panelProgress;
+          targetCameraZ = targetZ + 200;
+          camera.position.z += (targetCameraZ - camera.position.z) * 0.1;
+        }
+      };
+      
+      // --- Анімація та рендеринг ---
+      camera.position.z = 400;
       const clock = new THREE.Clock();
       
       const animate = () => {
         requestAnimationFrame(animate);
         const time = clock.getElapsedTime();
         
-        // Calcular velocidad del scroll suavizada
-        scrollSpeed = (scrollPosition - lastScrollPosition) * 2;
-        lastScrollPosition = scrollPosition;
-        scrollSpeed *= 0.95;
+        updateFireflies(time);
+        updateCamera();
         
-        updateFireflies(time, scrollSpeed);
-        
-        // Movimiento sutil de la cámara para dinamismo
         camera.position.x += (Math.sin(time * 0.1) * 30 - camera.position.x) * 0.01;
         camera.position.y += (Math.cos(time * 0.15) * 20 - camera.position.y) * 0.01;
-        camera.lookAt(scene.position);
+        camera.lookAt(0, 0, camera.position.z - 400);
         
         renderer.render(scene, camera);
       };
       
-      // --- Manejadores de eventos ---
+      // --- Обробники подій ---
       window.addEventListener('scroll', () => {
         scrollPosition = window.scrollY;
       });
@@ -220,13 +255,13 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
       });
       
-      // --- Inicialización ---
-      // Configurar scroll suave usando Lenis
+      // --- Ініціалізація ---
       const lenis = new Lenis({
         autoRaf: true,
         lerp: 0.1
       });
       
+      createPanels();
       createFireflies();
       animate();
     })();
