@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         loaderElement.classList.add('windowchange');
 
         loaderElement.addEventListener('animationend', function() {
-            window.location.href = "espacio.html";
+            window.location.href = "porque.html";
         });
     }
 

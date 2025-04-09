@@ -1,173 +1,126 @@
-// lenis.js
-const lenis = new Lenis({
-    autoRaf: true,
-});
+// porque.js - Archivo principal, inicializa todo y coordina el trabajo
 
-
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-// Colores definidos por el usuario
-const rosa = {r: 255, g: 150, b: 180};
-const morado = {r: 180, g: 100, b: 255};
-
-// Configuración de las partículas
-const particleCount = 300;
-const particles = [];
-
-// Velocidad de viaje
-let speed = 5;
-
-class Particle {
-    constructor() {
-    this.reset();
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    // Inicialización de Lenis para scroll suave
+    const lenis = new Lenis({
+      autoRaf: true,
+      lerp: 0.1
+    });
     
-    reset() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.z = Math.random() * 1000 + 1000; // Profundidad
-    this.size = Math.random() * 2 + 1;
-    this.opacity = Math.random() * 0.8 + 0.2;
+    // Variables para controlar el scroll y la animación
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+    let scrollPosition = 0;
+    let targetCameraZ = 0;
+    let currentPanelIndex = 0;
+    let redirectTriggered = false;
+    let redirectAnimationStarted = false;
+    const redirectURL = "first.html"; // URL de destino
     
-    // Color basado en una mezcla entre rosa y morado
-    const colorMix = Math.random();
-    this.color = {
-        r: rosa.r * colorMix + morado.r * (1 - colorMix),
-        g: rosa.g * colorMix + morado.g * (1 - colorMix),
-        b: rosa.b * colorMix + morado.b * (1 - colorMix)
+    // Inicialización de ThreeJS
+    const { scene, camera, renderer, clock } = ThreeJSManager.init();
+    document.body.appendChild(renderer.domElement);
+    
+    // Colores base
+    const colorRosa = new THREE.Color(255 / 255, 150 / 255, 180 / 255);
+    const colorMorado = new THREE.Color(180 / 255, 100 / 255, 255 / 255);
+    
+    // Inicialización de fireflies
+    const fireflyManager = new FireflyManager(scene, colorRosa, colorMorado);
+    // Pasar la referencia de la cámara al FireflyManager
+    fireflyManager.setCamera(camera);
+    
+    // Inicialización de paneles de texto
+    const textPanelManager = new TextPanelManager(scene);
+    
+    // Ciclo principal de animación
+    const animate = () => {
+      requestAnimationFrame(animate);
+      const time = clock.getElapsedTime();
+      
+      fireflyManager.update(time);
+      
+      // Actualización de la cámara
+      updateCamera(time);
+      updateProgressBar();
+      
+      camera.position.x += (Math.sin(time * 0.1) * 30 - camera.position.x) * 0.01;
+      camera.position.y += (Math.cos(time * 0.15) * 20 - camera.position.y) * 0.01;
+      camera.lookAt(0, 0, camera.position.z - 400);
+      
+      renderer.render(scene, camera);
     };
-    }
     
-    update() {
-    // Efecto de movimiento hacia adelante
-    this.z -= speed;
+    // Función de actualización de la cámara
+    const updateCamera = (time) => {
+      const scrollRatio = scrollPosition / maxScroll;
+      const targetIndex = Math.floor(scrollRatio * textPanelManager.panelCount);
+      const panelProgress = (scrollRatio * textPanelManager.panelCount) % 1;
+      
+      if (targetIndex !== currentPanelIndex && targetIndex < textPanelManager.panelCount) {
+        currentPanelIndex = targetIndex;
+      }
+      
+      const currentPanel = textPanelManager.textPanels[currentPanelIndex];
+      const nextPanel = textPanelManager.textPanels[Math.min(currentPanelIndex + 1, textPanelManager.panelCount - 1)];
+      
+      if (currentPanel && nextPanel) {
+        const targetZ = currentPanel.position.z + (nextPanel.position.z - currentPanel.position.z) * panelProgress;
+        targetCameraZ = targetZ + 200;
+        camera.position.z += (targetCameraZ - camera.position.z) * 0.1;
+      }
+      
+      textPanelManager.update(time, camera.position.z);
+    };
     
-    // Si la partícula está muy cerca, resetearla
-    if (this.z < 1) {
-        this.reset();
-        this.z = 1000;
-    }
+    // Actualización de la barra de progreso y verificación de finalización
+    const updateProgressBar = () => {
+      const progressBar = document.getElementById('progressBar');
+      const scrollRatio = scrollPosition / maxScroll;
+      
+      // Actualización de la barra de progreso
+      progressBar.style.height = (scrollRatio * 100) + '%';
+      
+      // Verificación de finalización
+      const lastPanelIndex = textPanelManager.panelCount - 1;
+      
+      if (currentPanelIndex === lastPanelIndex && scrollRatio > 0.97 && !redirectTriggered) {
+        redirectTriggered = true;
+        startRedirectAnimation();
+      }
+    };
     
-    // Calcular posición 3D proyectada a 2D
-    this.sx = (this.x - canvas.width / 2) / this.z;
-    this.sx = this.sx * 300 + canvas.width / 2;
+    // Función para iniciar la animación de transición
+    const startRedirectAnimation = () => {
+      if (redirectAnimationStarted) return;
+      
+      redirectAnimationStarted = true;
+      const overlay = document.getElementById('transitionOverlay');
+      overlay.classList.add('active');
+      
+      // Aumentamos el brillo de las luciérnagas y la velocidad del movimiento
+      fireflyManager.startRedirectEffect();
+      
+      // Redirección después del desvanecimiento
+      setTimeout(() => {
+        window.location.href = redirectURL;
+      }, 1500);
+    };
     
-    this.sy = (this.y - canvas.height / 2) / this.z;
-    this.sy = this.sy * 300 + canvas.height / 2;
+    // Manejadores de eventos
+    window.addEventListener('scroll', () => {
+      scrollPosition = window.scrollY;
+    });
     
-    // Tamaño basado en la profundidad - asegurarnos de que siempre sea positivo
-    this.pSize = Math.max(0.1, 3 * (1000 - this.z) / 1000);
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
     
-    // Ajustar el brillo basado en la profundidad
-    const depth = Math.max(0, Math.min(1, (1000 - this.z) / 1000));
-    this.currentOpacity = this.opacity * depth;
-    }
-    
-    draw() {
-    // Verificar que la partícula esté dentro del canvas y el tamaño sea válido
-    if (
-        this.sx > 0 && 
-        this.sx < canvas.width && 
-        this.sy > 0 && 
-        this.sy < canvas.height && 
-        this.pSize > 0
-    ) {
-        ctx.beginPath();
-        ctx.arc(this.sx, this.sy, this.pSize, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.currentOpacity})`;
-        ctx.fill();
-        
-        // Agregar un brillo para partículas más cercanas
-        if (this.z < 500) {
-        const glowSize = Math.max(0.1, this.pSize * 3);
-        const gradient = ctx.createRadialGradient(
-            this.sx, this.sy, 0,
-            this.sx, this.sy, glowSize
-        );
-        gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.currentOpacity * 0.8})`);
-        gradient.addColorStop(1, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0)`);
-        
-        ctx.beginPath();
-        ctx.arc(this.sx, this.sy, glowSize, 0, Math.PI * 2);
-        ctx.fillStyle = gradient;
-        ctx.fill();
-        }
-        
-        // Agregar estela para algunas partículas
-        if (this.z < 300 && Math.random() > 0.7) {
-        ctx.beginPath();
-        ctx.moveTo(this.sx, this.sy);
-        ctx.lineTo(this.sx + (Math.random() * 10 - 5), this.sy + (Math.random() * 10 - 5));
-        ctx.strokeStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.currentOpacity * 0.3})`;
-        ctx.lineWidth = Math.max(0.1, this.pSize / 2);
-        ctx.stroke();
-        }
-    }
-    }
-}
-
-// Inicializar partículas
-for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
-}
-
-// Función de animación
-function animate() {
-    // Limpiar canvas con un fondo negro con poca opacidad para crear efecto de estela
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Actualizar y dibujar partículas
-    for (let i = 0; i < particles.length; i++) {
-    particles[i].update();
-    particles[i].draw();
-    }
-    
-    // Crear un ligero resplandor en el centro
-    const centerGlow = ctx.createRadialGradient(
-    canvas.width / 2, canvas.height / 2, 0,
-    canvas.width / 2, canvas.height / 2, canvas.width / 4
-    );
-    centerGlow.addColorStop(0, 'rgba(180, 120, 220, 0.03)');
-    centerGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    
-    ctx.fillStyle = centerGlow;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Cambiar velocidad ligeramente para crear sensación de aceleración/desaceleración
-    speed = 5 + Math.sin(Date.now() / 2000) * 2;
-    
-    requestAnimationFrame(animate);
-}
-
-// Iniciar animación
-animate();
-
-// Ajustar tamaño del canvas al cambiar tamaño de ventana
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-
-// Controlar velocidad con las teclas
-window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowUp') {
-    speed = Math.min(speed + 1, 15);
-    } else if (e.key === 'ArrowDown') {
-    speed = Math.max(speed - 1, 1);
-    }
-});
-
-// Controlar velocidad con toques en la pantalla (para dispositivos móviles)
-canvas.addEventListener('touchstart', (e) => {
-    const touchY = e.touches[0].clientY;
-    if (touchY < canvas.height / 2) {
-    speed = Math.min(speed + 1, 15);
-    } else {
-    speed = Math.max(speed - 1, 1);
-    }
+    // Esperar a que se carguen las fuentes antes de inicializar
+    document.fonts.ready.then(() => {
+      textPanelManager.createPanels();
+      fireflyManager.createFireflies();
+      animate();
+    });
 });

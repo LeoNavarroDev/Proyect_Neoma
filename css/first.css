@@ -108,6 +108,7 @@ h3 {
 }
 
 .windowchange{
+    opacity: 0;
     animation: 1.5s alternate cambio;
 }
 
