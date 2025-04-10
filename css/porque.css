@@ -25,16 +25,16 @@ html, body {
 
 body {
   margin: 0;
-  background-color: #000;
+  background: #000;
   overflow-x: hidden;
-  height: 20000px; /* Espacio amplio для scroll */
+  height: 20000px;
   font-family: Arial, sans-serif;
-  /* Скрываем стандартный scrollbar */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  opacity: 1;
+  animation: 1.5s alternate principal;
 }
 
-/* Скрываем scrollbar для Chrome, Safari и Opera */
 body::-webkit-scrollbar {
   display: none;
 }
@@ -87,4 +87,9 @@ canvas {
 .transition-overlay.active {
   opacity: 1;
   visibility: visible;
+}
+
+@keyframes principal {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }

@@ -8,19 +8,21 @@
     src: url("../font/Roobert-Regular.woff2") format("woff2");
 }
 
-body,
-html {
+body{
     width: 100%;
     min-height: 100%;
     padding: 0;
     margin: 0;
     background-color: black;
-    display: contents;
+    display: flex;
     place-content: center;
     place-items: center;
+    opacity: 1;
+    animation: 1.5s alternate principal;
 }
 
 .loader{
+    padding-top: 5%;
     color: white;
     font-family: "ZENTRY", monospace;
 }
@@ -113,6 +115,11 @@ h3 {
 }
 
 @keyframes cambio {
-    from {opacity: 1;}
-    to {opacity: 0;}
-  }
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+@keyframes principal {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
