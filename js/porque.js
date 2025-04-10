@@ -124,3 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
       animate();
     });
 });
+
+
+function menu() {
+  window.location.href = "first.html";
+}

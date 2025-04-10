@@ -25,7 +25,7 @@ class TextPanelManager {
   getFontFamily(index) {
     // Para títulos (índices 1, 2 y 8) usamos "Bebas Neue"
     // Para textos normales, ahora usamos "Arial"
-    return (index === 1 || index === 2 || index === 8) ? 'Bebas Neue' : 'Arial';
+    return (index === 1 || index === 2 || index === 8 || index === 8) ? 'Bebas Neue' : 'Special Gothic Condensed One';
   }
   
   // Función para crear la textura del texto con los colores originales y efectos
