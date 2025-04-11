@@ -8,29 +8,42 @@
     src: url("../font/Roobert-Regular.woff2") format("woff2");
 }
 
-body{
-    width: 100%;
-    min-height: 100%;
-    padding: 0;
+* {
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
     background-color: black;
     display: flex;
-    place-content: center;
-    place-items: center;
+    justify-content: center;
+    align-items: center;
     opacity: 1;
     animation: 1.5s alternate principal;
 }
 
-.loader{
-    padding-top: 5%;
+.loader {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
     font-family: "ZENTRY", monospace;
+    position: relative;
 }
 
-.content{
-    display: block;
-    place-content: center;
-    place-items: center;
+.content {
+    text-align: center;
+    z-index: 1;
+    padding: 20px;
 }
 
 .videobg {
@@ -47,29 +60,24 @@ body{
 }
 
 h1 {
-    font-size: 12em;
+    font-size: 12rem;
     margin-bottom: 0;
     letter-spacing: 0.01em;
 }
 
 h3 {
     margin-top: 0;
-    font-size: 4em;
-    margin-bottom: 20%;
+    font-size: 4rem;
+    margin-bottom: 4rem;
     letter-spacing: 0.03em;
 }
 
-
 .scroll-downs {
-    transform: scale(130%);
     position: relative;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-
+    margin: 0 auto;
     width: 34px;
     height: 55px;
+    transform: scale(1.3);
 }
 
 .mousey {
@@ -97,29 +105,101 @@ h3 {
     0% {
         opacity: 0;
     }
-
     10% {
         transform: translateY(0);
         opacity: 1;
     }
-
     100% {
         transform: translateY(15px);
         opacity: 0;
     }
 }
 
-.windowchange{
+.windowchange {
     opacity: 0;
     animation: 1.5s alternate cambio;
 }
 
 @keyframes cambio {
-  from {opacity: 1;}
-  to {opacity: 0;}
+    from {opacity: 1;}
+    to {opacity: 0;}
 }
 
 @keyframes principal {
-  from {opacity: 0;}
-  to {opacity: 1;}
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+/* Media Queries para hacer la web responsive */
+
+/* Pantallas grandes (computadoras de escritorio, 1200px y más) */
+@media (min-width: 1200px) {
+    h1 {
+        font-size: 12rem;
+    }
+    h3 {
+        font-size: 4rem;
+    }
+}
+
+/* Pantallas medianas (laptops, 992px y más) */
+@media (max-width: 1199px) {
+    h1 {
+        font-size: 10rem;
+    }
+    h3 {
+        font-size: 3.5rem;
+    }
+}
+
+/* Pantallas pequeñas (tablets, 768px y más) */
+@media (max-width: 991px) {
+    h1 {
+        font-size: 8rem;
+    }
+    h3 {
+        font-size: 3rem;
+    }
+}
+
+/* Pantallas extra pequeñas (móviles en landscape, 576px y más) */
+@media (max-width: 767px) {
+    h1 {
+        font-size: 6rem;
+    }
+    h3 {
+        font-size: 2rem;
+    }
+    .scroll-downs {
+        transform: scale(1);
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 575px) {
+    h1 {
+        font-size: 4rem;
+    }
+    h3 {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .scroll-downs {
+        transform: scale(0.8);
+    }
+}
+
+/* Para asegurar que el video de fondo se adapte bien en todos los dispositivos */
+@media (max-aspect-ratio: 16/9) {
+    .videobg {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (min-aspect-ratio: 16/9) {
+    .videobg {
+        width: auto;
+        height: 100%;
+    }
 }
