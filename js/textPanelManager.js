@@ -43,7 +43,7 @@ class TextPanelManager {
     const chosenFont = this.getFontFamily(isTitle ? 1 : 0);
     ctx.font = `${isTitle ? 'bold ' : ''}${fontSize}px ${chosenFont}`;
     
-    // Dividir el texto en líneas que se ajusten al ancho máximo
+    // Dividir el texto en líneas que se ajusten a ancho máximo
     const words = text.split(' ');
     let lines = [];
     let currentLine = words[0];
