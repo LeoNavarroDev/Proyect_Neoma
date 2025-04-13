@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Three.js Lens Model</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+        #exportButton {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #exportButton:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <button id="exportButton">Експортувати GLB</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Правильне посилання на GLTFExporter -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
+    <script>
+        // Фіксовані параметри
+        const curveAmount = 0.5;
+        const smoothness = 0.9;
+        
+        // Базове налаштування Three.js
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x000000);
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        
+        // Завантаження текстури
+        const textureLoader = new THREE.TextureLoader();
+        const lensTexture = textureLoader.load('img/texture.png', function(texture) {
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.set(1, 1);
+        });
+        
+        // Функція створення детальної геометрії
+        function createDetailedCircleGeometry(radius, segments, radialSegments) {
+            const geometry = new THREE.BufferGeometry();
+            const positions = [];
+            const uvs = [];
+            const indices = [];
+            
+            // Центральна точка
+            positions.push(0, 0, 0);
+            uvs.push(0.5, 0.5);
+            
+            // Створення концентричних кілець
+            for (let r = 1; r <= radialSegments; r++) {
+                const radiusStep = radius * (r / radialSegments);
+                
+                for (let i = 0; i <= segments; i++) {
+                    const theta = (i / segments) * Math.PI * 2;
+                    const x = radiusStep * Math.cos(theta);
+                    const y = radiusStep * Math.sin(theta);
+                    
+                    positions.push(x, y, 0);
+                    
+                    // UV mapping
+                    const u = 0.5 + (x / (2 * radius));
+                    const v = 0.5 + (y / (2 * radius));
+                    uvs.push(u, v);
+                }
+            }
+            
+            // Створення індексів для трикутників
+            for (let i = 0; i < segments; i++) {
+                indices.push(0, i+1, i+2);
+            }
+            
+            for (let r = 0; r < radialSegments - 1; r++) {
+                const innerRingStart = 1 + r * (segments + 1);
+                const outerRingStart = innerRingStart + (segments + 1);
+                
+                for (let i = 0; i < segments; i++) {
+                    const innerRingCurrent = innerRingStart + i;
+                    const innerRingNext = innerRingStart + i + 1;
+                    const outerRingCurrent = outerRingStart + i;
+                    const outerRingNext = outerRingStart + i + 1;
+                    
+                    indices.push(innerRingCurrent, outerRingCurrent, innerRingNext);
+                    indices.push(innerRingNext, outerRingCurrent, outerRingNext);
+                }
+            }
+            
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+            geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+            geometry.setIndex(indices);
+            
+            return geometry;
+        }
+        
+        // Створення геометрії
+        const lensGeometry = createDetailedCircleGeometry(2, 72, 24);
+        const backLensGeometry = createDetailedCircleGeometry(2, 72, 24);
+        
+        // Створення матеріалу
+        const lensMaterial = new THREE.MeshPhongMaterial({
+            map: lensTexture,
+            side: THREE.DoubleSide,
+            transparent: true,
+            shininess: 100,
+            specular: 0x333333
+        });
+        
+        // Створення лінзи
+        const lens = new THREE.Mesh(lensGeometry, lensMaterial);
+        scene.add(lens);
+        
+        // Задня частина лінзи
+        const backLens = new THREE.Mesh(backLensGeometry, lensMaterial.clone());
+        backLens.position.z = -0.1;
+        backLens.rotation.y = Math.PI;
+        scene.add(backLens);
+        
+        // Базове освітлення
+        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
+        
+        // Оновлення форми лінзи
+        function updateLensShape() {
+            const positions = lensGeometry.attributes.position;
+            const backPositions = backLensGeometry.attributes.position;
+            const maxDistance = 2;
+            
+            for (let i = 0; i < positions.count; i++) {
+                const x = positions.getX(i);
+                const y = positions.getY(i);
+                const distanceFromCenter = Math.sqrt(x * x + y * y);
+                
+                let z = 0;
+                if (distanceFromCenter < maxDistance) {
+                    z = curveAmount * Math.pow(Math.cos(Math.PI * distanceFromCenter / (2 * maxDistance)), smoothness);
+                }
+                
+                positions.setZ(i, z);
+            }
+            
+            for (let i = 0; i < backPositions.count; i++) {
+                const x = backPositions.getX(i);
+                const y = backPositions.getY(i);
+                const distanceFromCenter = Math.sqrt(x * x + y * y);
+                
+                let z = 0;
+                if (distanceFromCenter < maxDistance) {
+                    z = -curveAmount * Math.pow(Math.cos(Math.PI * distanceFromCenter / (2 * maxDistance)), smoothness);
+                }
+                
+                backPositions.setZ(i, z);
+            }
+            
+            lensGeometry.attributes.position.needsUpdate = true;
+            backLensGeometry.attributes.position.needsUpdate = true;
+            lensGeometry.computeVertexNormals();
+            backLensGeometry.computeVertexNormals();
+        }
+        
+        // Застосувати форму
+        updateLensShape();
+        
+        // Адаптація до розміру вікна
+        window.addEventListener('resize', function() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        // Просте обертання мишею
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        
+        document.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            previousMousePosition = { x: e.clientX, y: e.clientY };
+        });
+        
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+        });
+        
+        document.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                const deltaMove = {
+                    x: e.clientX - previousMousePosition.x,
+                    y: e.clientY - previousMousePosition.y
+                };
+                
+                if (e.buttons === 1) {
+                    lens.rotation.y += deltaMove.x * 0.005;
+                    lens.rotation.x += deltaMove.y * 0.005;
+                    backLens.rotation.y = Math.PI + lens.rotation.y;
+                    backLens.rotation.x = lens.rotation.x;
+                }
+                
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            }
+        });
+        
+        // Функція експорту моделі у формат GLB
+        function exportToGLB() {
+            // Експортуємо тільки передню частину лінзи
+            const lensClone = lens.clone();
+            lensClone.name = "Lens";
+
+            // Налаштування експортера
+            const exporter = new THREE.GLTFExporter();
+
+            // Опції експорту
+            const options = {
+                binary: true,      // true для формату .glb, false для .gltf
+                trs: false,        // використовувати position, rotation, scale, а не матриці
+                onlyVisible: true  // експортувати тільки видимі об'єкти
+            };
+
+            // Експорт клонованого об'єкта
+            exporter.parse(lensClone, function(result) {
+                if (result instanceof ArrayBuffer) {
+                    // Це бінарний файл (.glb)
+                    saveArrayBuffer(result, 'lens_model.glb');
+                } else {
+                    // Це JSON (.gltf)
+                    const output = JSON.stringify(result, null, 2);
+                    saveString(output, 'lens_model.gltf');
+                }
+                console.log('Модель успішно експортована');
+            }, options);
+        }
+
+        
+        // Функції для збереження файлів
+        function saveArrayBuffer(buffer, filename) {
+            const blob = new Blob([buffer], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            downloadURL(url, filename);
+        }
+        
+        function saveString(text, filename) {
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            downloadURL(url, filename);
+        }
+        
+        function downloadURL(url, filename) {
+            const link = document.createElement('a');
+            link.style.display = 'none';
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            
+            // Очищення
+            setTimeout(function() {
+                URL.revokeObjectURL(url);
+                link.remove();
+            }, 100);
+        }
+        
+        // Додаємо обробник події для кнопки експорту
+        document.getElementById('exportButton').addEventListener('click', exportToGLB);
+        
+        // Анімаційний цикл
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+    </script>
+</body>
+</html>

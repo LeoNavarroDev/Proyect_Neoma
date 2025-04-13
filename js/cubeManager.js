@@ -1,9 +1,7 @@
-// cubeManager.js - Клас для керування 3D моделями в просторі
+// Створення менеджера для об'єктів (кубів)
 class CubeManager {
-  constructor(scene, colorRosa, colorMorado) {
+  constructor(scene) {
     this.scene = scene;
-    this.colorRosa = colorRosa;
-    this.colorMorado = colorMorado;
     this.cubes = [];
     this.cubeCount = 20; // Загальна кількість екземплярів моделі
 
@@ -34,27 +32,36 @@ class CubeManager {
       { x: 410, y: -60, z: -4700, size: 45, rotation: { x: 0.4, y: 0.2, z: 0.6 } }
     ];
   }
-  
-  // Завантаження моделі та створення екземплярів
+
+  // Завантаження моделі та створення екземплярів з текстурою
   createCubes() {
     // Видалення попередніх екземплярів моделі, якщо вони існують
     this.cubes.forEach(obj => {
       this.scene.remove(obj.model);
     });
     this.cubes = [];
-    
-    // Використовуємо GLTFLoader для завантаження моделі (переконайтесь, що THREE.GLTFLoader доступний)
+
+    // Завантаження текстури
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load('3d/texture.png');
+
+    // Використовуємо GLTFLoader для завантаження моделі
     const loader = new THREE.GLTFLoader();
     loader.load('3d/lens_model.glb', (gltf) => {
       const model = gltf.scene;
+
+      // Проходимось по усіх дочірніх елементах моделі та застосовуємо матеріал з текстурою
       model.traverse(child => {
         if (child.isMesh) {
-          // Можна задати матеріал за потреби
-          child.material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+          // Створення матеріалу з завантаженою текстурою
+          child.material = new THREE.MeshBasicMaterial({
+            map: texture,
+            side: THREE.DoubleSide  // Встановлюємо відображення обох сторін
+          });
         }
       });
       
-      // Створення нових екземплярів моделі
+      // Створення копій моделі згідно заданих позицій
       for (let i = 0; i < this.cubeCount; i++) {
         const pos = this.cubePositions[i];
         
@@ -64,8 +71,6 @@ class CubeManager {
         // Обчислюємо базовий масштаб за допомогою scaleFactor
         const scaleFactor = pos.size / 2;
         modelClone.scale.set(scaleFactor, scaleFactor, scaleFactor);
-        
-        // Зберігаємо базовий масштаб для подальшого використання в оновленні
         modelClone.userData.baseScale = scaleFactor;
         
         // Встановлюємо позицію та початкову ротацію згідно даних
@@ -90,7 +95,7 @@ class CubeManager {
   }
 
   // Оновлення стану екземплярів моделі (обертання, пульсація тощо)
-  update(time, cameraZ) {
+  update(time) {
     this.cubes.forEach(cube => {
       // Обертання моделі
       cube.model.rotation.x += cube.rotationSpeed.x;
@@ -111,14 +116,56 @@ class CubeManager {
       );
     });
   }
-  
+
   // Ефект для переходу між сторінками (наприклад, прискорення обертання)
   startRedirectEffect() {
     this.cubes.forEach(cube => {
       cube.rotationSpeed.x *= 5;
       cube.rotationSpeed.y *= 5;
       cube.rotationSpeed.z *= 5;
-      // За потреби можна змінити прозорість або інші властивості моделі
     });
   }
 }
+
+// Ініціалізація сцени, камери, рендерера та запуск анімації
+let scene, camera, renderer, cubeManager;
+
+function init() {
+  // Створення сцени
+  scene = new THREE.Scene();
+
+  // Налаштування камери
+  camera = new THREE.PerspectiveCamera(
+    75, window.innerWidth / window.innerHeight, 0.1, 10000
+  );
+  camera.position.z = 1000; // Пристосуй за потребою
+
+  // Налаштування рендерера
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  // Створення менеджера кубів та завантаження моделей із текстурою
+  cubeManager = new CubeManager(scene);
+  cubeManager.createCubes();
+
+  // Запуск анімації
+  animate();
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  const time = performance.now() * 0.001; // Час в секундах
+  cubeManager.update(time);
+  renderer.render(scene, camera);
+}
+
+// Обробка зміни розміру вікна
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Запуск ініціалізації
+init();
