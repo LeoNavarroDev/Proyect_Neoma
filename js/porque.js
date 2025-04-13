@@ -28,6 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const fireflyManager = new FireflyManager(scene, colorRosa, colorMorado);
   // Pasar la referencia de la cámara al FireflyManager
   fireflyManager.setCamera(camera);
+
+  // Після ініціалізації fireflyManager
+  const cubeManager = new CubeManager(scene, colorRosa, colorMorado);
+  cubeManager.createCubes();
+
   
   // Inicialización de paneles de texto
   const textPanelManager = new TextPanelManager(scene);
@@ -49,6 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Añadir movimiento suave de la cámara (independiente del ratón)
     camera.position.x += (Math.sin(time * 0.1) * 30 - camera.position.x) * 0.01;
     camera.position.y += (Math.cos(time * 0.15) * 20 - camera.position.y) * 0.01;
+    // В функції animate додати:
+    cubeManager.update(time, camera.position.z);
     
     // Actualizar rotación basada en la posición del ratón
     mouseManager.update();
@@ -105,6 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Aumentamos el brillo de las luciérnagas y la velocidad del movimiento
     fireflyManager.startRedirectEffect();
+    
+    cubeManager.startRedirectEffect();
     
     // Redirección después del desvanecimiento
     setTimeout(() => {
