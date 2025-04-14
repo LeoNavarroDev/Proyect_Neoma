@@ -29,10 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Pasar la referencia de la cámara al FireflyManager
   fireflyManager.setCamera(camera);
 
-  // Після ініціалізації fireflyManager
+  // Después de la inicialización de fireflyManager
   const cubeManager = new CubeManager(scene, colorRosa, colorMorado);
   cubeManager.createCubes();
-
   
   // Inicialización de paneles de texto
   const textPanelManager = new TextPanelManager(scene);
@@ -54,7 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Añadir movimiento suave de la cámara (independiente del ratón)
     camera.position.x += (Math.sin(time * 0.1) * 30 - camera.position.x) * 0.01;
     camera.position.y += (Math.cos(time * 0.15) * 20 - camera.position.y) * 0.01;
-    // В функції animate додати:
+    
+    // En la función animate añadir:
     cubeManager.update(time, camera.position.z);
     
     // Actualizar rotación basada en la posición del ratón
@@ -132,15 +132,40 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
   
-  // Esperar a que se carguen las fuentes antes de inicializar
-  document.fonts.ready.then(() => {
-    textPanelManager.createPanels();
-    fireflyManager.createFireflies();
-    animate();
+  // Función para verificar que las fuentes estén cargadas correctamente
+  function checkFontsLoaded() {
+    return new Promise((resolve) => {
+      const bebasNeue = new FontFaceObserver('Bebas Neue');
+      const specialGothic = new FontFaceObserver('Special Gothic Condensed One');
+      const zentry = new FontFaceObserver('ZENTRY');
+      const roobert = new FontFaceObserver('Roobert-Regular');
+      
+      Promise.all([
+        bebasNeue.load(null, 3000),
+        specialGothic.load(null, 3000),
+        zentry.load(null, 3000),
+        roobert.load(null, 3000)
+      ])
+      .then(() => {
+        resolve();
+      })
+      .catch(err => {
+        console.warn('Error al cargar algunas fuentes:', err);
+        resolve();
+      });
+    });
+  }
+  
+  // Pre-cargar las fuentes antes de inicializar la aplicación
+  checkFontsLoaded().then(() => {
+    setTimeout(() => {
+      textPanelManager.createPanels();
+      fireflyManager.createFireflies();
+      animate();
+    }, 100);
   });
 });
 
-
 function menu() {
-window.location.href = "first.html";
+  window.location.href = "first.html";
 }

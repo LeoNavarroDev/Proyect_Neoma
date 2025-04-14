@@ -10,6 +10,21 @@ html, body {
 }
 
 
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('../font/BebasNeue-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Special Gothic Condensed One';
+  src: url('../font/SpecialGothicCondensedOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 @font-face {
   font-family: "ZENTRY";
