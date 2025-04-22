@@ -166,33 +166,81 @@ header video {
 }
 
 /* -------- ABOUT US -------- */
+.draggable {
+  display: inline-block;
+  cursor: grab;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: yellow;
 
-section {
-  width: 100%;
 }
-.h1img {
-  height: 100vh;
+
+.overlay {
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.096);  
+  pointer-events: none; 
+  z-index: 1;
+  position: absolute;
+}
+
+.heroe_section_about{
+  width:100%;
+  height: 100vh;
   display: flex;
-  place-items: center;
-  place-content: center;
+  justify-content: center;
+  overflow: hidden;
 }
 .aboutUs-h1img {
   width: auto;
   height: 50%;
   cursor: pointer;
 }
-.video_aboutus {
-  height: 100vh;
-  width: 100%;
-}
-.video_aboutus video {
-  height: 100%;
+
+.imagen_hero {
+  height:100vh;
   width: 100%;
   object-fit: cover;
   object-position: center;
-  background-color: rgba(240, 248, 255, 0.144);
+  position: absolute;
+  z-index: -1;
+  
+
 }
+
+.container_tittle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  
+}
+
+.title{
+  font-family: "ZENTRY", monospace;
+  font-size: 15em;
+  letter-spacing: 10px;
+  line-height: 1em;
+  color: #f8fe23;
+  text-transform: uppercase;
+  font-weight: bold;
+  position: relative;
+  bottom: 18%;
+}
+
+.mini_tittle{
+  font-family: "ZENTRY", monospace;
+  font-size: 2em;
+  letter-spacing: 5px;
+  line-height: 2em;
+  color: #f8fe23;
+  position: absolute;
+  bottom: 10%;
+  
+}
+
 .aboutus-description {
   height: 100vh;
   width: 100%;

@@ -95,4 +95,63 @@ new p5(function (sketch) {
   };
 });
 
+// se realiza las letras movibles
+const letters = document.querySelectorAll('.draggable');
+const positions = [];
 
+// Guardar posición original
+letters.forEach((el, i) => {
+  const rect = el.getBoundingClientRect();
+  positions[i] = { x: rect.left, y: rect.top };
+});
+
+// Posicionar cada letra animadamente desde fuera del viewport
+letters.forEach((el, i) => {
+  gsap.fromTo(el, 
+    { x: -window.innerWidth, opacity: 0 },
+    { 
+      x: 0, 
+      y: 0, 
+      opacity: 1, 
+      duration: 0.8, 
+      delay: i * 0.15,
+      onComplete: () => {
+        const rect = el.getBoundingClientRect();
+        el.dataset.x = 0;
+        el.dataset.y = 0;
+        positions[i] = { x: rect.left, y: rect.top };
+      }
+    }
+  );
+});
+
+// Hacer que las letras sean arrastrables
+interact('.draggable').draggable({
+  inertia: true,
+  listeners: {
+    move(event) {
+      let target = event.target;
+      let x = (parseFloat(target.dataset.x) || 0) + event.dx;
+      let y = (parseFloat(target.dataset.y) || 0) + event.dy;
+
+      target.style.transform = `translate(${x}px, ${y}px)`;
+      target.dataset.x = x;
+      target.dataset.y = y;
+    },
+    end(event) {
+      // Al soltar, volver a la posición original después de un segundo
+      const index = [...letters].indexOf(event.target);
+      gsap.to(event.target, {
+        x: 0,
+        y: 0,
+        duration: 10,
+        ease: "power.out",
+        onUpdate: function () {
+          event.target.dataset.x = 0;
+          event.target.dataset.y = 0;
+          event.target.style.transform = `translate(0px, 0px)`;
+        }
+      });
+    }
+  }
+});
