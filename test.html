@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador de IA</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+    }
+    #chat {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 400px;
+      text-align: left;
+      transition: opacity 0.5s ease;
+      opacity: 1;
+    }
+    #chat.fade-out {
+      opacity: 0;
+    }
+    #chat.fade-in {
+      opacity: 1;
+    }
+    #pregunta {
+      font-weight: bold;
+      margin-bottom: 10px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    #pregunta.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #respuesta {
+      min-height: 40px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="chat" class="fade-in">
+    <div id="pregunta"></div>
+    <div id="respuesta"></div>
+  </div>
+
+  <script>
+    const qa = [
+      { q: '¿Cómo está el clima hoy?', a: 'Hoy hace sol con algunas nubes. La temperatura es agradable.' },
+      { q: '¿Cuál es la capital de Francia?', a: 'La capital de Francia es París.' },
+      { q: '¿Quién escribió Don Quijote?', a: 'Don Quijote fue escrito por Miguel de Cervantes Saavedra.' }
+      // Añade más pares pregunta-respuesta si lo deseas
+    ];
+
+    let index = 0;
+    const chatDiv = document.getElementById('chat');
+    const preguntaDiv = document.getElementById('pregunta');
+    const respuestaDiv = document.getElementById('respuesta');
+
+    function mostrarSiguiente() {
+      const { q, a } = qa[index];
+
+      // Animación de entrada del contenedor
+      chatDiv.classList.remove('fade-out');
+      chatDiv.classList.add('fade-in');
+
+      // Preparar y animar pregunta cada vez
+      preguntaDiv.classList.remove('show');
+      preguntaDiv.textContent = q;
+      // Forzar reflujo para reiniciar la animación
+      void preguntaDiv.offsetWidth;
+      preguntaDiv.classList.add('show');
+
+      // Limpiar respuesta y mostrar puntos suspensivos
+      respuestaDiv.textContent = '';
+      let dotCount = 0;
+      const dotsInterval = setInterval(() => {
+        dotCount = (dotCount + 1) % 4;
+        respuestaDiv.textContent = '.'.repeat(dotCount);
+      }, 300);
+
+      // Tras 1.2s, escribir respuesta letra a letra
+      setTimeout(() => {
+        clearInterval(dotsInterval);
+        respuestaDiv.textContent = '';
+        let charIndex = 0;
+        const typingInterval = setInterval(() => {
+          respuestaDiv.textContent += a.charAt(charIndex);
+          charIndex++;
+          if (charIndex >= a.length) {
+            clearInterval(typingInterval);
+            // Tras 2s, animar salida y pasar al siguiente
+            setTimeout(() => {
+              chatDiv.classList.remove('fade-in');
+              chatDiv.classList.add('fade-out');
+              chatDiv.addEventListener('transitionend', () => {
+                preguntaDiv.textContent = '';
+                respuestaDiv.textContent = '';
+                index = (index + 1) % qa.length;
+                setTimeout(mostrarSiguiente, 500);
+              }, { once: true });
+            }, 2000);
+          }
+        }, 50);
+      }, 1200);
+    }
+
+    window.onload = mostrarSiguiente;
+  </script>
+</body>
+</html>
