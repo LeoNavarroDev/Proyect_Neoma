@@ -1,0 +1,119 @@
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .8);
+    width: 100%;
+    height: 100vh;
+    z-index: 99;
+}
+
+.iconContainer {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -100px;
+    margin-top: -100px;
+}
+
+.iconContainer p{
+    color: white;
+    font-family: "Roobert-Regular", monospace;
+}
+
+.iconContainer p {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    font-size: 20px;
+    opacity: 0;
+}
+
+.phone {
+    position: relative;
+    left: 50%;
+    margin-left: -50px;
+    width: 0;
+    height: 0;
+    border: 0 solid #000000;
+    background: #d900ff;
+    background: linear-gradient(145deg, rgba(217, 0, 255, 1) 0%, rgba(90, 148, 224, 1) 100%);    
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.phone i {
+    text-align: center;
+    width: 100%;
+    line-height: 120px;
+    font-size: 50px;
+    color: #000000;
+    opacity: 0;
+}
+
+@media only screen and (max-width: 1020px) and (orientation: portrait) {
+    .overlay {
+        display: block;
+    }
+
+    .overlay .phone {
+        animation:
+            sizeIncrease .5s forwards ease,
+            borderIncrease .5s .5s forwards ease,
+            rotateRight .7s 1s forwards ease;
+    }
+
+    .overlay .phone i {
+        animation:
+            fadeIn .5s .8s forwards ease;
+    }
+
+    .overlay .iconContainer p {
+        animation:
+            fadeIn .5s 1.3s forwards ease;
+    }
+}
+
+/* KEYFRAMES
+------------------------------------------- */
+/* Animate width + height */
+@keyframes sizeIncrease {
+    0% {
+        width: 0;
+        height: 10px;
+    }
+    50% {
+        width: 100px;
+        height: 10px;
+    }
+    100% {
+        width: 100px;
+        height: 160px;
+    }
+}
+
+/* Add borders */
+@keyframes borderIncrease {
+    100% {
+        border-width: 20px 10px;
+    }
+}
+
+/* fade-in  */
+@keyframes fadeIn {
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Rotate device */
+@keyframes rotateRight {
+    100% {
+        transform: rotate(90deg);
+    }
+}

@@ -1,289 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Three.js Lens Model</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotate Device</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        body { margin: 0; overflow: hidden; }
-        canvas { display: block; }
-        #exportButton {
+
+        .overlay {
+            display: none;
             position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, .8);
+            width: 100%;
+            height: 100vh;
         }
-        #exportButton:hover {
-            background-color: #45a049;
+
+        .iconContainer {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -100px;
+            margin-top: -100px;
+        }
+
+        .iconContainer p{
+            color: white;
+        }
+
+        .iconContainer p {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            margin: 0;
+            font-size: 20px;
+            opacity: 0;
+        }
+
+        .phone {
+            position: relative;
+            left: 50%;
+            margin-left: -50px;
+            width: 0;
+            height: 0;
+            border: 0 solid #000000;
+            background: #d900ff;
+            background: linear-gradient(145deg, rgba(217, 0, 255, 1) 0%, rgba(90, 148, 224, 1) 100%);    
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        .phone i {
+            text-align: center;
+            width: 100%;
+            line-height: 120px;
+            font-size: 50px;
+            color: #000000;
+            opacity: 0;
+        }
+
+        @media only screen and (max-width: 1020px) {
+            .overlay {
+                display: block;
+            }
+
+            .overlay .phone {
+                animation:
+                    sizeIncrease .5s forwards ease,
+                    borderIncrease .5s .5s forwards ease,
+                    rotateRight .7s 1s forwards ease;
+            }
+
+            .overlay .phone i {
+                animation:
+                    fadeIn .5s .8s forwards ease;
+            }
+
+            .overlay .iconContainer p {
+                animation:
+                    fadeIn .5s 1.3s forwards ease;
+            }
+        }
+
+        /* KEYFRAMES
+        ------------------------------------------- */
+        /* Animate width + height */
+        @keyframes sizeIncrease {
+            0% {
+                width: 0;
+                height: 10px;
+            }
+            50% {
+                width: 100px;
+                height: 10px;
+            }
+            100% {
+                width: 100px;
+                height: 160px;
+            }
+        }
+
+        /* Add borders */
+        @keyframes borderIncrease {
+            100% {
+                border-width: 20px 10px;
+            }
+        }
+
+        /* fade-in  */
+        @keyframes fadeIn {
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Rotate device */
+        @keyframes rotateRight {
+            100% {
+                transform: rotate(90deg);
+            }
         }
     </style>
 </head>
 <body>
-    <button id="exportButton">Експортувати GLB</button>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Правильне посилання на GLTFExporter -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
-    <script>
-        // Фіксовані параметри
-        const curveAmount = 0.5;
-        const smoothness = 0.9;
-        
-        // Базове налаштування Three.js
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x000000);
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
-        
-        // Завантаження текстури
-        const textureLoader = new THREE.TextureLoader();
-        const lensTexture = textureLoader.load('img/texture.png', function(texture) {
-            texture.wrapS = THREE.RepeatWrapping;
-            texture.wrapT = THREE.RepeatWrapping;
-            texture.repeat.set(1, 1);
-        });
-        
-        // Функція створення детальної геометрії
-        function createDetailedCircleGeometry(radius, segments, radialSegments) {
-            const geometry = new THREE.BufferGeometry();
-            const positions = [];
-            const uvs = [];
-            const indices = [];
-            
-            // Центральна точка
-            positions.push(0, 0, 0);
-            uvs.push(0.5, 0.5);
-            
-            // Створення концентричних кілець
-            for (let r = 1; r <= radialSegments; r++) {
-                const radiusStep = radius * (r / radialSegments);
-                
-                for (let i = 0; i <= segments; i++) {
-                    const theta = (i / segments) * Math.PI * 2;
-                    const x = radiusStep * Math.cos(theta);
-                    const y = radiusStep * Math.sin(theta);
-                    
-                    positions.push(x, y, 0);
-                    
-                    // UV mapping
-                    const u = 0.5 + (x / (2 * radius));
-                    const v = 0.5 + (y / (2 * radius));
-                    uvs.push(u, v);
-                }
-            }
-            
-            // Створення індексів для трикутників
-            for (let i = 0; i < segments; i++) {
-                indices.push(0, i+1, i+2);
-            }
-            
-            for (let r = 0; r < radialSegments - 1; r++) {
-                const innerRingStart = 1 + r * (segments + 1);
-                const outerRingStart = innerRingStart + (segments + 1);
-                
-                for (let i = 0; i < segments; i++) {
-                    const innerRingCurrent = innerRingStart + i;
-                    const innerRingNext = innerRingStart + i + 1;
-                    const outerRingCurrent = outerRingStart + i;
-                    const outerRingNext = outerRingStart + i + 1;
-                    
-                    indices.push(innerRingCurrent, outerRingCurrent, innerRingNext);
-                    indices.push(innerRingNext, outerRingCurrent, outerRingNext);
-                }
-            }
-            
-            geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-            geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
-            geometry.setIndex(indices);
-            
-            return geometry;
-        }
-        
-        // Створення геометрії
-        const lensGeometry = createDetailedCircleGeometry(2, 72, 24);
-        const backLensGeometry = createDetailedCircleGeometry(2, 72, 24);
-        
-        // Створення матеріалу
-        const lensMaterial = new THREE.MeshPhongMaterial({
-            map: lensTexture,
-            side: THREE.DoubleSide,
-            transparent: true,
-            shininess: 100,
-            specular: 0x333333
-        });
-        
-        // Створення лінзи
-        const lens = new THREE.Mesh(lensGeometry, lensMaterial);
-        scene.add(lens);
-        
-        // Задня частина лінзи
-        const backLens = new THREE.Mesh(backLensGeometry, lensMaterial.clone());
-        backLens.position.z = -0.1;
-        backLens.rotation.y = Math.PI;
-        scene.add(backLens);
-        
-        // Базове освітлення
-        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(5, 5, 5);
-        scene.add(directionalLight);
-        
-        // Оновлення форми лінзи
-        function updateLensShape() {
-            const positions = lensGeometry.attributes.position;
-            const backPositions = backLensGeometry.attributes.position;
-            const maxDistance = 2;
-            
-            for (let i = 0; i < positions.count; i++) {
-                const x = positions.getX(i);
-                const y = positions.getY(i);
-                const distanceFromCenter = Math.sqrt(x * x + y * y);
-                
-                let z = 0;
-                if (distanceFromCenter < maxDistance) {
-                    z = curveAmount * Math.pow(Math.cos(Math.PI * distanceFromCenter / (2 * maxDistance)), smoothness);
-                }
-                
-                positions.setZ(i, z);
-            }
-            
-            for (let i = 0; i < backPositions.count; i++) {
-                const x = backPositions.getX(i);
-                const y = backPositions.getY(i);
-                const distanceFromCenter = Math.sqrt(x * x + y * y);
-                
-                let z = 0;
-                if (distanceFromCenter < maxDistance) {
-                    z = -curveAmount * Math.pow(Math.cos(Math.PI * distanceFromCenter / (2 * maxDistance)), smoothness);
-                }
-                
-                backPositions.setZ(i, z);
-            }
-            
-            lensGeometry.attributes.position.needsUpdate = true;
-            backLensGeometry.attributes.position.needsUpdate = true;
-            lensGeometry.computeVertexNormals();
-            backLensGeometry.computeVertexNormals();
-        }
-        
-        // Застосувати форму
-        updateLensShape();
-        
-        // Адаптація до розміру вікна
-        window.addEventListener('resize', function() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-        
-        // Просте обертання мишею
-        let isDragging = false;
-        let previousMousePosition = { x: 0, y: 0 };
-        
-        document.addEventListener('mousedown', function(e) {
-            isDragging = true;
-            previousMousePosition = { x: e.clientX, y: e.clientY };
-        });
-        
-        document.addEventListener('mouseup', function() {
-            isDragging = false;
-        });
-        
-        document.addEventListener('mousemove', function(e) {
-            if (isDragging) {
-                const deltaMove = {
-                    x: e.clientX - previousMousePosition.x,
-                    y: e.clientY - previousMousePosition.y
-                };
-                
-                if (e.buttons === 1) {
-                    lens.rotation.y += deltaMove.x * 0.005;
-                    lens.rotation.x += deltaMove.y * 0.005;
-                    backLens.rotation.y = Math.PI + lens.rotation.y;
-                    backLens.rotation.x = lens.rotation.x;
-                }
-                
-                previousMousePosition = { x: e.clientX, y: e.clientY };
-            }
-        });
-        
-        // Функція експорту моделі у формат GLB
-        function exportToGLB() {
-            // Експортуємо тільки передню частину лінзи
-            const lensClone = lens.clone();
-            lensClone.name = "Lens";
-
-            // Налаштування експортера
-            const exporter = new THREE.GLTFExporter();
-
-            // Опції експорту
-            const options = {
-                binary: true,      // true для формату .glb, false для .gltf
-                trs: false,        // використовувати position, rotation, scale, а не матриці
-                onlyVisible: true  // експортувати тільки видимі об'єкти
-            };
-
-            // Експорт клонованого об'єкта
-            exporter.parse(lensClone, function(result) {
-                if (result instanceof ArrayBuffer) {
-                    // Це бінарний файл (.glb)
-                    saveArrayBuffer(result, 'lens_model.glb');
-                } else {
-                    // Це JSON (.gltf)
-                    const output = JSON.stringify(result, null, 2);
-                    saveString(output, 'lens_model.gltf');
-                }
-                console.log('Модель успішно експортована');
-            }, options);
-        }
-
-        
-        // Функції для збереження файлів
-        function saveArrayBuffer(buffer, filename) {
-            const blob = new Blob([buffer], { type: 'application/octet-stream' });
-            const url = URL.createObjectURL(blob);
-            downloadURL(url, filename);
-        }
-        
-        function saveString(text, filename) {
-            const blob = new Blob([text], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            downloadURL(url, filename);
-        }
-        
-        function downloadURL(url, filename) {
-            const link = document.createElement('a');
-            link.style.display = 'none';
-            link.href = url;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            
-            // Очищення
-            setTimeout(function() {
-                URL.revokeObjectURL(url);
-                link.remove();
-            }, 100);
-        }
-        
-        // Додаємо обробник події для кнопки експорту
-        document.getElementById('exportButton').addEventListener('click', exportToGLB);
-        
-        // Анімаційний цикл
-        function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
-        }
-        
-        animate();
-    </script>
+    <div class="overlay">
+        <div class="iconContainer">
+            <div class="phone">
+                <i class="fa fa-repeat"></i>
+            </div>
+            <p>Rotate your device</p>
+        </div>
+    </div>
 </body>
 </html>
