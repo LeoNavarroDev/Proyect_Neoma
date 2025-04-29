@@ -30,3 +30,7 @@ video.addEventListener("timeupdate", () => {
     animacionEjecutada = true;
   }
 });
+
+
+
+
