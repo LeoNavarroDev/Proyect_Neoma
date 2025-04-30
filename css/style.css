@@ -166,6 +166,11 @@ header video {
 }
 
 /* -------- ABOUT US -------- */
+.tamaño_h2{
+  font-size: 8em;
+  margin-left: 100px;
+  font-family: "ZENTRY";
+}
 .draggable {
   display: inline-block;
   cursor: grab;
@@ -192,6 +197,7 @@ header video {
   display: flex;
   justify-content: center;
   overflow: hidden;
+  scroll-behavior: smooth;
 }
 .aboutUs-h1img {
   width: auto;
@@ -228,6 +234,8 @@ header video {
   font-weight: bold;
   position: relative;
   bottom: 18%;
+  height: auto;
+ 
 }
 
 .mini_tittle{
@@ -242,27 +250,33 @@ header video {
 }
 
 .aboutus-description {
-  height: 100vh;
+  height: auto;
   width: 100%;
-  background: rgb(83, 143, 220);
+  background: rgb(41, 50, 61);
   background: linear-gradient(
     135deg,
-    rgba(83, 143, 220, 1) 0%,
-    rgba(155, 79, 168, 1) 100%
+    rgb(10, 20, 34) 0%,
+    rgb(57, 32, 63) 100%
+    
   );
-  display: flex;
-  place-items: center;
-  place-content: center;
+  opacity: 0;
+  scroll-behavior: smooth;
+  margin-top: 10%;
 }
 .text-aboutus-description {
-  width: 27%;
-  margin-right: 15%;
+  width: 100%;
+  height: 100%;
   color: white;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-top: 10%;
+  justify-content: center;
 }
 .aboutus-description h3 {
   font-family: "ZENTRY", monospace;
   font-size: 4em;
-  margin: 0;
+  margin-top: 40px;
   line-height: 1em;
 }
 .aboutus-description p {
@@ -274,6 +288,12 @@ header video {
 .lente-aboutus {
   width: 30%;
   height: auto;
+  position: absolute;
+  right: 20%;
+  cursor: grab;
+}
+.lente-aboutus:active{
+  cursor: grabbing;
 }
 #canvas-container {
   width: 100%;
@@ -281,6 +301,41 @@ header video {
   display: flex !important;
   justify-content: center;
   align-items: center;
+}
+
+.listas_desordenadas{
+  padding-inline-start: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+margin-top: 10%;
+  list-style-type: none;
+  
+}
+
+.contenido_listas_desordenadas{
+   list-style-type: none;
+    display: flex;
+    justify-content: center;
+   cursor: pointer;
+    color: whitesmoke;
+    margin-top: 3.1em;
+    font-family: "ZENTRY";
+    font-size: 4.8em;
+    width: 100%;
+   
+  
+
+}
+
+@keyframes contenido_listas_desordenadas {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(-15px); }
+  50%  { transform: translateY(0); }
+  70%  { transform: translateY(-7px); }
+  100% { transform: translateY(0); }
 }
 
 

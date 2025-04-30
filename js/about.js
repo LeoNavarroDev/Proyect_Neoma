@@ -1,6 +1,5 @@
 
 
-
 // Lente about us
 new p5(function (sketch) {
   let numParticles = 1000;
@@ -154,4 +153,106 @@ interact('.draggable').draggable({
       });
     }
   }
+});
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Zoom progresivo mientras haces scroll
+gsap.to(".heroe_section_about", {
+  scale: 6,
+  ease: "power1.out",
+  
+  scrollTrigger: {
+    trigger: ".heroe_section_about",
+    start: "top top",
+    end: "+4500",
+    scrub: true,
+  }
+});
+
+// Fade out + scale out al final del scroll
+gsap.to(".heroe_section_about", {
+  opacity: 0,
+  scale: 1.9,
+  scrollTrigger: {
+    trigger: ".heroe_section_about",
+    start: "bottom bottom",
+    end: "bottom top",
+    scrub: true,
+  }
+});
+
+// Fade in suave de la siguiente sección
+gsap.to(".aboutus-description", {
+  opacity: 1,
+
+  scrollTrigger: {
+    trigger: ".heroe_section_about",
+    start: "bottom top",
+    end: "bottom center",
+    toggleActions: "play none none reverse",
+  }
+});
+
+// Realizando que el canva sea arrastrable 
+
+const box = document.getElementById("lente-aboutus");
+
+// Guarda la posición inicial
+const originX = box.offsetLeft;
+const originY = box.offsetTop;
+ 
+let isDragging = false;
+let offsetX, offsetY;
+let timeout;
+
+// Detecta el inicio del arrastre
+box.addEventListener("mousedown", (e) => {
+  isDragging = true;
+  offsetX = e.clientX - box.offsetLeft;
+  offsetY = e.clientY - box.offsetTop;
+  box.style.transition = "none"; // Quita transición al arrastrar
+  clearTimeout(timeout);
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
+  const x = e.clientX - offsetX;
+  const y = e.clientY - offsetY;
+  box.style.left = `${x}px`;
+  box.style.top = `${y}px`;
+});
+
+document.addEventListener("mouseup", () => {
+  if (isDragging) {
+    isDragging = false;
+
+    // Espera 10 segundos para volver al origen
+    timeout = setTimeout(() => {
+      box.style.transition = "transform 1s ease";
+      box.style.transform = "translate(0, 0)";
+      box.style.left = `${originX}px`;
+      box.style.top = `${originY}px`;
+    }, 10000);
+  }
+});
+
+
+// colocando un evento en la listas desordenada
+
+const paragraph = document.getElementById("contenido_listas_desordenadas");
+
+// Evento al pasar el mouse sobre el párrafo
+paragraph.addEventListener("mouseenter", () => {
+  const letters = paragraph.querySelectorAll(".contenido_listas_desordenadas");
+  letters.forEach((letter, index) => {
+    setTimeout(() => {
+      letter.style.animation = "bounce 0.6s ease";
+    }, index * 30);
+
+    // Elimina la animación para que se pueda volver a activar
+    letter.addEventListener("animationend", () => {
+      letter.style.animation = "";
+    });
+  });
 });
