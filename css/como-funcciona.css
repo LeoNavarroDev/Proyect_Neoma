@@ -147,6 +147,7 @@ body {
   align-items: center;
   width: 35%;
   position: relative;
+  padding-left: 3%;
 }
 .content div:first-child {
   margin-top: 10vh;
@@ -159,6 +160,18 @@ body {
   font-size: 20px;
   line-height: 130%;
 }
+.chat-user{
+  transition: all 0.5s ease;
+}
+.chat-neoma p {
+  opacity: 0;
+}
+
+/* Коли додаємо клас animated, повертаємо видимість контейнеру */
+.chat-neoma p.animated {
+  opacity: 1;
+}
+
 .chat-user p{
   background-color: #222222;
   padding: 1em;
@@ -191,6 +204,7 @@ strong{
   margin-left: auto;
   right: 2%;
   text-align: right;
+  padding-right: 3%;
 }
 .right .icon-user,
 .right .icon-neoma {
