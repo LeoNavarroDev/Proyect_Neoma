@@ -256,3 +256,56 @@ paragraph.addEventListener("mouseenter", () => {
     });
   });
 });
+
+
+// haciendo clickeable las listas desordenadas
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const frases = document.querySelectorAll(".clickable");
+
+
+  const section = document.getElementById('imageSection');
+  section.style.transition = "background-image 2s ease, background-size 1s ease, background-position 1s ease, background-color 1s ease";
+
+  
+  function cambiarImagen(imagenUrl) {
+    const section = document.getElementById('imageSection');
+    if (section) {  
+      section.style.transition = "background-image 1s ease, background-size 1s ease, background-position 1s ease, background-color 1s ease";
+      
+      // Primero cambiamos la imagen de fondo
+      section.style.backgroundImage = `url(${imagenUrl})`;
+
+      // Usamos setTimeout para esperar a que se cambie la imagen y luego ajustamos el tamaño
+      setTimeout(() => {
+        // Cambiar tamaño de la imagen para que no ocupe toda la pantalla
+        section.style.backgroundSize = 'cover'; // La imagen se ajusta sin recortarse
+        section.style.backgroundPosition = 'center'; // Centra la imagen
+        section.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Fondo oscuro semitransparente
+        
+      }, 10); // El pequeño retraso asegura que la imagen se cambie primero
+    }
+  }
+
+  // Evento para cada frase
+  frases.forEach((frase) => {
+    frase.addEventListener("click", () => {
+      if (frase.id === "text1") {
+        cambiarImagen('./img/mejor_vida.jpg');
+      } else if (frase.id === "text2") {
+        cambiarImagen('./img/pregunta_lo_que_quieras.jpg');
+      } else if (frase.id === "text3") {
+        cambiarImagen('./img/salud.jpg');
+      } else if (frase.id === "text4") {
+        cambiarImagen('./img/productividad.jpg');
+      }
+
+
+    });
+  });
+});
+
+// cambiar letras 
+
+

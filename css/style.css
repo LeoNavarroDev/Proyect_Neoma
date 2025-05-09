@@ -168,7 +168,7 @@ header video {
 /* -------- ABOUT US -------- */
 .tamaño_h2{
   font-size: 8em;
-  margin-left: 100px;
+  margin-left: -70%;
   font-family: "ZENTRY";
 }
 .draggable {
@@ -310,25 +310,36 @@ header video {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-margin-top: 10%;
+  margin-top:10px;
   list-style-type: none;
-  
+  height: auto;
+
 }
 
 .contenido_listas_desordenadas{
-   list-style-type: none;
+  margin-top: 45px;
+  list-style-type: none;
     display: flex;
     justify-content: center;
    cursor: pointer;
     color: whitesmoke;
-    margin-top: 3.1em;
     font-family: "ZENTRY";
     font-size: 4.8em;
     width: 100%;
-   
-  
+    height: 70vh;
 
+   
 }
+
+.transform_li{
+  transition: transform 0.5s ease;
+  margin-top: 2em;
+}
+
+.transform_li:hover{
+  transform: translate3d(50px, 20px, 50px); 
+}
+
 
 @keyframes contenido_listas_desordenadas {
   0%   { transform: translateY(0); }
