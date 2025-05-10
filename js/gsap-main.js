@@ -56,11 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
     tl.fromTo('.aboutUs h3', 
       { 
         opacity: 0, 
-        y: 50 
+        x: 50 
       },
       { 
         opacity: 1, 
-        y: -100,
+        x: 0,
         duration: 0.7
       }, 
       '-=0.3'
@@ -133,19 +133,12 @@ document.addEventListener("DOMContentLoaded", () => {
         opacity: 1,
         rotate: 0,
         duration: 1.2,
-        ease: "elastic.out(1, 0.3)"
+        ease: "out(1, 0.3)"
       }, 
       '-=0.8'
     );
     
-    // Додаємо плаваючий ефект для логотипу
-    gsap.to('.porque .logo', {
-      y: 20,
-      duration: 2,
-      repeat: -1,
-      yoyo: true,
-      ease: "power1.inOut"
-    });
+    
   };
 
   // Налаштування для paraque секції

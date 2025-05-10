@@ -195,7 +195,7 @@ section {
   top: 50%;
   transform: translate(-50%, -53%);
   margin: 0;
-  background: linear-gradient(140deg, rgba(83, 143, 220, 1) 50%, rgba(155, 79, 168, 1) 100%);
+  /* background: linear-gradient(140deg, rgba(83, 143, 220, 1) 50%, rgba(155, 79, 168, 1) 100%); */
   background-clip: text;
   color: transparent;
   text-shadow: none;
@@ -252,7 +252,7 @@ section {
   padding: 0;
   margin: 0;
   position: relative;
-  background: linear-gradient(140deg, rgba(83, 143, 220, 1) 50%, rgba(155, 79, 168, 1) 90%);
+  /* background: linear-gradient(140deg, rgba(83, 143, 220, 1) 50%, rgba(155, 79, 168, 1) 90%); */
   background-clip: text;
   color: transparent;
 }
@@ -270,7 +270,7 @@ section {
   margin: 0;
   position: relative;
   left: -20px;
-  background: linear-gradient(140deg, rgba(83, 143, 220, 1) 50%, rgba(155, 79, 168, 1) 90%);
+  /* background: linear-gradient(140deg, rgba(83, 143, 220, 1) 50%, rgba(155, 79, 168, 1) 90%); */
   background-clip: text;
   color: transparent;
 }
@@ -279,7 +279,7 @@ section {
   padding: 0;
   margin: 0;
   position: relative;
-  background: linear-gradient(140deg, rgba(83, 143, 220, 1) 50%, rgba(155, 79, 168, 1) 90%);
+  /* background: linear-gradient(140deg, rgba(83, 143, 220, 1) 50%, rgba(155, 79, 168, 1) 90%); */
   background-clip: text;
   color: transparent;
   transform: rotate(-90deg);
@@ -299,13 +299,3 @@ section {
   position: relative;
   margin: -25px 0;
 }
-
-
-
-
-
-
-
-
-
-

@@ -80,7 +80,7 @@
 .bold {
   font-weight: bold;
   color: rgba(255, 255, 255, 0.8);
-  background: linear-gradient(140deg, rgba(83, 143, 220, 1) 50%, rgba(155, 79, 168, 1) 90%);
+  /* background: linear-gradient(140deg, rgba(83, 143, 220, 1) 50%, rgba(155, 79, 168, 1) 90%); */
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
