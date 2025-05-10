@@ -59,6 +59,7 @@ nav .menu {
   filter: invert(1);
   padding: 0.7%;
   float: right;
+  cursor: pointer;
 }
 
 header {
@@ -294,3 +295,13 @@ section {
   position: relative;
   margin: -25px 0;
 }
+
+
+
+
+
+
+
+
+
+

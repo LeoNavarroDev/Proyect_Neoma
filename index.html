@@ -6,6 +6,9 @@
     <title>NEOMA</title>
     <link rel="icon" href="img/logo.png" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/footer.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js"></script>
     <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
@@ -16,6 +19,57 @@
       <img src="img/logo.png" alt="" class="logo" />
       <img src="img/list.svg" alt="menu" class="menu" />
     </nav>
+    
+    <div class="fullscreen-menu">
+      <div class="menu-overlay">
+        <div class="menu-container">
+          <div class="menu-header">
+            <div class="menu-logo">
+              <img src="img/logo.png" alt="NEOMA" />
+            </div>
+            <div class="menu-close">
+              <div class="close-btn">
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="menu-navigation">
+            <div class="menu-item" data-section="header">
+              <span class="menu-number">01</span>
+              <h2 class="menu-title">HOME</h2>
+            </div>
+            <div class="menu-item" data-section=".aboutUs">
+              <span class="menu-number">02</span>
+              <h2 class="menu-title">ABOUT US</h2>
+            </div>
+            <div class="menu-item" data-section=".porque">
+              <span class="menu-number">03</span>
+              <h2 class="menu-title">POR QUE</h2>
+            </div>
+            <div class="menu-item" data-section=".paraque">
+              <span class="menu-number">04</span>
+              <h2 class="menu-title">PARA QUE</h2>
+            </div>
+            <div class="menu-item" data-section=".como-funcciona">
+              <span class="menu-number">05</span>
+              <h2 class="menu-title">COMO FUNCCIONA</h2>
+            </div>
+          </div>
+          
+          <div class="menu-footer">
+            <div class="menu-social">
+              <a href="#" class="social-link">Instagram</a>
+              <a href="#" class="social-link">Twitter</a>
+              <a href="#" class="social-link">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
     <!-- heroe -->
     <header>
@@ -63,7 +117,55 @@
       <h1>A</h1>
     </section>
 
-    <script src="js/heroe.js"></script>
+    <!-- Додайте цей код перед закриваючим тегом body у вашому index.html -->
+
+    <footer class="footer">
+      <div class="giant-element">
+        <span class="giant-text">N</span>
+      </div>
+      
+      <div class="footer-content">
+        <div class="footer-top">
+          <div class="footer-item">
+            <h2>Contact</h2>
+            <p>hello@neoma.com</p>
+          </div>
+          
+          <div class="footer-item">
+            <h2>Follow</h2>
+            <div class="social-links">
+              <a href="#" class="social-link">Instagram</a>
+              <a href="#" class="social-link">Twitter</a>
+              <a href="#" class="social-link">LinkedIn</a>
+            </div>
+          </div>
+          
+          <div class="footer-item">
+            <h2>Address</h2>
+            <p>Ukraine, Kyiv<br>Future Street, 42</p>
+          </div>
+        </div>
+
+        <div class="gradient-line"></div>
+
+        <div class="footer-bottom">
+          <div class="copyright">
+            <p>© 2025 <span class="bold">NEOMA</span></p>
+          </div>
+          
+          <div class="footer-nav">
+            <a href="#" class="nav-link">About Us</a>
+            <a href="#" class="nav-link">Para Que</a>
+            <a href="#" class="nav-link">Como Funcciona</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+
+    <!-- <script src="js/heroe.js"></script> -->
+    <script src="js/nav.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
