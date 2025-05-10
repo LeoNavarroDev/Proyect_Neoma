@@ -1,0 +1,512 @@
+/* NEOMA - Responsive Styles
+   Розроблено для забезпечення адаптивності всіх елементів сайту
+   на пристроях різних розмірів */
+
+/* Large Desktops (1400px і більше)
+   Основні стилі вже визначені в style.css */
+
+/* Medium Desktops and Laptops (992px - 1399px) */
+@media screen and (max-width: 1399px) {
+  /* Header */
+  header h1 {
+    font-size: 20em;
+  }
+  
+  header p {
+    font-size: 2.2em;
+  }
+  
+  /* Sections */
+  .aboutUs h1 {
+    font-size: 500px;
+  }
+  
+  .aboutUs h3 {
+    font-size: 150px;
+  }
+  
+  .porque h1 {
+    font-size: 250px;
+  }
+  
+  .porque .logo {
+    height: 400px;
+  }
+  
+  .paraque h1 {
+    font-size: 200px;
+    margin: -50px 0;
+  }
+  
+  .paraque h2 {
+    font-size: 180px;
+  }
+  
+  .como-funcciona {
+    transform: scale(1.1);
+  }
+  
+  .como-funcciona h1 {
+    font-size: 380px;
+  }
+  
+  .como-funcciona h2 {
+    font-size: 200px;
+  }
+  
+  .como-funcciona h3 {
+    font-size: 180px;
+  }
+  
+  .como-funcciona h4 {
+    font-size: 130px;
+  }
+}
+
+/* Small Desktops and Laptops (992px - 1199px) */
+@media screen and (max-width: 1199px) {
+  /* Navbar */
+  nav .logo {
+    width: 3vw;
+  }
+  
+  nav .menu {
+    width: 4vw;
+  }
+  
+  /* Header */
+  header h1 {
+    font-size: 16em;
+  }
+  
+  header p {
+    font-size: 2em;
+  }
+  
+  /* Sections */
+  .aboutUs h1 {
+    font-size: 400px;
+  }
+  
+  .aboutUs h3 {
+    font-size: 120px;
+  }
+  
+  .porque {
+    width: 70%;
+  }
+  
+  .porque h1 {
+    font-size: 220px;
+  }
+  
+  .porque .logo {
+    height: 350px;
+  }
+  
+  .paraque h1 {
+    font-size: 180px;
+  }
+  
+  .paraque h2 {
+    font-size: 160px;
+  }
+  
+  .como-funcciona {
+    transform: scale(1);
+  }
+  
+  .como-funcciona h1 {
+    font-size: 350px;
+  }
+  
+  .como-funcciona h2 {
+    font-size: 180px;
+  }
+  
+  .como-funcciona h3 {
+    font-size: 160px;
+  }
+  
+  .como-funcciona h4 {
+    font-size: 120px;
+  }
+}
+
+/* Tablets (768px - 991px) */
+@media screen and (max-width: 991px) {
+  /* Navbar */
+  nav .logo {
+    width: 4vw;
+    padding: 2%;
+  }
+  
+  nav .menu {
+    width: 6vw;
+    padding: 1.5%;
+  }
+  
+  /* Header */
+  header h1 {
+    font-size: 12em;
+  }
+  
+  header p {
+    font-size: 1.8em;
+  }
+  
+  .heroe-logo {
+    width: 0.7em;
+  }
+  
+  /* Sections */
+  .aboutUs h1 {
+    font-size: 300px;
+  }
+  
+  .aboutUs h3 {
+    font-size: 90px;
+  }
+  
+  .porque {
+    width: 80%;
+  }
+  
+  .porque h1 {
+    font-size: 180px;
+  }
+  
+  .porque .logo {
+    height: 300px;
+    top: 22%;
+  }
+  
+  .paraque h1 {
+    font-size: 150px;
+    margin: -30px 0;
+  }
+  
+  .paraque h2 {
+    font-size: 130px;
+  }
+  
+  .como-funcciona {
+    transform: scale(0.9);
+  }
+  
+  .como-funcciona h1 {
+    font-size: 300px;
+  }
+  
+  .como-funcciona h2 {
+    font-size: 150px;
+  }
+  
+  .como-funcciona h3 {
+    font-size: 130px;
+  }
+  
+  .como-funcciona h4 {
+    font-size: 100px;
+  }
+  
+  /* Footer */
+  .footer {
+    padding: 80px 0 40px;
+  }
+  
+  .footer-item h2 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Large Smartphones and Small Tablets (576px - 767px) */
+@media screen and (max-width: 767px) {
+  /* Navbar */
+  nav .logo {
+    width: 6vw;
+    padding: 3%;
+  }
+  
+  nav .menu {
+    width: 8vw;
+    padding: 2%;
+  }
+  
+  /* Header */
+  header h1 {
+    font-size: 8em;
+  }
+  
+  header p {
+    font-size: 1.5em;
+  }
+  
+  /* Sections */
+  .aboutUs h1 {
+    font-size: 200px;
+  }
+  
+  .aboutUs h3 {
+    font-size: 70px;
+  }
+  
+  .porque {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+  
+  .porque h1 {
+    font-size: 150px;
+    right: 0;
+    text-align: center;
+  }
+  
+  .porque .logo {
+    height: 250px;
+    margin-top: 50px;
+    top: 0;
+  }
+  
+  .paraque h1 {
+    font-size: 120px;
+    margin: -20px 0;
+  }
+  
+  .paraque h2 {
+    font-size: 100px;
+  }
+  
+  .como-funcciona {
+    transform: scale(0.7);
+    flex-direction: column;
+  }
+  
+  .como-funcciona h1, 
+  .como-funcciona h2,
+  .como-funcciona h3,
+  .como-funcciona h4 {
+    position: static;
+    text-align: center;
+    transform: none;
+    right: 0;
+    left: 0;
+    top: 0;
+  }
+  
+  .como-funcciona h2 {
+    transform: rotate(0);
+    margin: -40px 0;
+  }
+  
+  /* Footer */
+  .footer {
+    padding: 60px 0 30px;
+  }
+  
+  .footer-item h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+}
+
+/* Smartphones (320px - 575px) */
+@media screen and (max-width: 575px) {
+  /* Navbar */
+  nav .logo {
+    width: 8vw;
+    padding: 4%;
+  }
+  
+  nav .menu {
+    width: 10vw;
+    padding: 3%;
+  }
+  
+  /* Header */
+  header h1 {
+    font-size: 5em;
+  }
+  
+  header p {
+    font-size: 1.2em;
+  }
+  
+  .heroe-logo {
+    width: 0.6em;
+  }
+  
+  /* Sections */
+  section {
+    height: auto;
+    min-height: 100vh;
+    padding: 20px 0;
+  }
+  
+  .aboutUs h1 {
+    font-size: 120px;
+  }
+  
+  .aboutUs h3 {
+    font-size: 50px;
+  }
+  
+  .porque h1 {
+    font-size: 100px;
+  }
+  
+  .porque .logo {
+    height: 180px;
+  }
+  
+  .paraque h1 {
+    font-size: 80px;
+    margin: -10px 0;
+  }
+  
+  .paraque h2 {
+    font-size: 70px;
+  }
+  
+  .como-funcciona {
+    transform: scale(0.5);
+  }
+  
+  /* Footer */
+  .giant-text {
+    font-size: 300px;
+  }
+  
+  .footer {
+    padding: 40px 0 20px;
+  }
+  
+  .footer-item h2 {
+    font-size: 1.8rem;
+  }
+  
+  .footer-item p {
+    font-size: 0.9rem;
+  }
+  
+  .social-link,
+  .nav-link {
+    font-size: 0.9rem;
+  }
+  
+  .gradient-line {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Extra Small Devices (Less than 375px) */
+@media screen and (max-width: 374px) {
+  /* Header */
+  header h1 {
+    font-size: 3.5em;
+  }
+  
+  header p {
+    font-size: 1em;
+  }
+  
+  /* Sections */
+  .aboutUs h1 {
+    font-size: 90px;
+  }
+  
+  .aboutUs h3 {
+    font-size: 40px;
+  }
+  
+  .porque h1 {
+    font-size: 70px;
+  }
+  
+  .porque .logo {
+    height: 150px;
+  }
+  
+  .paraque h1 {
+    font-size: 60px;
+  }
+  
+  .paraque h2 {
+    font-size: 50px;
+  }
+  
+  /* Other adjustments */
+  .footer-top {
+    gap: 20px;
+  }
+  
+  .footer-item h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Portrait Orientation (для мобільних пристроїв в портретному режимі) */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  section {
+    height: auto;
+    min-height: 120vh;  /* Більше 100vh щоб контент мав простір */
+  }
+  
+  .aboutUs h1 {
+    position: relative;
+    transform: none;
+    left: 0;
+    top: 0;
+    text-align: center;
+    margin-top: 100px;
+  }
+  
+  .aboutUs h3 {
+    position: relative;
+    transform: none;
+    left: 0;
+    top: 0;
+    text-align: center;
+    margin-top: -80px;
+  }
+  
+  .porque, .paraque, .como-funcciona {
+    padding: 50px 0;
+  }
+}
+
+/* Fix для скролбарів на Windows */
+@media screen and (min-width: 992px) {
+  body {
+    scrollbar-width: thin;
+    scrollbar-color: white rgba(0, 0, 0, 0.4);
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+}
+
+/* Орієнтація для планшетів */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  section {
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
+/* Додаткові фіксовані стилі для переповнень контенту */
+@media screen and (max-width: 767px) {
+  .heroe-text {
+    width: 90%;
+    text-align: center;
+  }
+  
+  section {
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+}

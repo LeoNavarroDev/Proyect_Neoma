@@ -6,22 +6,6 @@
   overflow: hidden;
 }
 
-.giant-element {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 0;
-  opacity: 0.03;
-  pointer-events: none;
-}
-
-.giant-text {
-  font-family: "PassionOne", monospace;
-  font-size: 800px;
-  line-height: 0.8;
-  color: white;
-}
-
 .footer-content {
   width: 90%;
   max-width: 1400px;

@@ -46,6 +46,8 @@ nav {
   position: fixed;
   width: 100%;
   z-index: 999;
+  background: #00000000;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 50%);
 }
 nav .logo {
   width: 2vw;
@@ -90,9 +92,9 @@ header p {
   margin: 0;
   transform: translateY(1em);
 }
-.heroe-logo {
-  height: auto;
-  width: 0.77em;
+.heroe-logo {    
+  height: 0.65em;
+  width: auto;
 }
 .heroe-bg-canvas {
   width: 100%;
@@ -110,9 +112,11 @@ header video {
   min-width: 100%;
   height: auto;
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 50%;
+  top: 50%;
   z-index: -2;
+  transform: translate(-50%, -50%);
+  
 }
 .gradient {
   height: 5%;
