@@ -1,9 +1,3 @@
-/* NEOMA - Responsive Styles
-   Розроблено для забезпечення адаптивності всіх елементів сайту
-   на пристроях різних розмірів */
-
-/* Large Desktops (1400px і більше)
-   Основні стилі вже визначені в style.css */
 
 /* Medium Desktops and Laptops (992px - 1399px) */
 @media screen and (max-width: 1399px) {
@@ -175,6 +169,12 @@
   .porque h1 {
     font-size: 180px;
   }
+  .porque > h1:first-child {
+    bottom: -250px;
+  }
+  .porque > h1:last-child {
+    top: -200px;
+  }
   
   .porque .logo {
     height: 300px;
@@ -244,7 +244,7 @@
   
   /* Sections */
   .aboutUs h1 {
-    font-size: 200px;
+    font-size: 400px;
   }
   
   .aboutUs h3 {
@@ -264,6 +264,12 @@
     right: 0;
     text-align: center;
   }
+  .porque > h1:first-child {
+    bottom: -30%;
+  }
+  .porque > h1:last-child {
+    bottom: 20%;
+  }
   
   .porque .logo {
     height: 250px;
@@ -282,24 +288,15 @@
   
   .como-funcciona {
     transform: scale(0.7);
-    flex-direction: column;
   }
   
   .como-funcciona h1, 
   .como-funcciona h2,
   .como-funcciona h3,
   .como-funcciona h4 {
-    position: static;
-    text-align: center;
-    transform: none;
-    right: 0;
-    left: 0;
-    top: 0;
   }
   
   .como-funcciona h2 {
-    transform: rotate(0);
-    margin: -40px 0;
   }
   
   /* Footer */
@@ -343,15 +340,14 @@
   section {
     height: auto;
     min-height: 100vh;
-    padding: 20px 0;
   }
   
   .aboutUs h1 {
-    font-size: 120px;
+    font-size: 250px;
   }
   
   .aboutUs h3 {
-    font-size: 50px;
+    font-size: 70px;
   }
   
   .porque h1 {
@@ -359,6 +355,7 @@
   }
   
   .porque .logo {
+    margin-top: 3%;
     height: 180px;
   }
   
@@ -399,114 +396,5 @@
   
   .gradient-line {
     margin-bottom: 1.5rem;
-  }
-}
-
-/* Extra Small Devices (Less than 375px) */
-@media screen and (max-width: 374px) {
-  /* Header */
-  header h1 {
-    font-size: 3.5em;
-  }
-  
-  header p {
-    font-size: 1em;
-  }
-  
-  /* Sections */
-  .aboutUs h1 {
-    font-size: 90px;
-  }
-  
-  .aboutUs h3 {
-    font-size: 40px;
-  }
-  
-  .porque h1 {
-    font-size: 70px;
-  }
-  
-  .porque .logo {
-    height: 150px;
-  }
-  
-  .paraque h1 {
-    font-size: 60px;
-  }
-  
-  .paraque h2 {
-    font-size: 50px;
-  }
-  
-  /* Other adjustments */
-  .footer-top {
-    gap: 20px;
-  }
-  
-  .footer-item h2 {
-    font-size: 1.5rem;
-  }
-}
-
-/* Portrait Orientation (для мобільних пристроїв в портретному режимі) */
-@media screen and (max-height: 500px) and (orientation: landscape) {
-  section {
-    height: auto;
-    min-height: 120vh;  /* Більше 100vh щоб контент мав простір */
-  }
-  
-  .aboutUs h1 {
-    position: relative;
-    transform: none;
-    left: 0;
-    top: 0;
-    text-align: center;
-    margin-top: 100px;
-  }
-  
-  .aboutUs h3 {
-    position: relative;
-    transform: none;
-    left: 0;
-    top: 0;
-    text-align: center;
-    margin-top: -80px;
-  }
-  
-  .porque, .paraque, .como-funcciona {
-    padding: 50px 0;
-  }
-}
-
-/* Fix для скролбарів на Windows */
-@media screen and (min-width: 992px) {
-  body {
-    scrollbar-width: thin;
-    scrollbar-color: white rgba(0, 0, 0, 0.4);
-  }
-  
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-}
-
-/* Орієнтація для планшетів */
-@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  section {
-    height: auto;
-    min-height: 100vh;
-  }
-}
-
-/* Додаткові фіксовані стилі для переповнень контенту */
-@media screen and (max-width: 767px) {
-  .heroe-text {
-    width: 90%;
-    text-align: center;
-  }
-  
-  section {
-    overflow-x: hidden;
-    overflow-y: visible;
   }
 }

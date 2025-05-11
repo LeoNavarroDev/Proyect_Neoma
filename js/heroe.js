@@ -1,5 +1,5 @@
 // Variables globales y de tiempo
-let N = 100000;
+let N = 50000;
 let fbWide, fbHigh;
 let oldPos, newPos;
 let updateShdr, drawShdr;
@@ -7,8 +7,8 @@ let b = 1;
 let canvas;
 
 // Tiempo activo y duración del fade (en segundos)
-let activeTime = 5; // tiempo en que las partículas se muestran a pleno rendimiento
-let fadeTime = 3; // tiempo durante el cual las partículas se desvanecen
+let activeTime = 2; // tiempo en que las partículas se muestran a pleno rendimiento
+let fadeTime = 2; // tiempo durante el cual las partículas se desvanecen
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight, WEBGL);
