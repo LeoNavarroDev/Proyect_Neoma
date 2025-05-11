@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Neoma</title>
+  <link rel="icon" href="img/logo.png" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.3.0/fontfaceobserver.js"></script>
+  <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="stylesheet" href="css/porque.css">
+  <link rel="stylesheet" href="css/rotate_phone.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <!-- Progress bar -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <button onclick="menu()"><img src="img/list.svg" alt="menu" class="menu"/></button>
+
+  <!-- Animacion en pasar a otra pagina  -->
+  <div class="transition-overlay" id="transitionOverlay"></div>
+  
+
+  
+    
+  <div class="overlay">
+    <div class="iconContainer">
+        <div class="phone">
+            <i class="fa fa-repeat"></i>
+        </div>
+        <p>Rotate your device</p>
+    </div>
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/threeJSManager.js"></script>
+  <script src="js/fireflyManager.js"></script>
+  <script src="js/cubeManager.js"></script>
+  <script src="js/textPanelManager.js"></script>
+  <script src="js/mouseManager.js"></script>
+  <script src="js/porque.js" defer></script>
+</body>
+</html>
