@@ -23,3 +23,86 @@
     background-position: 0% 50%;
   }
 }
+
+
+
+
+
+
+/* Hover-анімації для NEOMA сайту 
+ * Ці анімації працюють незалежно від GSAP
+ * і додають ефект тіні при наведенні на елементи
+ */
+
+/* ------- ЗАГАЛЬНІ ПРАВИЛА ДЛЯ HOVER-ЕФЕКТІВ ------- */
+/* Застосовуємо тільки властивості тіні, щоб не впливати на GSAP анімації */
+section h1, section h2, section h3, section h4, section .logo {
+  transition: text-shadow 0.4s ease, filter 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* ------- ABOUT US SECTION ------- */
+/* Звичайний текст */
+.aboutUs h1:hover {
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+/* Градієнтний текст */
+.aboutUs h3.gradient-text:hover {
+  filter: drop-shadow(0 0 10px rgba(155, 79, 168, 0.6));
+  cursor: pointer;
+}
+
+/* ------- PORQUE SECTION ------- */
+/* Звичайний текст */
+.porque .por:hover,
+.porque .que:hover {
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+/* Логотип */
+.porque .logo:hover {
+  filter: drop-shadow(0 0 15px rgba(83, 143, 220, 0.7)) 
+         drop-shadow(0 0 15px rgba(155, 79, 168, 0.5));
+  cursor: pointer;
+}
+
+/* ------- PARAQUE SECTION ------- */
+/* Звичайний текст */
+.paraque h1:hover {
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+/* Градієнтний текст */
+.paraque h2.gradient-text:hover {
+  filter: drop-shadow(0 0 12px rgba(155, 79, 168, 0.6));
+  cursor: pointer;
+}
+
+/* ------- COMO-FUNCCIONA SECTION ------- */
+/* Звичайний текст */
+.como-funcciona h3:hover,
+.como-funcciona h4:hover {
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+/* Градієнтний текст "ASI" */
+.como-funcciona h2.gradient-text:hover {
+  filter: drop-shadow(0 0 12px rgba(83, 143, 220, 0.6));
+  cursor: pointer;
+}
+
+/* Градієнтний текст "A" */
+.como-funcciona h1.gradient-text:hover {
+  filter: drop-shadow(0 0 12px rgba(220, 83, 143, 0.7));
+  cursor: pointer;
+}
+
+/* ------- ЗАГАЛЬНЕ ПРАВИЛО ДЛЯ ВСІХ ГРАДІЄНТНИХ ТЕКСТІВ ------- */
+/* Додаткове підсвічування для градієнтних текстів при наведенні */
+.gradient-text:hover {
+  filter: saturate(130%) brightness(1.1) drop-shadow(0 0 10px rgba(155, 79, 168, 0.5));
+}

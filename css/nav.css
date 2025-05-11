@@ -43,7 +43,6 @@ body.menu-active .menu-overlay {
 
 .menu-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 5vh;
 }
@@ -67,6 +66,7 @@ body.menu-active .menu-logo img {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: auto;
 }
 
 .close-btn {
@@ -213,6 +213,9 @@ body.menu-active {
 @media (max-width: 992px) {
   .menu-title {
     font-size: 8vw;
+  }
+  .menu-close {
+    margin-right: 8%;
   }
 }
 
