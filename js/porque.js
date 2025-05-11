@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPanelIndex = 0;
   let redirectTriggered = false;
   let redirectAnimationStarted = false;
-  const redirectURL = "first.html"; // URL de destino
+  const redirectURL = "index.html"; // URL de destino
   
   // Inicialización de ThreeJS
   const { scene, camera, renderer, clock } = ThreeJSManager.init();
@@ -165,7 +165,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
   });
 });
-
-function menu() {
-  window.location.href = "first.html";
-}

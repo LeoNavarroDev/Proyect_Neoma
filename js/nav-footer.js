@@ -115,16 +115,32 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Обробник для пунктів меню
   menuItems.forEach(function(item) {
-    item.addEventListener('click', function() {
-      const targetSection = this.getAttribute('data-section');
+  item.addEventListener('click', function() {
+    // 1) якщо є data-page — переходимо на вказану сторінку
+    const page = this.getAttribute('data-page');
+    if (page) {
+      window.location.href = page;
+      return;
+    }
+
+    // 2) інакше — це внутрішній якорний скрол
+    const targetSection = this.getAttribute('data-section');
+
+    // якщо клікаємо на те, що вже у фокусі (наприклад, головна сторінка без секції) —
+    // прокрутимо просто вгору
+    if (!targetSection || targetSection === window.location.hash) {
+      gsap.to(window, {
+        duration: 1,
+        scrollTo: { y: 0 },
+        ease: 'power2.inOut'
+      });
+    } else {
+      // штатний скрол до секції
       body.classList.remove('menu-active');
       menuCloseAnimation.restart();
-      
-      // Затримка перед скролом, щоб анімація закриття встигла виконатися
       setTimeout(function() {
         const section = document.querySelector(targetSection);
         if (section) {
-          // Використовуємо GSAP для плавного скролу
           gsap.to(window, {
             duration: 1.5,
             scrollTo: {
@@ -135,8 +151,10 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         }
       }, 700);
-    });
+    }
   });
+});
+
   
   // Закрити меню при натисканні клавіші Escape
   document.addEventListener('keydown', function(e) {

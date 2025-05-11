@@ -34,3 +34,15 @@ video.addEventListener("timeupdate", () => {
 
 
 
+
+document.querySelectorAll('section').forEach(sec => {
+  const url = sec.dataset.url;
+
+  // знаходимо всі елементи всередині секції
+  sec.querySelectorAll('*').forEach(child => {
+    child.addEventListener('click', () => {
+      window.location.href = url;
+    });
+  });
+});
+

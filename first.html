@@ -8,12 +8,75 @@
     <link rel="stylesheet" href="css/first.css">
     <link rel="stylesheet" href="css/rotate_phone.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/nav.css">
         
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
 </head>
 <body>
+
+    <!-- navbar -->
+    <nav>
+      <img src="img/logo.png" onclick="window.location.href='index.html'" alt="neoma" class="logo" /> style="cursor: pointer;"
+      <img src="img/list.svg" alt="menu" class="menu" />
+    </nav>
+    
+    <div class="fullscreen-menu">
+      <div class="menu-overlay">
+        <div class="menu-container">
+          <div class="menu-header">
+            <div class="menu-logo">
+              <img src="img/logo.png" alt="NEOMA" />
+            </div>
+            <div class="menu-close">
+              <div class="close-btn">
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="menu-navigation">
+            <div class="menu-item" data-page="index.html" data-section="header">
+              <span class="menu-number">01</span>
+              <h2 class="menu-title">HOME</h2>
+            </div>
+            <div class="menu-item" data-page="#">
+              <span class="menu-number">02</span>
+              <h2 class="menu-title">ABOUT US</h2>
+            </div>
+            <div class="menu-item" data-section="#">
+              <span class="menu-number">03</span>
+              <h2 class="menu-title">POR QUE</h2>
+            </div>
+            <div class="menu-item" data-page="#">
+              <span class="menu-number">04</span>
+              <h2 class="menu-title">PARA QUE</h2>
+            </div>
+            <div class="menu-item" data-page="#">
+              <span class="menu-number">05</span>
+              <h2 class="menu-title">COMO FUNCCIONA</h2>
+            </div>
+          </div>
+<!--           
+          <div class="menu-footer">
+            <div class="menu-social">
+              <a href="#" class="social-link">Instagram</a>
+              <a href="#" class="social-link">Twitter</a>
+              <a href="#" class="social-link">LinkedIn</a>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+
     <div class="loader">
         <video src="img/video_bg.mp4" autoplay loop muted playsinline class="videobg"></video>
         <div class="content">
@@ -38,5 +101,6 @@
     </div>
 
     <script src="js/first.js"></script>
+    <script src="js/nav-footer.js"></script>
 </body>
 </html>

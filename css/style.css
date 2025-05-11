@@ -43,26 +43,8 @@ body {
 }
 
 nav {
-  position: fixed;
-  width: 100%;
-  z-index: 999;
   background: #00000000;
   background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 50%);
-}
-nav .logo {
-  width: 2vw;
-  height: auto;
-  padding: 1%;
-  float: left;
-}
-nav .menu {
-  width: 3vw;
-  height: auto;
-  filter: invert(1);
-  padding: 0.7%;
-  right: 0;
-  cursor: pointer;
-  position: absolute;
 }
 
 header {

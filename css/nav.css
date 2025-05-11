@@ -1,4 +1,32 @@
-
+@font-face {
+  font-family: "PassionOne";
+  src: url("../font/PassionOne-Regular.ttf") format("woff2");
+}
+nav {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  top: 0;
+}
+nav * {
+  font-family: 'PassionOne';
+}
+nav .logo {
+  width: 2vw;
+  height: auto;
+  padding: 1%;
+  float: left;
+  cursor: pointer;
+}
+nav .menu {
+  width: 3vw;
+  height: auto;
+  filter: invert(1);
+  padding: 0.7%;
+  right: 0;
+  cursor: pointer;
+  position: absolute;
+}
 .fullscreen-menu {
   position: fixed;
   top: 0;
