@@ -14,13 +14,13 @@ document.addEventListener('DOMContentLoaded', function() {
   menuOpenAnimation
     .to('.menu-overlay', { 
       clipPath: 'circle(150% at calc(100% - 65px) 65px)', 
-      duration: 0.8, 
+      duration: 0.1, 
       ease: 'power3.inOut' 
     })
     .to('.menu-logo img', { 
       opacity: 1, 
       y: 0,
-      duration: 0.4, 
+      duration: 0.2, 
       ease: 'power2.out' 
     }, '-=0.4')
     .to('.close-btn span:first-child', { 
