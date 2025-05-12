@@ -333,12 +333,15 @@ header video {
 
 .transform_li{
   transition: transform 0.5s ease;
-  margin-top: 2em;
+  margin-top: 4em;
 }
 
 .transform_li:hover{
   transform: translate3d(50px, 20px, 50px); 
+color: rgb(0, 217, 255);
 }
+
+
 
 
 @keyframes contenido_listas_desordenadas {
@@ -350,4 +353,7 @@ header video {
 }
 
 
-/* -------- PORQUE NOSOTROS -------- */
+.andreu{
+  width: 100%;
+  height: 100vh;
+}

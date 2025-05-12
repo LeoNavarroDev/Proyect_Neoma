@@ -306,6 +306,29 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// cambiar letras 
+
+// Configurar el cambio de color de fondo con ScrollTrigger
+ScrollTrigger.create({
+  trigger: ".andreu", // La sección donde se va a activar el cambio
+  start: "top center", // Cuando la parte superior de la sección llega al centro de la ventana
+  onEnter: () => {
+    gsap.to("body", {
+      background: "linear-gradient(-30deg, #00ffcc, #9b59b6, #00c3ff, #33ccff, #ff9e00, #b6ff00)", // El nuevo fondo
+      backgroundSize: "400% 400%", // Tamaño del gradiente
+      duration: 2, // Duración de la animación
+      ease: "linear" ,// Tipo de transición
+      animation: 'gradient 15s ease infinite', 
+    });
+  },
+  onLeaveBack: () => {
+    gsap.to("body", {
+      background: "linear-gradient(-45deg, #ffffff, #ffffff, #ffffff, #ffffff)", // Fondo original
+      backgroundSize: "400% 400%",
+      duration: 1,
+      ease: "easeInOut"
+    });
+  }
+});
+
 
 
