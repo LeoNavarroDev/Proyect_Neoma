@@ -134,6 +134,7 @@ strong {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 15%;
 }
 .etapas_title {
     font-size: 5em;
@@ -204,12 +205,101 @@ strong {
 }
 
 
+/* hardware */
+.hardware {
+    position: relative;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15%;
+    margin-bottom: 15%;
+}
+.hardware_title {
+    font-size: 5em;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-family: 'PassionOne', sans-serif;
+}
+.list-componentes p {
+    font-size: 1.7em;
+    margin-bottom: 0;
+    margin-top: 1em;
+}
+.list-componentes div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.list-componentes div img {
+    height: 3em;
+    margin-right: 1em;
+}
 
 
+/* beneficios clave */
+.beneficios-clave {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.beneficios-clave_title {
+    font-size: 5em;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-family: 'PassionOne', sans-serif;
+}
+.tabla-beneficios{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
+.fila-beneficios{
+    width: 100% !important;
+}
+.gradient-border-beneficios {
+    /* Ajusta a tu ancho/alto */
+    width: 100%;
+    aspect-ratio: 3/2;
+    margin-bottom: 2%;
+    margin-left: 3%;
+    margin-right: 0;
 
+    /* Simula el “borde” degradado con padding */
+    padding: 4px;
+    border-radius: 20px;
 
+    /* 2 gradientes superpuestos */
+    background: 
+        linear-gradient(10deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 80%),
+        linear-gradient(90deg, rgba(155, 79, 168, 1), rgba(83, 143, 220, 1));
+}
 
+.inner-content-beneficios {
+    height: 99%;
+    font-size: 1.6em;
+    /* Fondo de tu contenido */
+    background: rgb(0, 0, 0);
+    border-radius: 20px;  /* 10px (padre) – 4px (padding) */
+    
+    /* Espacio interno para texto/images */
+    padding: 1rem;
 
+    /* Opcional: centrar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    /* Para que crezca con su contenido */
+    min-height: 100px;
+}
 
 
 
@@ -237,4 +327,8 @@ strong {
     border-radius: 50%;
     background-color: rgb(0, 0, 0);
     display: block;
+}
+
+.chat-neoma p.animated {
+  opacity: 1;
 }
