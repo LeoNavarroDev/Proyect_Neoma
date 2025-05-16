@@ -1,0 +1,338 @@
+@font-face {
+  font-family: "PassionOne";
+  src: url("../font/PassionOne-Regular.ttf") format("woff2");
+}
+@font-face {
+  font-family: "Roobert-Regular";
+  src: url("../font/Roobert-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Roobert-Medium";
+  src: url("../font/Roobert-Medium.woff2") format("woff2");
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  margin: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background-clip: padding-box;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(226, 226, 226);
+  background-size: 200% 200%;
+  background-position: right bottom;
+}
+
+/* --------------------------------- */
+
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: black;
+    color: white;
+    font-family: "Roobert-Regular", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.hero{
+    position: relative;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    font-family: 'PassionOne', sans-serif;
+}
+.hero-text-content {
+    position: absolute;
+    left: 0;
+    font-weight: 100;
+    left: 5%;
+    z-index: 1;
+}
+.hero-text-content h1 {
+    font-size: 20em;
+    margin-bottom: 0;
+    margin-top: 0;
+    z-index: 1;
+}
+.hero-text-content h3 {
+    font-size: 6em;
+    margin-bottom: 0;
+    margin-top: 0;
+    z-index: 1;
+}
+
+.lentilla-hero {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    z-index: 0;
+}
+.linea-hero {
+    position: absolute;
+    top: 0;
+    height: 150%;
+    z-index: 2;
+}
+
+/* introduccion */
+.introduccion {
+    position: relative;
+    width: 40%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.introduccion_title {
+    font-size: 5em;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-family: 'PassionOne', sans-serif;
+}
+.introduccion_text {
+    font-size: 1.7em;
+    margin-bottom: 0;
+    margin-top: 0.7em;
+    text-align: center;
+}
+strong {
+    font-family: 'Roobert-Medium', sans-serif;
+    font-weight: 900;
+}
+.circle-introduccion{
+    width: 20%;
+    right: -7%;
+    bottom: 28%;
+    transform: rotate(45deg);
+}
+
+/* etapas */
+.etapas {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15%;
+}
+.etapas_title {
+    font-size: 5em;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-family: 'PassionOne', sans-serif;
+}
+.etapas-container{
+    position: relative;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
+.etapa-name {
+    width: 15%;
+    font-size: 2.5em;
+    margin-bottom: 0;
+    margin-top: 0;
+    text-align: center;
+    font-family: 'PassionOne', sans-serif;
+}
+.circle-etapa {
+    width: 15%;
+    left: 12%;
+    bottom: 30%;
+    transform: rotate(120deg);
+}
+.etapa-discripcion {
+    width: 50%;
+}
+
+.gradient-border-wrapper {
+    /* Ajusta a tu ancho/alto */
+    width: 100%;
+    margin-bottom: 2%;
+    margin-left: 3%;
+    margin-right: 0;
+
+    /* Simula el “borde” degradado con padding */
+    padding: 4px;
+    border-radius: 20px;
+
+    /* 2 gradientes superpuestos */
+    background: 
+        linear-gradient(10deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 80%),
+        linear-gradient(90deg, rgba(155, 79, 168, 1), rgba(83, 143, 220, 1));
+}
+
+.inner-content {
+    font-size: 1.6em;
+    /* Fondo de tu contenido */
+    background: rgb(0, 0, 0);
+    border-radius: 20px;  /* 10px (padre) – 4px (padding) */
+    
+    /* Espacio interno para texto/images */
+    padding: 1rem;
+
+    /* Opcional: centrar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    /* Para que crezca con su contenido */
+    min-height: 100px;
+}
+
+
+/* hardware */
+.hardware {
+    position: relative;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15%;
+    margin-bottom: 15%;
+}
+.hardware_title {
+    font-size: 5em;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-family: 'PassionOne', sans-serif;
+}
+.list-componentes p {
+    font-size: 1.7em;
+    margin-bottom: 0;
+    margin-top: 1em;
+}
+.list-componentes div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.list-componentes div img {
+    height: 3em;
+    margin-right: 1em;
+}
+
+
+/* beneficios clave */
+.beneficios-clave {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.beneficios-clave_title {
+    font-size: 5em;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-family: 'PassionOne', sans-serif;
+}
+.tabla-beneficios{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
+.fila-beneficios{
+    width: 100% !important;
+}
+.gradient-border-beneficios {
+    /* Ajusta a tu ancho/alto */
+    width: 100%;
+    aspect-ratio: 3/2;
+    margin-bottom: 2%;
+    margin-left: 3%;
+    margin-right: 0;
+
+    /* Simula el “borde” degradado con padding */
+    padding: 4px;
+    border-radius: 20px;
+
+    /* 2 gradientes superpuestos */
+    background: 
+        linear-gradient(10deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 80%),
+        linear-gradient(90deg, rgba(155, 79, 168, 1), rgba(83, 143, 220, 1));
+}
+
+.inner-content-beneficios {
+    height: 99%;
+    font-size: 1.6em;
+    /* Fondo de tu contenido */
+    background: rgb(0, 0, 0);
+    border-radius: 20px;  /* 10px (padre) – 4px (padding) */
+    
+    /* Espacio interno para texto/images */
+    padding: 1rem;
+
+    /* Opcional: centrar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    /* Para que crezca con su contenido */
+    min-height: 100px;
+}
+
+
+
+
+
+
+.circle_decore {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    position: absolute;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%),
+     linear-gradient(180deg, rgba(155, 79, 168, 1) 0%, rgba(83, 143, 220, 1) 100%);
+    padding: 4px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: blur(2px);
+    z-index: -2;
+}
+.circle_decore::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgb(0, 0, 0);
+    display: block;
+}
+
+.chat-neoma p.animated {
+  opacity: 1;
+}

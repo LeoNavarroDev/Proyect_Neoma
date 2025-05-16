@@ -1,0 +1,337 @@
+/* responsive.css para NEOMA
+   Complementa como-funcciona.css con estilos responsivos 
+   para diferentes tamaños de dispositivos */
+
+/* Media Queries Generales */
+
+/* Tablets y dispositivos medianos (hasta 1024px) */
+@media screen and (max-width: 1024px) {
+    /* Ajustes generales */
+    body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+    
+    /* Hero section */
+    .hero-text-content h1 {
+      font-size: 14em;
+    }
+    
+    .hero-text-content h3 {
+      font-size: 4em;
+    }
+    
+    .lentilla-hero {
+      height: 80%;
+      display: none;
+    }
+  
+    /* Introducción */
+    .introduccion {
+      width: 70%;
+    }
+    
+    .circle-introduccion {
+      width: 15%;
+      right: -5%;
+    }
+    
+    /* Etapas */
+    .etapas-container {
+      width: 85%;
+    }
+    
+    /* Hardware */
+    .hardware {
+      width: 70%;
+    }
+    
+    /* Beneficios */
+    .tabla-beneficios {
+      width: 90%;
+      flex-wrap: wrap;
+    }
+    
+    .gradient-border-beneficios {
+      width: 45%;
+      margin: 1%;
+    }
+  }
+  
+  /* Dispositivos móviles y pantallas pequeñas (hasta 768px) */
+  @media screen and (max-width: 768px) {
+    /* Hero ajustado */
+    .hero {
+      flex-direction: column;
+    }
+    
+    .hero-text-content {
+      position: relative;
+      text-align: center;
+      left: 0;
+      margin-top: 20%;
+    }
+    
+    .hero-text-content h1 {
+      font-size: 8em;
+    }
+    
+    .hero-text-content h3 {
+      font-size: 3em;
+    }
+    
+    .lentilla-hero {
+      position: relative;
+      right: auto;
+      height: 60%;
+      margin-top: 5%;
+    }
+    
+    .linea-hero {
+      display: none;
+    }
+    
+    /* Introducción */
+    .introduccion {
+      width: 90%;
+      height: auto;
+      padding: 10% 0;
+    }
+    
+    .introduccion_title {
+      font-size: 3.5em;
+    }
+    
+    .introduccion_text {
+      font-size: 1.4em;
+    }
+    
+    .circle-introduccion {
+      width: 25%;
+      right: 5%;
+      bottom: 15%;
+    }
+    
+    /* Etapas */
+    .etapas {
+      margin-top: 10%;
+    }
+    
+    .etapas_title {
+      font-size: 3.5em;
+    }
+    
+    .etapas-container {
+      width: 90%;
+      flex-direction: column;
+      margin-top: 10%;
+    }
+    
+    .etapa-name {
+      width: 100%;
+      font-size: 2em;
+      margin-bottom: 5%;
+    }
+    
+    .circle-etapa {
+      width: 20%;
+      left: auto;
+      bottom: auto;
+      position: relative;
+      margin: 5% 0;
+    }
+    
+    .etapa-discripcion {
+      width: 100%;
+    }
+    
+    .gradient-border-wrapper {
+      margin-left: 0;
+      margin-bottom: 5%;
+    }
+    
+    .inner-content {
+      font-size: 1.2em;
+      min-height: auto;
+      padding: 0.8rem;
+    }
+    
+    /* Hardware */
+    .hardware {
+      width: 90%;
+      margin-top: 10%;
+      margin-bottom: 10%;
+    }
+    
+    .hardware_title {
+      font-size: 3.5em;
+    }
+    
+    .list-componentes p {
+      font-size: 1.3em;
+    }
+    
+    .list-componentes div {
+      align-items: flex-start;
+    }
+    
+    .list-componentes div img {
+      height: 2em;
+    }
+    
+    /* Beneficios clave */
+    .beneficios-clave_title {
+      font-size: 3.5em;
+    }
+    
+    .tabla-beneficios {
+      flex-direction: column;
+      width: 90%;
+    }
+    
+    .gradient-border-beneficios {
+      width: 100%;
+      margin: 2% 0;
+    }
+    
+    .inner-content-beneficios {
+      font-size: 1.2em;
+      padding: 0.8rem;
+    }
+  }
+  
+  /* Dispositivos muy pequeños (hasta 480px) */
+  @media screen and (max-width: 480px) {
+    /* Hero más compacto */
+    .hero-text-content h1 {
+      font-size: 5em;
+    }
+    
+    .hero-text-content h3 {
+      font-size: 2em;
+    }
+    
+    /* Ajustes tipográficos */
+    .introduccion_title, 
+    .etapas_title, 
+    .hardware_title, 
+    .beneficios-clave_title {
+      font-size: 2.8em;
+    }
+    
+    .introduccion_text {
+      font-size: 1.2em;
+    }
+    
+    .inner-content {
+      font-size: 1em;
+    }
+    
+    .etapa-name {
+      font-size: 1.8em;
+    }
+    
+    .list-componentes p {
+      font-size: 1.1em;
+    }
+    
+    .inner-content-beneficios {
+      font-size: 1em;
+    }
+    
+    /* Ajustes de espacio */
+    .etapas {
+      margin-top: 15%;
+    }
+    
+    .etapas-container {
+      margin-top: 8%;
+    }
+    
+    /* Círculos decorativos */
+    .circle_decore {
+      filter: blur(1px);
+    }
+  }
+  
+  /* Ajustes para pantallas grandes (más de 1440px) */
+  @media screen and (min-width: 1440px) {
+    .hero-text-content h1 {
+      font-size: 24em;
+    }
+    
+    .hero-text-content h3 {
+      font-size: 8em;
+    }
+    
+    .introduccion {
+      width: 35%;
+    }
+    
+    .introduccion_title,
+    .etapas_title,
+    .hardware_title,
+    .beneficios-clave_title {
+      font-size: 6em;
+    }
+    
+    .introduccion_text {
+      font-size: 2em;
+    }
+    
+    .inner-content,
+    .inner-content-beneficios {
+      font-size: 1.8em;
+    }
+    
+    .hardware {
+      width: 35%;
+    }
+    
+    .list-componentes p {
+      font-size: 1.9em;
+    }
+  }
+  
+  /* Orientación landscape para móviles */
+  @media screen and (max-height: 600px) and (orientation: landscape) {
+    .hero {
+      height: auto;
+      min-height: 100vh;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 5% 0;
+    }
+    
+    .hero-text-content {
+      position: relative;
+      margin-top: 0;
+      left: 5%;
+      text-align: left;
+    }
+    
+    .hero-text-content h1 {
+      font-size: 6em;
+    }
+    
+    .hero-text-content h3 {
+      font-size: 2em;
+    }
+    
+    .lentilla-hero {
+      position: relative;
+      height: 90vh;
+      margin-top: 0;
+    }
+    
+    .introduccion,
+    .hardware {
+      height: auto;
+      padding: 10% 0;
+    }
+  }
+  
+  /* Compatibilidad con modo oscuro del sistema */
+  @media (prefers-color-scheme: dark) {
+    /* Ya está en modo oscuro por defecto */
+  }
