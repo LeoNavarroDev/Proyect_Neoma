@@ -1,108 +1,175 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEOMA</title>
-    <link rel="icon" href="img/logo.png" />
-    <link rel="stylesheet" href="css/style.css" />
-    <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
-        integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
-        integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js"></script>
-    <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
-  </head>
-  <body>
-    <!-- navbar -->
-    <nav>
-      <img src="img/logo.png" alt="" class="logo" />
-      <img src="img/list.svg" alt="menu" class="menu" />
-    </nav>
-    
-  
-    <section id="heroe_section_about" class="heroe_section_about">
-      <!-- imagen presentacion -->
-      <h1 class="title"> 
-        <span class="draggable">H</span> 
-        <span class="draggable">I</span> 
-        <span class="draggable">N</span> 
-        <span class="draggable">E</span> 
-        <span class="draggable">O</span> 
-        <span class="draggable">M</span> 
-        <span class="draggable">A</span> 
-      </h1>
-  
-      <h2 class="mini_tittle">La lentilla que te cambia la vida por completo</h2>
-      </div>
-       <div class="overlay"></div>
-      
-      <div class="imagen_hero">
-       
-       <img src="./img/close-up-beautiful-blue-eyes-man.jpg" alt="" width="100%">
-       
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEOMA</title>
+  <link rel="icon" href="img/logo.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+    integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+    integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js"></script>
+  <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
+</head>
+
+<body>
+  <!-- navbar -->
+  <nav>
+    <img src="img/logo.png" alt="" class="logo" />
+    <img src="img/list.svg" alt="menu" class="menu" />
+  </nav>
+
+
+  <section id="heroe_section_about" class="heroe_section_about">
+    <!-- imagen presentacion -->
+    <h1 class="title">
+      <span class="draggable">H</span>
+      <span class="draggable">I</span>
+      <span class="draggable">N</span>
+      <span class="draggable">E</span>
+      <span class="draggable">O</span>
+      <span class="draggable">M</span>
+      <span class="draggable">A</span>
+    </h1>
+
+    <h2 class="mini_tittle">La lentilla que te cambia la vida por completo</h2>
+    </div>
+    <div class="overlay"></div>
+
+    <div class="imagen_hero">
+
+      <img src="./img/close-up-beautiful-blue-eyes-man.jpg" alt="" width="100%">
+
+    </div>
+
+  </section>
+  <section id="aboutus-description" class="aboutus-description">
+    <div class="text-aboutus-description">
+      <!-- text -->
+      <div>
+        <h2 class="tamaño_h2">Explora todo el <br> potencial de <br> NEOMA</h2>
+
       </div>
 
-    </section>
-    <section id="aboutus-description" class="aboutus-description">
-      <div class="text-aboutus-description">
-        <!-- text -->
-        <div>
-          <h2 class="tamaño_h2">Explora todo el <br> potencial de <br> NEOMA</h2>
-        
+      <!-- lente -->
+      <div id="lente-aboutus" class="lente-aboutus">
+        <div id="canvas-container" class="draggable_canva"></div>
+      </div>
+    </div>
+
+    <!-- lista desordenada mostrando que es neoma -->
+
+    <section class="imageSection" id="imageSection">
+      <ul class="listas_desordenadas ">
+        <div id="contenido_listas_desordenadas" class="contenido_listas_desordenadas">
+          <span id="text1" class="transform_li clickable"> mejores desiciones en tu vida</span>
         </div>
 
-        <!-- lente -->
-        <div id="lente-aboutus" class="lente-aboutus">
-          <div id="canvas-container" class="draggable_canva"></div>
-        </div>
+        </li>
+        <li>
+          <div id="contenido_listas_desordenadas" class="contenido_listas_desordenadas">
+            <span id="text2" class="transform_li clickable">Preguntale lo que tu quieras</span>
+          </div>
+
+        </li>
+        <li>
+          <div id="contenido_listas_desordenadas" class="contenido_listas_desordenadas">
+            <span id="text3" class="transform_li clickable">Mejora tu salud</span>
+          </div>
+
+        </li>
+        <li>
+          <div id="contenido_listas_desordenadas" class="contenido_listas_desordenadas">
+            <span id="text4" class="transform_li clickable">Mejora tu productividad</span>
+          </div>
+
+        </li>
+      </ul>
+
+    </section>
+
+
+
+  </section>
+<!-- section de andreuuuu gsapp  -->
+  <section class="andreu">
+
+    <div class="style_descripciones">
+      <h2 class="h2_style_h2">Conoce la forma de <span>ver</span> tu vida de otra manera</h2>
+      <p class="descripcion_style_h2">Soluciona y mejora el rendimiento que impulsan tu crecimiento en diferentes
+        factores de tu vida. Nuestra <br> lentilla NEOMA combina
+        impactantes funcionalidades con alto impacto tecnologico con el maximo de tops de IA y control por si misma.</p>
+    </div>
+
+    <div class="contenedor_1">
+      <div>
+        <h2 class="llama_a_neoma">LLama a Neoma cuando quieras</h2>
+        <p class="description_llama_neoma">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit velit vitae
+          necessitatibus optio repellat ipsam
+          ratione, quisquam eos magni sapiente non atque nesciunt quis illum sunt iusto eligendi hic temporibus.
+          Consequatur laborum aut repellat, molestias illum repudiandae neque cum reprehenderit, consequuntur culpa </p>
       </div>
 
-      <!-- lista desordenada mostrando que es neoma -->
-       
-      <section class="imageSection" id="imageSection">
-        <ul class="listas_desordenadas ">
-          <div id="contenido_listas_desordenadas" class="contenido_listas_desordenadas">
-             <span id="text1" class="transform_li clickable"  > mejores desiciones en tu vida</span>
-            </div>
-         
-        </li>
-        <li >
-          <div id="contenido_listas_desordenadas" class="contenido_listas_desordenadas">
-              <span id="text2"  class="transform_li clickable" >Preguntale lo que tu quieras</span>
-          </div>
-         
-        </li>
-        <li >
-          <div  id="contenido_listas_desordenadas" class="contenido_listas_desordenadas">
-            <span id="text3" class="transform_li clickable" >Mejora tu salud</span>
-          </div>
-         
-        </li>
-        <li >
-          <div id="contenido_listas_desordenadas" class="contenido_listas_desordenadas">
-            <span id="text4" class="transform_li clickable" >Mejora tu productividad</span>
-          </div>
-         
-        </li>
-       </ul>
+      <div class="imagen_contenedor_1">
+        <video src="./img/ojos1.mp4" loop muted height="100%" style="border-radius: 20px;"> </video>
+      </div>
+    </div>
 
-      </section>
-     
-  
+    <div class="contenedor_2">
+      <div>
+        <h2 class="llama_a_neoma">Mejores desiciones</h2>
+        <p class="description_llama_neoma">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit velit vitae
+          necessitatibus optio repellat ipsam
+          ratione, quisquam eos magni sapiente non atque nesciunt quis illum sunt iusto eligendi hic temporibus.
+          Consequatur laborum aut repellat, molestias illum repudiandae neque cum reprehenderit, consequuntur culpa </p>
+      </div>
 
-    </section>
+      <div class="imagen_contenedor_1">
+        <video src="./img/ojos1.mp4" loop muted height="100%" style="border-radius: 20px;"> </video>
+      </div>
+    </div>
+    <div class="contenedor_3">
+      <div>
+        <h2 class="llama_a_neoma">Facilita tu vida</h2>
+        <p class="description_llama_neoma">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit velit vitae
+          necessitatibus optio repellat ipsam
+          ratione, quisquam eos magni sapiente non atque nesciunt quis illum sunt iusto eligendi hic temporibus.
+          Consequatur laborum aut repellat, molestias illum repudiandae neque cum reprehenderit, consequuntur culpa </p>
+      </div>
 
-    <section class="andreu">
-      
-    </section>
-     
-    
-    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
-    <script src="js/about.js"></script>
-    <script src="js/main.js"></script>
-  </body>
+      <div class="imagen_contenedor_3">
+        <video src="./img/ojos1.mp4" loop muted height="100%" style="border-radius: 20px;"> </video>
+      </div>
+    </div>
+    <div class="contenedor_4">
+      <div>
+        <h2 class="llama_a_neoma">tu vida mucho mas facil</h2>
+        <p class="description_llama_neoma">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit velit vitae
+          necessitatibus optio repellat ipsam
+          ratione, quisquam eos magni sapiente non atque nesciunt quis illum sunt iusto eligendi hic temporibus.
+          Consequatur laborum aut repellat, molestias illum repudiandae neque cum reprehenderit, consequuntur culpa </p>
+      </div>
+
+      <div class="imagen_contenedor_4">
+        <video src="./img/ojos1.mp4" loop muted height="100%" style="border-radius: 20px;"> </video>
+      </div>
+    </div>
+
+
+  </section>
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+  <script src="js/about.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
 </html>

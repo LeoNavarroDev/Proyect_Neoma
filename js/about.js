@@ -330,5 +330,88 @@ ScrollTrigger.create({
   }
 });
 
+// realizando animaciones en la section "andreu"
+gsap.fromTo(".style_descripciones",
+  {
+      x: "50%",
+      opacity: 0,
+
+  },
+
+  {
+      x: "0%",
+      ease: "power2.out",
+      opacity: 1,
+      scrollTrigger: {
+          trigger: ".style_descripciones",
+          start: "top bottom", // Se activa cuando la parte inferior de la sección toca la parte inferior de la ventana
+          end: "bottom center", // Termina cuando el centro del trigger toca el centro de la ventana
+          scrub: true, // Hace que la animación sea progresiva con el scroll
+          markers: true,
+      },
+  });
+
+
+  //haciendo animaciones con los divs neoma
+
+  gsap.fromTo(".contenedor_2",
+    {
+        y: "0",
+  
+    },
+  
+    {
+        y: "-45%",
+        ease: "power2.out",
+        opacity: 1,
+        scrollTrigger: {
+            trigger: ".contenedor_2",
+            start: "top bottom", // Se activa cuando la parte inferior de la sección toca la parte inferior de la ventana
+            end: "center center", // Termina cuando el centro del trigger toca el centro de la ventana
+            scrub: true, // Hace que la animación sea progresiva con el scroll
+            markers: true,
+        },
+    });
+
+    gsap.fromTo(".contenedor_3",
+      {
+          y: "0",
+    
+      },
+    
+      {
+          y: "-55%",
+          ease: "power2.out",
+          opacity: 1,
+          scrollTrigger: {
+              trigger: ".contenedor_3",
+              start: "top bottom", // Se activa cuando la parte inferior de la sección toca la parte inferior de la ventana
+              end: "center center", // Termina cuando el centro del trigger toca el centro de la ventana
+              scrub: true, // Hace que la animación sea progresiva con el scroll
+              markers: true,
+          },
+      });
+
+      gsap.fromTo(".contenedor_4",
+        {
+            y: "0",
+      
+        },
+      
+        {
+            y: "-65%",
+            ease: "power2.out",
+            opacity: 1,
+            scrollTrigger: {
+                trigger: ".contenedor_4",
+                start: "top bottom", // Se activa cuando la parte inferior de la sección toca la parte inferior de la ventana
+                end: "center center", // Termina cuando el centro del trigger toca el centro de la ventana
+                scrub: true, // Hace que la animación sea progresiva con el scroll
+                markers: true,
+            },
+        });
+  
+
+
 
 
