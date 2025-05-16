@@ -7,6 +7,8 @@
   <link rel="icon" href="img/logo.png" />
   <link rel="stylesheet" href="css/como-funcciona.css" />
   <link rel="stylesheet" href="css/resposive_como_funcciona.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/footer.css">
 
   <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
   
@@ -14,6 +16,57 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer" ></script>
 </head>
 <body>
+
+    <!-- navbar -->
+    <nav>
+        <img src="img/logo.png" alt="neoma" class="logo" />
+        <img src="img/list.svg" alt="menu" class="menu" />
+      </nav>
+      
+      <div class="fullscreen-menu">
+        <div class="menu-overlay">
+          <div class="menu-container">
+            <div class="menu-header">
+              <div class="menu-logo">
+                <img src="img/logo.png" alt="NEOMA" />
+              </div>
+              <div class="menu-close">
+                <div class="close-btn">
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="menu-navigation">
+              <div class="menu-item" data-page="index.html" data-section="header">
+                <span class="menu-number">01</span>
+                <h2 class="menu-title">HOME</h2>
+              </div>
+              <div class="menu-item" data-page="#" data-section=".aboutUs">
+                <span class="menu-number">02</span>
+                <h2 class="menu-title">ABOUT US</h2>
+              </div>
+              <div class="menu-item" data-page="first.html" data-section=".porque">
+                <span class="menu-number">03</span>
+                <h2 class="menu-title">POR QUE</h2>
+              </div>
+              <div class="menu-item" data-page="como-funciona.html" data-section=".como-funcciona">
+                <span class="menu-number">05</span>
+                <h2 class="menu-title">COMO FUNCCIONA</h2>
+              </div>
+            </div>
+            
+            <div class="menu-footer">
+              <div class="menu-social">
+                <a href="#" class="social-link">Instagram</a>
+                <a href="#" class="social-link">Twitter</a>
+                <a href="#" class="social-link">LinkedIn</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
   
     <!-- hero -->
     <div class="hero">
@@ -153,9 +206,53 @@
         </div>
     </div>
 
+
+    <!-- footer -->
+    <footer class="footer">
+      
+        <div class="footer-content">
+          <div class="footer-top">
+            <div class="footer-item">
+              <h2>Contact</h2>
+              <p>hello@neoma.com</p>
+            </div>
+            
+            <div class="footer-item">
+              <h2>Follow</h2>
+              <div class="social-links">
+                <a href="#" class="social-link">Instagram</a>
+                <a href="#" class="social-link">Twitter</a>
+                <a href="#" class="social-link">LinkedIn</a>
+              </div>
+            </div>
+            
+            <div class="footer-item">
+              <h2>Address</h2>
+              <p>Ukraine, Kyiv<br>Future Street, 42</p>
+            </div>
+          </div>
+  
+          <div class="gradient-line"></div>
+  
+          <div class="footer-bottom">
+            <div class="copyright">
+              <p>© 2025 <span class="bold gradient-text">NEOMA</span></p>
+            </div>
+            
+            <div class="footer-nav">
+                <a href="index.html" class="nav-link">Home</a>
+              <a href="#" class="nav-link">About Us</a>
+              <a href="first.html" class="nav-link">Por Que</a>
+              <a href="como-funciona.html" class="nav-link">Como Funcciona</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
     
     <script src="js/como-funcciona.js"></script>
     <script src="js/gsap.js"></script>
+    <script src="js/nav-footer.js"></script>
 
 
 </body>
