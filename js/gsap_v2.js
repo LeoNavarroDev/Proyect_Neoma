@@ -79,8 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
       start: 'top 60%',
       toggleActions: 'play none none none'
     },
-    scale: 0,
-    rotation: 0,
+    opacity: 0,
     duration: 1.2,
     ease: "elastic.out(1, 0.5)"
   });
@@ -151,8 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
         start: 'top 75%',
         toggleActions: 'play none none none'
       },
-      scale: 0,
-      rotation: 0,
       duration: 1,
       delay: 0.2,
       ease: "elastic.out(1, 0.5)"
