@@ -336,3 +336,19 @@ strong {
 .chat-neoma p.animated {
   opacity: 1;
 }
+
+
+
+
+.grafico-satisfaccion {
+  width: 90%;
+  max-width: 1000px;
+  margin: 5em auto;
+  text-align: center;
+}
+
+.satisfaccion-title {
+  font-size: 3em;
+  margin-bottom: 1em;
+  font-family: 'PassionOne', sans-serif;
+}

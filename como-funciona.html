@@ -12,6 +12,8 @@
 
   <script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
   
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer" ></script>
 </head>
@@ -207,6 +209,14 @@
     </div>
 
 
+    <section class="grafico-satisfaccion">
+      <h2 class="satisfaccion-title">Satisfacción de Usuarios por Categoría</h2>
+      <canvas id="satisfaccionChart" width="800" height="400"></canvas>
+    </section>
+
+
+
+
     <!-- footer -->
     <footer class="footer">
       
@@ -249,7 +259,7 @@
         </div>
       </footer>
 
-    
+
     <script src="js/como-funcciona.js"></script>
     <script src="js/gsap.js"></script>
     <script src="js/nav-footer.js"></script>
