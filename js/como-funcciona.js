@@ -122,27 +122,26 @@ const ctx = document.getElementById('satisfaccionChart').getContext('2d');
 const satisfaccionChart = new Chart(ctx, {
   type: 'bar',
   data: {
-labels: ['Comodidad', 'Precisión', 'Batería', 'Estilo', 'Usabilidad', 'Privacidad'],
-datasets: [{
-  label: 'Nivel de satisfacción (%)',
-  data: [92, 88, 80, 85, 90, 75],
-  backgroundColor: function(context) {
-    const chart = context.chart;
-    const {ctx, chartArea} = chart;
+  labels: ['Comodidad', 'Precisión', 'Batería', 'Estilo', 'Usabilidad', 'Privacidad'],
+  datasets: [{
+    label: 'Nivel de satisfacción (%)',
+    data: [92, 88, 80, 85, 90, 75],
+    backgroundColor: function(context) {
+      const chart = context.chart;
+      const {ctx, chartArea} = chart;
 
-    if (!chartArea) return null; // Previene errores al cargar
+      if (!chartArea) return null; // Previene errores al cargar
 
-    const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-    gradient.addColorStop(0, 'rgba(63, 81, 181, 0.8)');   // Azul profundo
-    gradient.addColorStop(1, 'rgba(156, 39, 176, 0.8)');  // Violeta
+      const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+      gradient.addColorStop(0, 'rgba(63, 81, 181, 0.8)');   // Azul profundo
+      gradient.addColorStop(1, 'rgba(156, 39, 176, 0.8)');  // Violeta
 
-    return gradient;
-  },
-  borderColor: 'rgba(63, 81, 181, 1)',
-  borderWidth: 1
-}]
-}
-,
+      return gradient;
+    },
+    borderColor: 'rgba(63, 81, 181, 1)',
+    borderWidth: 1
+  }]
+},
   options: {
     responsive: true,
     plugins: {
