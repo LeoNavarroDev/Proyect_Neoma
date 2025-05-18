@@ -1,5 +1,3 @@
-
-
 // Lente about us
 new p5(function (sketch) {
   let numParticles = 1000;
@@ -95,7 +93,7 @@ new p5(function (sketch) {
 });
 
 // se realiza las letras movibles
-const letters = document.querySelectorAll('.draggable');
+const letters = document.querySelectorAll(".draggable");
 const positions = [];
 
 // Guardar posición original
@@ -106,26 +104,27 @@ letters.forEach((el, i) => {
 
 // Posicionar cada letra animadamente desde fuera del viewport
 letters.forEach((el, i) => {
-  gsap.fromTo(el, 
+  gsap.fromTo(
+    el,
     { x: -window.innerWidth, opacity: 0 },
-    { 
-      x: 0, 
-      y: 0, 
-      opacity: 1, 
-      duration: 0.8, 
+    {
+      x: 0,
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
       delay: i * 0.15,
       onComplete: () => {
         const rect = el.getBoundingClientRect();
         el.dataset.x = 0;
         el.dataset.y = 0;
         positions[i] = { x: rect.left, y: rect.top };
-      }
+      },
     }
   );
 });
 
 // Hacer que las letras sean arrastrables
-interact('.draggable').draggable({
+interact(".draggable").draggable({
   inertia: true,
   listeners: {
     move(event) {
@@ -149,10 +148,10 @@ interact('.draggable').draggable({
           event.target.dataset.x = 0;
           event.target.dataset.y = 0;
           event.target.style.transform = `translate(0px, 0px)`;
-        }
+        },
       });
-    }
-  }
+    },
+  },
 });
 
 gsap.registerPlugin(ScrollTrigger);
@@ -161,13 +160,13 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.to(".heroe_section_about", {
   scale: 6,
   ease: "power1.out",
-  
+
   scrollTrigger: {
     trigger: ".heroe_section_about",
     start: "top top",
     end: "+4500",
     scrub: true,
-  }
+  },
 });
 
 // Fade out + scale out al final del scroll
@@ -179,7 +178,7 @@ gsap.to(".heroe_section_about", {
     start: "bottom bottom",
     end: "bottom top",
     scrub: true,
-  }
+  },
 });
 
 // Fade in suave de la siguiente sección
@@ -191,17 +190,17 @@ gsap.to(".aboutus-description", {
     start: "bottom top",
     end: "bottom center",
     toggleActions: "play none none reverse",
-  }
+  },
 });
 
-// Realizando que el canva sea arrastrable 
+// Realizando que el canva sea arrastrable
 
 const box = document.getElementById("lente-aboutus");
 
 // Guarda la posición inicial
 const originX = box.offsetLeft;
 const originY = box.offsetTop;
- 
+
 let isDragging = false;
 let offsetX, offsetY;
 let timeout;
@@ -237,7 +236,6 @@ document.addEventListener("mouseup", () => {
   }
 });
 
-
 // colocando un evento en la listas desordenada
 
 const paragraph = document.getElementById("contenido_listas_desordenadas");
@@ -257,33 +255,30 @@ paragraph.addEventListener("mouseenter", () => {
   });
 });
 
-
 // haciendo clickeable las listas desordenadas
-
 
 document.addEventListener("DOMContentLoaded", () => {
   const frases = document.querySelectorAll(".clickable");
 
+  const section = document.getElementById("imageSection");
+  section.style.transition =
+    "background-image 2s ease, background-size 1s ease, background-position 1s ease, background-color 1s ease";
 
-  const section = document.getElementById('imageSection');
-  section.style.transition = "background-image 2s ease, background-size 1s ease, background-position 1s ease, background-color 1s ease";
-
-  
   function cambiarImagen(imagenUrl) {
-    const section = document.getElementById('imageSection');
-    if (section) {  
-      section.style.transition = "background-image 1s ease, background-size 1s ease, background-position 1s ease, background-color 1s ease";
-      
+    const section = document.getElementById("imageSection");
+    if (section) {
+      section.style.transition =
+        "background-image 1s ease, background-size 1s ease, background-position 1s ease, background-color 1s ease";
+
       // Primero cambiamos la imagen de fondo
       section.style.backgroundImage = `url(${imagenUrl})`;
 
       // Usamos setTimeout para esperar a que se cambie la imagen y luego ajustamos el tamaño
       setTimeout(() => {
         // Cambiar tamaño de la imagen para que no ocupe toda la pantalla
-        section.style.backgroundSize = 'cover'; // La imagen se ajusta sin recortarse
-        section.style.backgroundPosition = 'center'; // Centra la imagen
-        section.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Fondo oscuro semitransparente
-        
+        section.style.backgroundSize = "cover"; // La imagen se ajusta sin recortarse
+        section.style.backgroundPosition = "center"; // Centra la imagen
+        section.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Fondo oscuro semitransparente
       }, 10); // El pequeño retraso asegura que la imagen se cambie primero
     }
   }
@@ -292,20 +287,17 @@ document.addEventListener("DOMContentLoaded", () => {
   frases.forEach((frase) => {
     frase.addEventListener("click", () => {
       if (frase.id === "text1") {
-        cambiarImagen('./img/mejor_vida.jpg');
+        cambiarImagen("./img/mejor_vida.jpg");
       } else if (frase.id === "text2") {
-        cambiarImagen('./img/pregunta_lo_que_quieras.jpg');
+        cambiarImagen("./img/pregunta_lo_que_quieras.jpg");
       } else if (frase.id === "text3") {
-        cambiarImagen('./img/salud.jpg');
+        cambiarImagen("./img/salud.jpg");
       } else if (frase.id === "text4") {
-        cambiarImagen('./img/productividad.jpg');
+        cambiarImagen("./img/productividad.jpg");
       }
-
-
     });
   });
 });
-
 
 // Configurar el cambio de color de fondo con ScrollTrigger
 ScrollTrigger.create({
@@ -313,11 +305,12 @@ ScrollTrigger.create({
   start: "top center", // Cuando la parte superior de la sección llega al centro de la ventana
   onEnter: () => {
     gsap.to("body", {
-      background: "linear-gradient(-30deg, #00ffcc, #9b59b6, #00c3ff, #33ccff, #ff9e00, #b6ff00)", // El nuevo fondo
+      background:
+        "linear-gradient(-30deg,rgb(2, 82, 66), #9b59b6,rgb(43, 96, 110),rgb(57, 171, 206), #ff9e00, #b6ff00)", // El nuevo fondo
       backgroundSize: "400% 400%", // Tamaño del gradiente
       duration: 2, // Duración de la animación
-      ease: "linear" ,// Tipo de transición
-      animation: 'gradient 15s ease infinite', 
+      ease: "linear", // Tipo de transición
+      animation: "gradient 15s ease infinite",
     });
   },
   onLeaveBack: () => {
@@ -325,93 +318,103 @@ ScrollTrigger.create({
       background: "linear-gradient(-45deg, #ffffff, #ffffff, #ffffff, #ffffff)", // Fondo original
       backgroundSize: "400% 400%",
       duration: 1,
-      ease: "easeInOut"
+      ease: "easeInOut",
     });
-  }
+  },
 });
 
 // realizando animaciones en la section "andreu"
-gsap.fromTo(".style_descripciones",
+gsap.fromTo(
+  ".style_descripciones",
   {
-      x: "50%",
-      opacity: 0,
-
+    x: "50%",
+    opacity: 0,
   },
 
   {
-      x: "0%",
-      ease: "power2.out",
-      opacity: 1,
-      scrollTrigger: {
-          trigger: ".style_descripciones",
-          start: "top bottom", // Se activa cuando la parte inferior de la sección toca la parte inferior de la ventana
-          end: "bottom center", // Termina cuando el centro del trigger toca el centro de la ventana
-          scrub: true, // Hace que la animación sea progresiva con el scroll
-          markers: true,
-      },
-  });
-
-
-  //haciendo animaciones con los divs neoma
-
-  gsap.fromTo(".contenedor_2",
-    {
-        y: "0",
-  
+    x: "0%",
+    ease: "power2.out",
+    opacity: 1,
+    scrollTrigger: {
+      trigger: ".style_descripciones",
+      start: "top bottom", // Se activa cuando la parte inferior de la sección toca la parte inferior de la ventana
+      end: "bottom center", // Termina cuando el centro del trigger toca el centro de la ventana
+      scrub: true, // Hace que la animación sea progresiva con el scroll
+      markers: true,
     },
-  
-    {
-        y: "-45%",
-        ease: "power2.out",
-        opacity: 1,
-        scrollTrigger: {
-            trigger: ".contenedor_2",
-            start: "top bottom", // Se activa cuando la parte inferior de la sección toca la parte inferior de la ventana
-            end: "center center", // Termina cuando el centro del trigger toca el centro de la ventana
-            scrub: true, // Hace que la animación sea progresiva con el scroll
-            markers: true,
-        },
-    });
+  }
+);
 
-    gsap.fromTo(".contenedor_3",
-      {
-          y: "0",
-    
-      },
-    
-      {
-          y: "-55%",
-          ease: "power2.out",
-          opacity: 1,
-          scrollTrigger: {
-              trigger: ".contenedor_3",
-              start: "top bottom", // Se activa cuando la parte inferior de la sección toca la parte inferior de la ventana
-              end: "center center", // Termina cuando el centro del trigger toca el centro de la ventana
-              scrub: true, // Hace que la animación sea progresiva con el scroll
-              markers: true,
-          },
-      });
+//haciendo animaciones con los divs neoma
 
-      gsap.fromTo(".contenedor_4",
-        {
-            y: "0",
-      
-        },
-      
-        {
-            y: "-65%",
-            ease: "power2.out",
-            opacity: 1,
-            scrollTrigger: {
-                trigger: ".contenedor_4",
-                start: "top bottom", // Se activa cuando la parte inferior de la sección toca la parte inferior de la ventana
-                end: "center center", // Termina cuando el centro del trigger toca el centro de la ventana
-                scrub: true, // Hace que la animación sea progresiva con el scroll
-                markers: true,
-            },
-        });
-  
+gsap.fromTo(
+  ".contenedor_2",
+  {
+    y: "0",
+  },
 
+  {
+    y: "-80%",
+    ease: "power2.out",
+    opacity: 1,
+    scrollTrigger: {
+      trigger: ".contenedor_2",
+      start: "top bottom", // Se activa cuando la parte inferior de la sección toca la parte inferior de la ventana
+      end: "center center", // Termina cuando el centro del trigger toca el centro de la ventana
+      scrub: true, // Hace que la animación sea progresiva con el scroll
+      markers: true,
+    },
+  }
+);
 
+gsap.fromTo(
+  ".contenedor_3",
+  {
+    y: "0",
+  },
 
+  {
+    y: "-100%",
+    ease: "power2.out",
+    opacity: 1,
+    scrollTrigger: {
+      trigger: ".contenedor_3",
+      start: "top bottom", // Se activa cuando la parte inferior de la sección toca la parte inferior de la ventana
+      end: "center center", // Termina cuando el centro del trigger toca el centro de la ventana
+      scrub: true, // Hace que la animación sea progresiva con el scroll
+      markers: true,
+    },
+  }
+);
 
+gsap.fromTo(
+  ".contenedor_4",
+  {
+    y: "0",
+  },
+
+  {
+    y: "-100%",
+    ease: "power2.out",
+    opacity: 1,
+    scrollTrigger: {
+      trigger: ".contenedor_4",
+      start: "top bottom", // Se activa cuando la parte inferior de la sección toca la parte inferior de la ventana
+      end: "center center", // Termina cuando el centro del trigger toca el centro de la ventana
+      scrub: true, // Hace que la animación sea progresiva con el scroll
+      markers: true,
+    },
+  }
+);
+
+gsap.to(".final_section", {
+  ease: power2.out,
+  y: "-100%",
+
+  scrollTrigger: {
+    trigger: ".final_section",
+    start: "bottom center",
+    end: "bottom center",
+    toggleActions: "play none none reverse",
+  },
+});
